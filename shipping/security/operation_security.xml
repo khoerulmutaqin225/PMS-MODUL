@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="base.module_category_human_resources_employees" model="ir.module.category">
+        <field name="description">Helps you manage shipping company, vessel, crew and certificate.</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="group_operation_user" model="res.groups">
+        <field name="name">Shipping Operation</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(6, 0, [ref('base.group_user')])]"/>
+        <field name="comment">The user will be able to create vessel and certificates.</field>
+    </record>
+
+
+</odoo>

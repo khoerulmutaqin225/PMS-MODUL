@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+   <record id="act_job_crew_evidence" model="ir.actions.act_window">
+             <field name="name">Job Evidence</field>
+            <field name="res_model">job.crew.evidence</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new data.
+                </p>
+            </field>
+        </record>
+
+        <record id="act_form_job_crew_evidence" model="ir.ui.view">
+            <field name="name">act_form_job_crew_evidence</field>
+            <field name="model">job.crew.evidence</field>
+            <field name="arch" type="xml">
+                <form string="Job Evidence">
+                    <sheet>
+                        <group>
+                            <field name="vehicle_id"/>
+                        </group>
+                        <group>
+                            <field name="file_evidence"/>
+                        </group>
+                        <group>
+                            <field name="date_evidence"/>
+                        </group>
+                        <group>
+                            <div class="oe_title">
+                            <h2>
+                                <label for="keterangan"/>
+                            </h2>
+                            <h3>
+                                <field name="keterangan" placeholder="Keterangan"/>
+                            </h3>
+                        </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_job_crew_evidence_tree" model="ir.ui.view">
+            <field name="name">act_job_crew_evidence_tree</field>
+            <field name="model">job.crew.evidence</field>
+            <field name="arch" type="xml">
+                <tree string="Job Evidence">
+                     <field name="date_evidence"/>
+                     <field name="keterangan"/>
+                     <field name="vehicle_id"/>
+                     <field name="file_evidence"/>
+                </tree>
+            </field>
+        </record>
+
+
+         <menuitem name="Evidence" parent="menu_pms_mgt" id="evidence" sequence="50"/>
+
+        <menuitem name="Job Evidence" id="job_crew_evidence_menu" parent="evidence" action="act_job_crew_evidence" sequence="10"/>
+
+
+</odoo>

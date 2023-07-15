@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_crew,job.crew,model_job_crew,base.group_user,1,1,1,1
+access_job_crew_line,job.crew.line,model_job_crew_line,base.group_user,1,1,1,1
+access_vehicle_vehicle,vehicle.vehicle,model_vehicle_vehicle,base.group_user,1,1,1,1
+access_submit_job_crew_line_wizard,submit.job.crew.line.wizard,model_submit_job_crew_line_wizard,base.group_user,1,1,1,1
+access_gas_maintenance_vehicle,gas.maintenance.vehicle,model_gas_maintenance_vehicle,base.group_user,1,1,1,1
+access_job_crew_evidence,job.crew.evidence,model_job_crew_evidence,base.group_user,1,1,1,1

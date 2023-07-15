@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_submit_job_crew_line_form" model="ir.ui.view">
+         <field name="name">submit.job.crew.line.wizard.form</field>
+         <field name="model">submit.job.crew.line.wizard</field>
+         <field name="arch" type="xml">
+             <form string="Job Crew Line">
+                  <separator string="Submit Job Crew Line:" />
+                  <field name="image_1920" widget="image" class="oe_avatar"/>
+                  <newline />
+                 <div class="oe_edit_only">
+                        <label for="name" class="oe_inline"/>
+                    </div>
+                    <h1>
+                        <field
+                                name="name"
+                                class="oe_inline"
+                        />
+                    </h1>
+                     <group>
+                        <field name="status"/>
+                         <field name="status_progress"/>
+                        <field name="type_time"/>
+                        <field name="type_satuan"/>
+                         <field name="current_date"/>
+                    </group>
+                     <group>
+                        <group>
+                            <field name="last_main_date"/>
+                            <field name="est_next_due_date"/>
+                            <field name="interval_time"/>
+                        </group>
+                        <group>
+                            <field name="current_value"/>
+                            <field name="last_value"/>
+                            <field name="interval_value"/>
+                        </group>
+                     </group>
+                     <group>
+                        <field name="keterangan"/>
+                    </group>
+                    <newline />
+                     <footer>
+                          <button name="submit_job_crew_line" type="object" string="Submit" class="btn-primary"/>
+                          <button string="Cancel" class="btn-secondary" special="cancel"/>
+                     </footer>
+             </form>
+         </field>
+    </record>
+
+    <record id="action_submit_job_crew_line" model="ir.actions.act_window">
+         <field name="name">Submit Job Crew</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">submit.job.crew.line.wizard</field>
+         <field name="view_mode">form</field>
+         <field name="view_id" ref="view_submit_job_crew_line_form"/>
+         <field name="target">new</field>
+    </record>
+
+
+
+ </odoo>

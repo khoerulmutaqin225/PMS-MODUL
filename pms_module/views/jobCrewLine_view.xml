@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<odoo>
+
+    <record model="ir.actions.act_window" id="act_job_crew_line">
+        <field name="name">Job Crew Line</field>
+        <field name="res_model">job.crew.line</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+<!--     Form View Ship-->
+    <record id="job_crew_line_form" model="ir.ui.view">
+        <field name="name">pms.job_crew_line.form</field>
+        <field name="model">job.crew.line</field>
+        <field name="arch" type="xml">
+            <form string="Job Crew">
+                <sheet>
+                    <separator string="Show Job Crew Line:" />
+                    <field name="image_1920" widget="image" class="oe_avatar" readonly="0"/>
+                    <div class="oe_edit_only">
+                        <label for="name" class="oe_inline"/>
+                    </div>
+                    <h1>
+                        <field
+                                name="name"
+                                class="oe_inline"
+                        />
+                    </h1>
+                    <group>
+                        <field name="nilai_progress" attrs="{'invisible':[('status_progress','=','on_progress')]}"/>
+                        <field name="nilai_progress_temp" attrs="{'invisible':[('status_progress','=','completed')]}"/>
+                        <field name="status"/>
+                        <field name="status_progress"/>
+                        <field name="type_time"/>
+                        <field name="type_satuan"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="last_main_date"/>
+                            <field name="est_next_due_date"/>
+                            <field name="interval_time"/>
+                        </group>
+                        <group>
+                            <field name="current_value"/>
+                            <field name="last_value"/>
+                            <field name="interval_value"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="keterangan" placeholder="Berikan Keterangan pekerjaan..." readonly="0"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View Ship-->
+    <record id="job_crew_line_tree" model="ir.ui.view">
+        <field name="name">pms.job_crew_line.tree</field>
+        <field name="model">job.crew.line</field>
+        <field name="arch" type="xml">
+            <tree string="Job Crew Line" decoration-success="status == 'updated'" decoration-muted="status == ''" decoration-danger="status == 'not_updated'">
+                <field name="name"/>
+                <field name="current_date" invisible="1"/>
+                <field name="last_main_date"/>
+                <field name="interval_time"/>
+                <field name="est_next_due_date"/>
+                <field name="current_value"/>
+                <field name="interval_value"/>
+                <field name="last_value"/>
+                <field name="type_time"/>
+                <field name="type_satuan"/>
+                <field name="nilai_progress" attrs="{'invisible':[('status_progress','=','on_progress')]}"/>
+                <field name="nilai_progress_temp" attrs="{'invisible':[('status_progress','=','completed')]}"/>
+                <field name="status"/>
+                <field name="status_progress"/>
+                <field name="vehicle_id" invisible="1"/>
+                <button
+                    name="%(pms_module.action_submit_job_crew_line)d"
+                    string="Submit"
+                    type="action"
+                    class="oe_highlight"
+                    attrs="{'invisible':[('status', '=','updated')]}"
+                />
+                <button
+                    name="%(pms_module.action_submit_job_crew_line)d"
+                    string="Edit"
+                    type="action"
+                    class="oe_highlight"
+                    attrs="{'invisible':[('status', '=','not_updated')]}"
+                />
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menu Ship-->
+    <menuitem name="Job Crew Line" id="job_crew_line_menu" parent="pms_menu" action="act_job_crew_line" sequence="20"/>
+
+</odoo>

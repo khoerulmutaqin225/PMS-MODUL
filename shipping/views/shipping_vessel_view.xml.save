@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <!-- Search Shipping Vessel  -->
+
+	<record model="ir.ui.view" id="shipping_vessel_view_search">
+		<field name="name">shipping.vessel.view.search</field>
+		<field name="model">shipping.vessel</field>
+		<field name="arch" type="xml">
+			<search string="Search Vessel">
+			  <field name="name" />
+			  <field name="call_sign"/>
+			  <field name="imo_no"/>
+			  <field name="mmsi_no"/>
+                    		<searchpanel>
+                        	  <field name="bisnis_unit" icon="fa-building" />
+                        	  <field name="owner"  icon="fa-building"/>
+                        	  <field name="type_id" icon="fa-users"/>
+                    		</searchpanel>
+			</search>
+		</field>
+	</record>
+
+
+ 
+    <!-- Form Vessel -->
+
+	<record model="ir.ui.view" id="shipping_vessel_view_form">
+		<field name="name">shipping.vessel.view.form</field>
+		<field name="model">shipping.vessel</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<field name="image" widget='image' class="oe_inline"/>
+					<field name="name"/>		
+					<group string="Information">
+						<group>
+							<field name="type_id" />
+							<field name="gross_tonage"/>
+							<field name="call_sign"/>
+							<field name="imo_no"/>
+							<field name="mmsi_no"/>
+						</group> 
+						<group>
+							<field name="operator" />
+							<field name="owner" />
+                                                        <field name="bisnis_unit" />
+							<field name="registered_year" />
+							<field name="registered_place" />
+							<field name="flag" />
+						</group>
+					</group> 
+				</sheet>
+			</form>
+		</field>
+	</record>	
+
+
+   <!-- List Vessel -->
+	
+	<record model="ir.ui.view" id="shipping_vessel_view_tree">
+		<field name="name">shipping.vessel.view.tree</field>
+		<field name="model">shipping.vessel</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="type_id" />
+				<field name="name" />
+				<field name="gross_tonage"/>
+				<field name="call_sign"/>
+				<field name="imo_no"/>
+				<field name="mmsi_no"/>
+				<field name="operator" />
+				<field name="owner" />
+                                <field name="bisnis_unit" />
+				<field name="registered_year" />
+				<field name="registered_place" />
+				<field name="flag" />
+			</tree>
+		</field>
+	</record>	
+
+
+
+
+
+
+
+    <record model="ir.ui.view" id="hr_employee_vessel_inherit_form_view">
+        <field name="name">hr.employee.form.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="vessel_id"/>
+		<field name="is_crew"/>
+            </xpath>        
+        </field>
+    </record>
+
+
+
+    <!-- Search Shipping Vessel Certificate  -->
+	<record model="ir.ui.view" id="shipping_vessel_certificate_view_search">
+		<field name="name">shipping.vessel.certificate.view.search</field>
+		<field name="model">shipping.vessel.certificate</field>
+		<field name="arch" type="xml">
+			<search string="Search Vessel Certificates">
+				<field name="vessel_id" />			
+				<field name="type_id"/>
+				<field name="name" />
+				<field name="issued_place"/>
+
+				<filter string="Expired" name="expired" domain="[('status','=','Expired')]"/>
+				<filter string="Exp. in 1-7 Days" name="week"
+					domain="[('status', '=','7Days')]"
+					help="Expired in 1-7 Days" />
+					
+				<filter string="Exp. in 8-30 Days" 
+					name="month"
+					domain="[('status', '=','30Days' )]"
+					help="Expired in 8-30 Days"
+					/>
+
+				<group expand="0" string="Group by...">
+					<filter name="groupby_vessel" string="Vessel"  domain="" context="{'group_by':'vessel_id'}"/>
+					<filter name="groupby_certificate" string="Certificate" domain="" context="{'group_by':'type_id'}"/>										
+					<filter name="groupby_status" string="Expired Status" domain="" context="{'group_by':'status'}" />
+				</group>
+
+
+			      	<searchpanel>
+              				<field name="vessel_id"  icon="fa-building"/>
+              				<field name="type_id" icon="fa-users"/>
+        			</searchpanel>
+
+
+			</search>
+		</field>
+	</record>
+
+    <!-- Form Vessel Certificate-->
+
+	<record model="ir.ui.view" id="shipping_vessel_certificate_view_form">
+		<field name="name">shipping.vessel.certificate.view.form</field>
+		<field name="model">shipping.vessel.certificate</field>
+		<field name="arch" type="xml">
+			<form string="Vessel Certificate" version="7.0">
+				<sheet>
+					<div>
+						<h1>
+							<field name="name"/>		
+						</h1>
+					</div>
+					<group>
+					<group>
+						<field name="vessel_id" />			
+						<field name="type_id"/>
+					</group> 
+					<group>
+						<field name="issued_place"/>
+						<field name="issued_date"/>
+						<field name="expired_date"/>
+						<field name="is_endorse" />
+						<field name="endorse_issued_date" attrs="{'invisible':[('is_endorse','!=',True)]}" />
+						<field name="endorse_expired_date" attrs="{'invisible':[('is_endorse','!=',True)]}" />
+						<field name="document_exist" />
+                                                <field name="remark" />
+					</group>
+						
+					</group> 
+				</sheet>
+			</form>
+		</field>
+	</record>	
+
+    <!-- List Vessel Certificates -->
+	
+	<record model="ir.ui.view" id="shipping_vessel_certificate_view_tree">
+		<field name="name">shipping.vessel.certificate.view.tree</field>
+		<field name="model">shipping.vessel.certificate</field>
+		<field name="arch" type="xml">
+			<tree string="Vessel Certificates" 
+        			decoration-danger="status == 'Expired'" 
+        			decoration-warning="status == '7Days'"
+        			decoration-info="status == ''"
+        			decoration-success="status == 'NoExpired'"
+        			decoration-it="status == '30Days'" >
+
+				<field name="vessel_id" />
+				<field name="name" />
+				<field name="type_id"/>
+				<field name="issued_place"/>
+				<field name="issued_date"/>
+				<field name="expired_date"/>
+				<field name="endorse_issued_date"/>
+				<field name="endorse_expired_date"/>
+                                <field name="f_expired_date" />
+ 				<field name="days_due" />
+				<field name="status"/>
+                                <field name="remark"/>
+			</tree>
+		</field>
+	</record>	
+
+
+    <!-- Certificate Type -->
+	
+	<record model="ir.ui.view" id="shipping_certificate_type_view_search">
+		<field name="name">shipping.certificate.type.view.search</field>
+		<field name="model">shipping.certificate.type</field>
+		<field name="arch" type="xml">
+			<search string="Search Certificates Type">
+				<field name="name" string="Type"/>
+			</search>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="shipping_certificate_type_view_form">
+		<field name="name">shipping.certificate.type.view.form</field>
+		<field name="model">shipping.certificate.type</field>
+		<field name="arch" type="xml">
+			<form string="Certificate">
+				<sheet>
+					<div>
+						<h1>
+							<field name="name" string="Certificate"/>							
+						</h1>
+					</div>
+					<group>
+						<field name="type_id" />
+						<field name="parent_id"/>
+						<field name="short_name"/>
+						
+					</group> 
+				</sheet>
+			</form>
+		</field>
+	</record>	
+
+	<record model="ir.ui.view" id="shipping_certificate_type_view_tree">
+		<field name="name">shipping.certificate.type.view.tree</field>
+		<field name="model">shipping.certificate.type</field>
+		<field name="arch" type="xml">
+			<tree string="Certificate Type">	
+				<field name="name" />
+				<field name="short_name" />							
+				<field name="parent_id"/>
+				<field name="status" />
+			</tree>
+		</field>
+	</record>	
+
+
+    <!-- Action Open Vessel -->	
+	<record model="ir.actions.act_window" id="action_shipping_vessel">
+		<field name="res_model">shipping.vessel</field>
+		<field name="name">Vessel</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'search_default_current_id': 1}</field>
+		<field name="search_view_id" ref="shipping_vessel_view_search"/>
+	</record>
+
+
+    <!-- Action Open Vessel Certificate -->	
+	<record model="ir.actions.act_window" id="action_shipping_vessel_certificate">
+		<field name="res_model">shipping.vessel.certificate</field>
+		<field name="name">Vessel Certificate</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'search_default_current_id': 1,'search_default_groupby_vessel':True,}</field>
+		<field name="search_view_id" ref="shipping_vessel_certificate_view_search"/>
+	</record>
+
+
+	<!-- Action Open Certificate Type -->	
+	<record model="ir.actions.act_window" id="action_shipping_certificate_type">
+		<field name="res_model">shipping.certificate.type</field>
+		<field name="name">Vessel Certificates Type</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'search_default_current_id': 1}</field>
+		<field name="search_view_id" ref="shipping_certificate_type_view_search"/>
+	</record>
+
+
+
+    <!-- Menu Shipping Configuration -->
+	<menuitem name="Operation" id="menu_shipping_mgt"/>
+	<menuitem name="Vessel" parent="menu_shipping_mgt" id="shipping.vessel" sequence="10" />
+	<menuitem name="Configuration" parent="menu_shipping_mgt" id="shipping.configuration" sequence="60" groups="group_operation_user"/>
+
+	<menuitem action="action_shipping_certificate_type" id="shipping_menu_certificate_type" name="Vessel Certificates Type" parent="shipping.configuration" sequence="10" groups="group_operation_user"/>
+	<menuitem action="action_shipping_vessel" id="shipping_menu_vessel"  name="Vessel" parent="shipping.vessel" sequence="10"/>
+	<menuitem action="action_shipping_vessel_certificate" id="shipping_menu_vessel_certificate"  name="Vessel Certificates" parent="shipping.vessel" sequence="40" groups="group_operation_user"/>
+
+
+	
+</data>
+</odoo>

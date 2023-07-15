@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shipping_vessel,shipping.vessel,model_shipping_vessel,base.group_user,1,0,0,0
+access_shipping_vessel,shipping.vessel,model_shipping_vessel,group_operation_user,1,1,1,1
+access_res_bisnis_unit,res.bisnis.unit,model_res_bisnis_unit,base.group_user,1,0,0,0
+access_res_bisnis_unit,res.bisnis.unit,model_res_bisnis_unit,group_operation_user,1,1,1,1
+access_shipping_vessel_type,shipping_vessel_type,model_shipping_vessel_type,base.group_user,1,0,0,0
+access_shipping_vessel_type,shipping_vessel_type,model_shipping_vessel_type,group_operation_user,1,1,1,1
+access_shipping_vessel_certificate,shipping.vessel.certificate,model_shipping_vessel_certificate,base.group_user,1,0,0,0
+access_shipping_vessel_certificate,shipping.vessel.certificate,model_shipping_vessel_certificate,group_operation_user,1,1,1,1
+access_shipping_certificate_type,shipping.certificate.type,model_shipping_certificate_type,base.group_user,1,0,0,0
+access_shipping_certificate_type,shipping.certificate.type,model_shipping_certificate_type,group_operation_user,1,1,1,1

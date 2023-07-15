@@ -1,0 +1,137 @@
+
+from datetime import datetime, date, timedelta
+from odoo import models, fields, api, _
+from odoo.exceptions import Warning
+
+
+class ShippingBisnisUnit(models.Model):
+    _name = 'res.bisnis.unit'
+    _description = 'Bisnis Unit'
+
+    name = fields.Char(string='Bisnis Unit', required=True, copy=False)
+    active = fields.Boolean('Active', default=True)
+
+
+class ShippingVesselType(models.Model):
+    _name = 'shipping.vessel.type'
+    _description = 'Vessel Type'
+
+    name = fields.Char(string='Type', required=True, copy=False)
+    active = fields.Boolean('Active', default=True)
+
+class ShippingVessel(models.Model):
+    _name = 'shipping.vessel'
+    _description = 'Vessel'
+
+    name = fields.Char(string='Name', size=128, required=True)
+    type_id = fields.Many2one('shipping.vessel.type','Type')
+    image =  fields.Binary('Image')
+    gross_tonage = fields.Integer('Gross Tonage')
+    call_sign =  fields.Char('Call Sign', size=32)	
+    imo_no = fields.Char('IMO Number', size=32)
+    mmsi_no = fields.Char('MMSI Number', size=32)
+    registered_year =  fields.Char('Year Registered',size=4)		
+    registered_place =  fields.Char('Place Registered', size=128)	
+    operator = fields.Many2one('res.company','Operator')
+    owner = fields.Many2one('res.company','Owner')
+    bisnis_unit = fields.Many2one('res.bisnis.unit','Bisnis Unit')
+    flag = fields.Many2one('res.country', 'Flag')
+    active = fields.Boolean('Active', default=True)
+
+class HrEmployee(models.Model):
+    _inherit = 'hr.employee'
+
+    vessel_id = fields.Many2one('shipping.vessel','Vessel')
+    is_crew = fields.Boolean('Is Crew', default=False)
+
+class ShippingCertificateType(models.Model):
+    _name = 'shipping.certificate.type'
+    _description = 'Certificate Type'
+
+    name = fields.Char('Name', size=64, required=True)
+    short_name = fields.Char('Short Name', size=10)
+    status = fields.Char('Status', size=32)
+    type_id = fields.Selection([
+	('01', 'Surat Ukur'),
+	('02', 'Surat Laut'),
+	('03', 'Sert. Keselamatan Konstruksi'),
+	('04', 'Sert. Keselamatan Perlengkapan'),
+	('05', 'Sert. Keselamatan Radio'),
+	('06', 'Sert. Nasional Pencegahan Pencemaran (SNPP)'),
+	('07', 'Sert. Internasional Pencegahan Pencemaran oleh Minyak (IOPP)'),
+	('08', 'Sert. Internasional Pencegahan Pencemaran oleh Udara (IAPP)'),
+	('09', 'Sert. Internasional Pencegahan Pencemaran oleh Kotoran (Sewage)'),
+	('10', 'Sert. Keamanan Kapal Internasional Interim (ISPS)'),
+	('11', 'Sert. Manajemen Keselamatan (SMC)'),
+	('12', 'Sert. Keselamatan Pengawakan Minimum (Safemanning)'),
+	('13', 'RPT -> Rencana Pola Trayek'),
+	('14', 'Sert. Sanitasi'),
+	('15', 'Sert. Pemadam Kebakaran'),
+	('16', 'Sert. Pemadam Kebakaran CO2'),
+	('17', 'Sert. Pemeriksaan Liferaft'),
+	('18', 'Izin Stasiun Radio Kapal Laut (Postel)'),
+	('19', 'Sert. Garis Muat Internasional'),
+	('20', 'Sert. Klasifikasi Lambung'),
+	('21', 'Sert. Klasifikasi Mesin'),
+	('22', 'CLC (Sert. Dana Ganti Rugi Pencemaran Laut'),
+	('23', 'Sert. Pengangkut Minyak Bumi'),
+	('99', 'Dokumen Lain'), 
+    ], string='Type')
+    active = fields.Boolean('Active', default=True)
+    parent_id = fields.Many2one('shipping.certificate.type', 'Parent')
+    child_ids = fields.One2many('shipping.certificate.type', 'parent_id', 'Children')
+
+class ShippingVesselCertificate(models.Model):
+    _name = 'shipping.vessel.certificate'
+    _description = 'Vessel Certificate'
+
+    name = fields.Char('Certificate Number', size=64, required=True)
+    active = fields.Boolean('Active', default=True)
+    type_id = fields.Many2one('shipping.certificate.type', 'Certificate', required=True)
+    issued_place = fields.Char('Place Issued', size=128)
+    issued_date = fields.Date('Issued Date Certificate')
+    expired_date = fields.Date('Expired Date Certificate')
+    is_endorse = fields.Boolean('Is Endorse?')
+    endorse_issued_date = fields.Date('Issued Date Endorse')
+    endorse_expired_date = fields.Date('Expired Date Endorse')
+    f_expired_date = fields.Date('Expired Date',compute="_compute_expired_status", store=True)
+    days_due = fields.Integer('Days due',compute="_compute_expired_status", store=True)
+    vessel_id = fields.Many2one('shipping.vessel','Vessel')
+    attachment_ids = fields.One2many('ir.attachment','res_id','Attachments',domain="[('res_model','=','shipping.vessel.certificate')]")
+    document_exist = fields.Boolean('Document Exist?', default=False)
+    one = fields.Integer('One', default=1)
+    status = fields.Char('Status',size=32, compute="_compute_expired_status", store=True)
+    remark = fields.Char('Remark',size=128)
+
+    @api.depends('expired_date','endorse_expired_date')
+    def _compute_expired_status(self):
+        today = fields.Date.today()
+        f_expired_date = False
+        days_due = False
+        status = False
+        for record in self:
+            if record.is_endorse and record.endorse_expired_date:
+                f_expired_date = record.endorse_expired_date
+            if f_expired_date:
+                if record.expired_date and record.expired_date < f_expired_date:
+                    f_expired_date = record.expired_date
+            elif record.expired_date:
+                f_expired_date = record.expired_date
+            if f_expired_date:
+                days_due = (f_expired_date - today).days
+            if days_due:
+                if days_due <=0:
+                    status = "Expired"
+                elif days_due > 0 and days_due <=7:
+                    status = "7Days"
+                elif days_due > 7 and days_due <=30:
+                    status = "30Days"
+                else:
+                    status = "More30Days"
+            else:
+                status = "NoExpired"
+
+            record.f_expired_date = f_expired_date
+            record.days_due = days_due
+            record.status = status
+
