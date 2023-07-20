@@ -77,6 +77,7 @@
                 <field name="status"/>
                 <field name="status_progress"/>
                 <field name="vehicle_id" invisible="1"/>
+                <!-- CATATAN TAMBAHAN DISINI  -->
                 <button
                     name="%(pms_module.action_submit_job_crew_line)d"
                     string="Submit"
@@ -91,6 +92,7 @@
                     class="oe_highlight"
                     attrs="{'invisible':[('status', '=','not_updated')]}"
                 />
+                <!-- CATATAN TAMBAHAN DISINI  -->                
                 <field name="active" widget="boolean_toggle"/>
             </tree>
         </field>

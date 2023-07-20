@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="gas_maintenance_vehicle_act_window" model="ir.actions.act_window">
+        <field name="name">Monitoring Perbaikan Mobil</field>
+        <field name="res_model">gas.maintenance.vehicle</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+
+    <record id="gas_maintenance_vehicle_form" model="ir.ui.view">
+        <field name="name">pms.gas_maintenance_vehicle.form</field>
+        <field name="model">gas.maintenance.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Gas Maintenance">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="no_ba_o" />
+                        <h1>
+                            <field name="no_ba_o" />
+                        </h1>
+                        <label for="vehicle_id" />
+                        <h1>
+                             <field name="vehicle_id" placeholder="Vehicle" />
+                        </h1>
+                    </div>
+                    <group>
+                        
+                        <field name="tanggal_kerusakan" />
+                        <field name="pelapor" />
+                        <field name="status" />                        
+
+                        <field name="jenis_sarfas" />
+                        <field name="nama_sarfas" />
+                        <field name="uraian_pekerjaan" />                        
+
+                        <field name="jenis_downtime" />
+                        <field name="type_downtime" />
+                        <field name="start_perbaikan" />                        
+                        <field name="finish_perbaikan" />                        
+
+                        <field name="km" />
+                        <field name="standar_lama" />
+                        <field name="biaya_perbaikan" />                        
+                        <field name="vendor" />                        
+                    </group>
+
+                    <separator string="Catatan" />
+                    <label for="catatan" string="Catatan perbaikan:" />
+                    <field name="catatan" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gas_maintenance_tree" model="ir.ui.view">
+        <field name="name">pms.gas_maintenance_tree.tree</field>
+        <field name="model">gas.maintenance.vehicle</field>
+        <field name="arch" type="xml">
+            <tree string="Maintenance Armada" decoration-success="status == 'open'"
+                decoration-muted="status == ''" decoration-danger="status == 'finish'">
+                <field name="no_ba_o" />
+                <field name="vehicle_id" />
+                <field name="tanggal_kerusakan" />
+                <field name="pelapor" />
+                <field name="status" />                        
+
+                <!-- <field name="jenis_sarfas" />
+                <field name="nama_sarfas" />
+                <field name="uraian_pekerjaan" />                        
+
+                <field name="jenis_downtime" />
+                <field name="type_downtime" />
+                <field name="start_perbaikan" />                        
+                <field name="finish_perbaikan" />                        
+
+                <field name="km" />
+                <field name="standar_lama" /> -->
+                <field name="biaya_perbaikan" />                        
+                <!-- <field name="vendor" />                -->
+            </tree>
+        </field>
+    </record>
+
+
+    <menuitem name="Maintenance Kendaraan" parent="menu_pms_mgt" id="gas" sequence="60" />
+
+    <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas"
+        action="gas_maintenance_vehicle_act_window" sequence="10" />
+
+
+</odoo>

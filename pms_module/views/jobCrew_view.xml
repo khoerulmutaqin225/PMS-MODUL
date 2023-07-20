@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
 
 <odoo>
@@ -8,13 +8,14 @@
         <field name="model">job.crew</field>
         <field name="arch" type="xml">
             <search string="Search Job Crew">
-                <field name="name" string="Job"/>
-                <field name="vehicle_id"/>
+                <field name="name" string="Job" />
+                <field name="vehicle_id" />
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
-                <separator/>
+                <separator />
                 <group expand="0" string="Group By">
-                    <!--                    <filter string="Report Date" name="recap_date" domain="[]" context="{'group_by': 'tanggal_rekap'}"/>-->
-                    <filter string="Vehicle" name="Vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <!--                    <filter string="Report Date" name="recap_date" domain="[]"
+                    context="{'group_by': 'tanggal_rekap'}"/>-->
+                    <filter string="Vehicle" name="Vehicle" context="{'group_by': 'vehicle_id'}" />
                 </group>
             </search>
         </field>
@@ -26,13 +27,14 @@
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <search string="Search Job Crew">
-                <field name="no_ba_o" string="Job"/>
-                <field name="vehicle_id"/>
+                <field name="no_ba_o" string="Job" />
+                <field name="vehicle_id" />
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
-                <separator/>
+                <separator />
                 <group expand="0" string="Group By">
-                    <!--                    <filter string="Report Date" name="recap_date" domain="[]" context="{'group_by': 'tanggal_rekap'}"/>-->
-                    <filter string="Vehicle" name="Vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <!--                    <filter string="Report Date" name="recap_date" domain="[]"
+                    context="{'group_by': 'tanggal_rekap'}"/>-->
+                    <filter string="Vehicle" name="Vehicle" context="{'group_by': 'vehicle_id'}" />
                 </group>
             </search>
         </field>
@@ -47,15 +49,13 @@
         <field name="context">{
             'search_default_vehicle_id': [active_id],
             'default_vehicle_id': active_id,
-        }</field>
-        <field name="search_view_id" ref="job_crew_view_search"/>
+            }</field>
+        <field name="search_view_id" ref="job_crew_view_search" />
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Click <i>Create</i> to start a new Job for this Vehicle.
-            </p><p>
-            Create and update Job to see performance of vehicle.<br/>
-            Make sure your data is up to date.
-        </p>
+            <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
+                this Vehicle. </p>
+            <p> Create and update Job to see performance of vehicle.<br /> Make sure your data is up
+                to date. </p>
         </field>
     </record>
 
@@ -67,15 +67,13 @@
         <field name="context">{
             'search_gas_default_vehicle_id': [active_id],
             'gas_default_vehicle_id': active_id,
-        }</field>
-        <field name="search_view_id" ref="job_gas_view_search"/>
+            }</field>
+        <field name="search_view_id" ref="job_gas_view_search" />
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Click <i>Create</i> to start a new Job for this Vehicle.
-            </p><p>
-            Create and update Job to see performance of vehicle.<br/>
-            Make sure your data is up to date.
-        </p>
+            <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
+                this Vehicle. </p>
+            <p> Create and update Job to see performance of vehicle.<br /> Make sure your data is up
+                to date. </p>
         </field>
     </record>
     <!-- field to monitoring Mobil -->
@@ -84,49 +82,56 @@
         <field name="name">job_crew.kanban</field>
         <field name="model">vehicle.vehicle</field>
         <field name="arch" type="xml">
-            
-            <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors"
-                    create="false">
-                <field name="name"/>
-                <field name="type"/>
-                <field name="persentase"/>
-                <field name="code_vehicle"/>
-                <field name="record_count"/>
-                <field name="nopol"/>
-                <field name="color"/>
-                <field name="active"/>
+
+            <kanban
+                class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors"
+                create="false">
+                <field name="name" />
+                <field name="type" />
+                <field name="persentase" />
+                <field name="code_vehicle" />
+                <field name="record_count" />
+                <field name="nopol" />
+                <field name="color" />
+                <field name="active" />
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                        <div
+                            t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
                             <div class="o_project_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
                                         <div class="o_primary">
                                             <span class="o_right">
                                                 <t t-if="record.type.value == 'Kapal'">
-                                                     <i class="fa fa-ship" role="img"
-                                                                     aria-label="Ship" title="Ship"/>
+                                                    <i class="fa fa-ship" role="img"
+                                                        aria-label="Ship" title="Ship" />
                                                 </t>
                                                 <t t-if="record.type.value == 'Mobil'">
                                                     <i class="fa fa-car" role="img"
-                                                                     aria-label="Car" title="Ship"/>
+                                                        aria-label="Car" title="Ship" />
                                                 </t>
                                                 <t t-if="record.type.value == 'Alat Berat'">
                                                     <i class="fa fa-gear" role="img"
-                                                                     aria-label="Gear" title="Ship"/>
+                                                        aria-label="Gear" title="Ship" />
                                                 </t>
                                                 <t t-if="record.type.value == ''">
-                                                     <i class="fa fa-ship" role="img"
-                                                                     aria-label="Ship" title="Ship"/>
+                                                    <i class="fa fa-ship" role="img"
+                                                        aria-label="Ship" title="Ship" />
                                                 </t>
-                                                <t t-esc="record.code_vehicle.value"/></span>
+                                                <t t-esc="record.code_vehicle.value" />
+                                            </span>
                                             <span>
-                                                <strong><h6><t t-esc="record.name.value"/></h6></strong>
+                                                <strong>
+                                                    <h6>
+                                                        <t t-esc="record.name.value" />
+                                                    </h6>
+                                                </strong>
                                             </span>
                                         </div>
-                                        <div class="o_kanban_tags_section"/>
+                                        <div class="o_kanban_tags_section" />
                                         <t t-if="record.type.value == 'Kapal'">
-                                            <small>Persentase : <t t-esc="record.persentase.value"/></small>
+                                            <small>Persentase : <t t-esc="record.persentase.value" /></small>
                                         </t>
                                         <t t-if="record.type.value == 'Mobil'">
                                             <small>Mobil</small>
@@ -134,40 +139,51 @@
                                         <t t-if="record.type.value == ''">
                                             <small>Alat Berat</small>
                                         </t>
-                                            
+
                                     </div>
                                 </div>
                                 <div class="o_kanban_card_manage_pane dropdown-menu" role="menu">
-                                    <div class="o_kanban_card_manage_section o_kanban_manage_reports">
+                                    <div
+                                        class="o_kanban_card_manage_section o_kanban_manage_reports">
                                         <div role="menuitem">
                                             <a type="edit">Edit</a>
                                         </div>
                                     </div>
-                                    <div role="menuitem" aria-haspopup="true" class="o_no_padding_kanban_colorpicker">
-                                        <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                    <div role="menuitem" aria-haspopup="true"
+                                        class="o_no_padding_kanban_colorpicker">
+                                        <ul class="oe_kanban_colorpicker" data-field="color"
+                                            role="popup" />
                                     </div>
                                 </div>
                                 <a class="o_kanban_manage_toggle_button o_left" href="#"
-                                  ><i class="fa fa-ellipsis-v"
-                                    role="img"
-                                    aria-label="Manage"
-                                    title="Manage"/></a>
+                                >
+                                    <i class="fa fa-ellipsis-v"
+                                        role="img"
+                                        aria-label="Manage"
+                                        title="Manage" />
+                                </a>
                             </div>
                             <div class="o_project_kanban_boxes">
                                 <t t-if="record.type.value == 'Kapal'">
-                                    <a class="o_project_kanban_box" name="%(act_job_crew_2_record_all)d"
-                                    type="action">
+                                    <a class="o_project_kanban_box"
+                                        name="%(act_job_crew_2_record_all)d"
+                                        type="action">
                                         <div>
-                                            <span class="o_value"><t t-esc="record.record_count.value"/></span>
+                                            <span class="o_value">
+                                                <t t-esc="record.record_count.value" />
+                                            </span>
                                             <span class="o_label">Records</span>
                                         </div>
                                     </a>
                                 </t>
                                 <t t-if="record.type.value == 'Mobil'">
-                                    <a class="o_project_kanban_box" name="%(act_job_crew_3_record_all)d"
-                                    type="action">
+                                    <a class="o_project_kanban_box"
+                                        name="%(act_job_crew_3_record_all)d"
+                                        type="action">
                                         <div>
-                                            <span class="o_value"><t t-esc="record.nopol.value"/></span>
+                                            <span class="o_value">
+                                                <t t-esc="record.nopol.value" />
+                                            </span>
                                             <!-- <span class="o_label">Records</span> -->
                                         </div>
                                     </a>
@@ -193,65 +209,81 @@
                     />
                 </header>
                 <sheet>
-                    <widget name="web_ribbon" title="Updated" bg_color="bg-success" attrs="{'invisible':[('status','=','not_updated')]}"/>
+                    <widget name="web_ribbon" title="Updated" bg_color="bg-success"
+                        attrs="{'invisible':[('status','=','not_updated')]}" />
                     <group>
-                            <div>
-                                <h2>Catatan Penilaian Persentase</h2>
-                                <p>1. Nilai >= 90%: telah dilakukan verifikasi aktual di kapal atau video lengkap setiap item, tanggal, jam dan lokasi atau verifikasi via virtual ( video call )</p>
-                                <p>2. Nilai 71% - 89% : Laporan PMS Kapal dikirimkan sesuai standar format PMS (excel, foto-foto dan pdf) dan mengisi laporan via android PMS dilengkapi dengan evidence foto (score: 71% - 89%)</p>
-                                <p>3. Nilai => 70%: Kapal mengirimkan laporan namun tidak lengkap / tidak standard format PMS</p>
-                                <p>3. Nilai = 0%: Kapal tidak mengirimkan laporan standard PMS atau jika tidak mengisi di android PMS (score: 0%)</p>
-                            </div>
+                        <div>
+                            <h2>Catatan Penilaian Persentase</h2>
+                            <p>1. Nilai >= 90%: telah dilakukan verifikasi aktual di kapal atau
+                                video lengkap setiap item, tanggal, jam dan lokasi atau verifikasi
+                                via virtual ( video call )</p>
+                            <p>2. Nilai 71% - 89% : Laporan PMS Kapal dikirimkan sesuai standar
+                                format PMS (excel, foto-foto dan pdf) dan mengisi laporan via
+                                android PMS dilengkapi dengan evidence foto (score: 71% - 89%)</p>
+                            <p>3. Nilai => 70%: Kapal mengirimkan laporan namun tidak lengkap /
+                                tidak standard format PMS</p>
+                            <p>3. Nilai = 0%: Kapal tidak mengirimkan laporan standard PMS atau jika
+                                tidak mengisi di android PMS (score: 0%)</p>
+                        </div>
                     </group>
                     <div class="oe_edit_only">
-                        <label for="name" class="oe_inline"/>
+                        <label for="name" class="oe_inline" />
                     </div>
                     <h1>
                         <field
-                                name="name"
-                                class="oe_inline"
+                            name="name"
+                            class="oe_inline"
                         />
                     </h1>
                     <group>
                         <group>
-                            <field name="vehicle_id"/>
-                            <field name="current_date"/>
-                            <field name="last_update_rh_date"/>
-                             <field name="persentase" placeholder="Silahkan masukan nilai berdasarkan hasil verifikasi data-data"/>
-                             <div>
-                                <p t-att-style="color: #red;font-weight:bold">Untuk Persentasi (%), Silahkan masukan nilai berdasarkan hasil verifikasi data-data</p>
+                            <field name="vehicle_id" />
+                            <field name="current_date" />
+                            <field name="last_update_rh_date" />
+                            <field name="persentase"
+                                placeholder="Silahkan masukan nilai berdasarkan hasil verifikasi data-data" />
+                            <div>
+                                <p t-att-style="color: #red;font-weight:bold">Untuk Persentasi (%),
+                                    Silahkan masukan nilai berdasarkan hasil verifikasi data-data</p>
                             </div>
                         </group>
                         <group>
-                            <field name="current_hours"/>
-                            <field name="last_running_hours"/>
-                            <field name="nilai_progress" attrs="{'invisible':[('status_progress','=','on_progress')]}"/>
-                            <field name="nilai_progress_temp" attrs="{'invisible':[('status_progress','=','completed')]}"/>
-                            <field name="status_progress"/>
-                            <field name="bobot"/>
-                            <field name="status"/>
+                            <field name="current_hours" />
+                            <field name="last_running_hours" />
+                            <field name="nilai_progress"
+                                attrs="{'invisible':[('status_progress','=','on_progress')]}" />
+                            <field name="nilai_progress_temp"
+                                attrs="{'invisible':[('status_progress','=','completed')]}" />
+                            <field name="status_progress" />
+                            <field name="bobot" />
+                            <field name="status" />
                         </group>
                     </group>
                     <notebook position="inside">
                         <page string="Uraian Job">
                             <field name="line_jobs"
-                                   widget="section_and_note_one2many"
-                                   mode="tree">
-                                <tree create="false" decoration-success="status == 'updated'" decoration-muted="status == ''" decoration-danger="status == 'not_updated'">
-                                    <field name="name"/>
-                                    <field name="current_date" invisible="1"/>
-                                    <field name="last_main_date"/>
-                                    <field name="interval_time"/>
-                                    <field name="est_next_due_date"/>
-                                    <field name="current_value"/>
-                                    <field name="interval_value"/>
-                                    <field name="last_value"/>
-                                    <field name="type_time"/>
-                                    <field name="type_satuan"/>
-                                    <field name="nilai_progress" attrs="{'invisible':[('status_progress','=','on_progress')]}"/>
-                                    <field name="nilai_progress_temp" attrs="{'invisible':[('status_progress','=','completed')]}"/>
-                                    <field name="status" widget="badge"/>
-                                    <field name="status_progress" widget="badge"/>
+                                widget="section_and_note_one2many"
+                                mode="tree">
+                                <tree create="false" decoration-success="status == 'updated'"
+                                    decoration-muted="status == ''"
+                                    decoration-danger="status == 'not_updated'">
+                                    <field name="name" />
+                                    <field name="current_date" invisible="1" />
+                                    <field name="last_main_date" />
+                                    <field name="interval_time" />
+                                    <field name="est_next_due_date" />
+                                    <field name="current_value" />
+                                    <field name="interval_value" />
+                                    <field name="last_value" />
+                                    <field name="type_time" />
+                                    <field name="type_satuan" />
+                                    <field name="nilai_progress"
+                                        attrs="{'invisible':[('status_progress','=','on_progress')]}" />
+                                    <field name="nilai_progress_temp"
+                                        attrs="{'invisible':[('status_progress','=','completed')]}" />
+                                    <field name="status" widget="badge" />
+                                    <field name="status_progress" widget="badge" />
+                                    <!-- CATATAN TAMBAHAN DISINI  -->
                                     <button
                                         name="%(pms_module.action_submit_job_crew_line)d"
                                         string="Submit"
@@ -266,11 +298,12 @@
                                         class="oe_highlight"
                                         attrs="{'invisible':[('status', '=','not_updated')]}"
                                     />
+                                    <!-- CATATAN TAMBAHAN DISINI  -->
                                 </tree>
                             </field>
                         </page>
                     </notebook>
-                    <field name="keterangan" placeholder="Berikan Keterangan Job Crew..."/>
+                    <field name="keterangan" placeholder="Berikan Keterangan Job Crew..." />
                 </sheet>
             </form>
         </field>
@@ -281,16 +314,17 @@
         <field name="name">pms.job_crew.tree</field>
         <field name="model">job.crew</field>
         <field name="arch" type="xml">
-            <tree string="Job Crew" decoration-success="status == 'updated'" decoration-muted="status == ''" decoration-danger="status == 'not_updated'">
-                <field name="name"/>
-                <field name="bobot"/>
-                <field name="current_date"/>
-                <field name="last_update_rh_date"/>
-                <field name="current_hours"/>
-                <field name="status_progress" widget="badge"/>
-                <field name="status" widget="badge"/>
-                 <field name="nilai_progress"/>
-                <field name="persentase"/>
+            <tree string="Job Crew" decoration-success="status == 'updated'"
+                decoration-muted="status == ''" decoration-danger="status == 'not_updated'">
+                <field name="name" />
+                <field name="bobot" />
+                <field name="current_date" />
+                <field name="last_update_rh_date" />
+                <field name="current_hours" />
+                <field name="status_progress" widget="badge" />
+                <field name="status" widget="badge" />
+                <field name="nilai_progress" />
+                <field name="persentase" />
             </tree>
         </field>
     </record>
@@ -300,11 +334,12 @@
         <field name="name">pms.gas_maintenance_tree.tree</field>
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
-            <tree string="Maintenance Armada" decoration-success="status == 'open'" decoration-muted="status == ''" decoration-danger="status == 'finish'">
-                <field name="no_ba_o"/>
-                <field name="vehicle_id"/>
-                <field name="tanggal_kerusakan"/>
-                <field name="status"/>
+            <tree string="Maintenance Armada" decoration-success="status == 'open'"
+                decoration-muted="status == ''" decoration-danger="status == 'finish'">
+                <field name="no_ba_o" />
+                <field name="vehicle_id" />
+                <field name="tanggal_kerusakan" />
+                <field name="status" />
             </tree>
         </field>
     </record>
@@ -315,7 +350,7 @@
         <field name="res_model">vehicle.vehicle</field>
         <field name="domain">[]</field>
         <field name="view_mode">kanban</field>
-        <field name="view_id" ref="view_job_crew_all"/>
+        <field name="view_id" ref="view_job_crew_all" />
         <field name="target">main</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -326,11 +361,11 @@
 
     <!-- Menu Ship-->
     <menuitem name="PMS" id="menu_pms_mgt"
-              web_icon="pms_module,static/description/icon.png"/>
+        web_icon="pms_module,static/description/icon.png" />
 
-    <menuitem name="Main Menu" parent="menu_pms_mgt" id="pms_menu" sequence="30"/>
+    <menuitem name="Main Menu" parent="menu_pms_mgt" id="pms_menu" sequence="30" />
 
-      <menuitem action="job_crew_action" id="job_crew_menu" name="Job Crew"
-              parent="pms_menu" sequence="10"/>
+    <menuitem action="job_crew_action" id="job_crew_menu" name="Job Crew"
+        parent="pms_menu" sequence="10" />
 
 </odoo>

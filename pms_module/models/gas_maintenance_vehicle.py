@@ -22,9 +22,11 @@ class gas_maintenance_vehicle(models.Model):
     vehicle_id = fields.Many2one(
         'vehicle.vehicle',
         string='Vehicle',
-        readonly=True,
+        readonly=False,
         required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
         index=True, tracking=True, change_default=True)
+    
+    
     catatan = fields.Char(string="Catatan")
     status = fields.Selection(
         string='Status',
@@ -33,5 +35,23 @@ class gas_maintenance_vehicle(models.Model):
                    ('finish', 'Finish') ],
         default='open',
         store=True,
-        readonly=True,
+        readonly=False,
     )
+    
+    jenis_sarfas = fields.Char(string="Jenis Sarfas")
+    nama_sarfas = fields.Char(string="Nama Sarfas")
+    uraian_pekerjaan = fields.Char(string="Uraian Pekerjaan")
+    
+    jenis_downtime = fields.Char(string="Jenis Downtime")
+    type_downtime = fields.Char(string="Type Downtime")
+    start_perbaikan = fields.Date(string="Start Perbaikan")
+    finish_perbaikan = fields.Date(string="Finish Perbaikan")
+    
+    km = fields.Char(string="Km")
+    standar_lama = fields.Char(string="Standar Lama")
+    biaya_perbaikan = fields.Char(string="Biaya Perbaikan")
+    vendor = fields.Char(string="Vendor")
+
+    
+    
+    

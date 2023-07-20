@@ -29,6 +29,7 @@
         'views/jobCrewLine_view.xml',
         'views/vehicle_view.xml',
         'wizard/submit_job_crew_line.xml',
+        'views/gas_maintenance_vehicle.xml',
         'views/jobCrewEvidence_view.xml'
         #'views/portal_view.xml',
     ],
