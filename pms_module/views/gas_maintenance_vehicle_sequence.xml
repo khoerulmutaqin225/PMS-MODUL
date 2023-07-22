@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sequence_gas_maintenance_vehicle_id" model="ir.sequence">
+        <field name="name">Sequence Gas Maintenance Vehicle Pembelian</field>
+        <field name="code">gas.maintenance.vehicle</field>
+        <field name="prefix"></field>
+        <field eval="1" name="number_next" />
+        <field eval="1" name="number_increment" />
+        <field eval="True" name="use_date_range" />
+        <field name="company_id" eval="2" />
+        <field name="padding">4</field>
+        <field name="suffix">/ASG/%(month)s/%(year)s</field>
+    </record> 
+</odoo>

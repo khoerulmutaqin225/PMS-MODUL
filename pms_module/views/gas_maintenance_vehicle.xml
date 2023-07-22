@@ -20,37 +20,33 @@
         <field name="arch" type="xml">
             <form string="Gas Maintenance">
                 <sheet>
-                    <div class="oe_title">
-                        <label for="no_ba_o" />
-                        <h1>
-                            <field name="no_ba_o" />
-                        </h1>
-                        <label for="vehicle_id" />
-                        <h1>
-                             <field name="vehicle_id" placeholder="Vehicle" />
-                        </h1>
+                    <div>
+                        <label for="no_ba_o" string="No Berita Acara" />
                     </div>
+                    <h1>
+                        <field name="no_ba_o" class="oe_inline" />
+                    </h1>
                     <group>
-                        
-                        <field name="tanggal_kerusakan" />
-                        <field name="pelapor" />
-                        <field name="status" />                        
-
-                        <field name="jenis_sarfas" />
-                        <field name="nama_sarfas" />
-                        <field name="uraian_pekerjaan" />                        
-
-                        <field name="jenis_downtime" />
-                        <field name="type_downtime" />
-                        <field name="start_perbaikan" />                        
-                        <field name="finish_perbaikan" />                        
-
-                        <field name="km" />
-                        <field name="standar_lama" />
-                        <field name="biaya_perbaikan" />                        
-                        <field name="vendor" />                        
+                        <group name="no_ba_o" string="General">
+                            <field name="vehicle_id" options="{'no_create': True}" />
+                            <field name="tanggal_kerusakan" />
+                            <field name="status" style="background-color:green; color: white;" />
+                            <field name="pelapor" style="" />
+                            <field name="jenis_sarfas" style="" />
+                            <field name="nama_sarfas" />
+                            <field name="uraian_pekerjaan" />
+                            <field name="vendor" />
+                        </group>
+                        <group name="records" string="Records">
+                            <field name="jenis_downtime" />
+                            <field name="type_downtime" />
+                            <field name="start_perbaikan" />
+                            <field name="finish_perbaikan" />
+                            <field name="km" />
+                            <field name="standar_lama" />
+                            <field name="biaya_perbaikan" />
+                        </group>
                     </group>
-
                     <separator string="Catatan" />
                     <label for="catatan" string="Catatan perbaikan:" />
                     <field name="catatan" />
@@ -69,21 +65,19 @@
                 <field name="vehicle_id" />
                 <field name="tanggal_kerusakan" />
                 <field name="pelapor" />
-                <field name="status" />                        
-
+                <field name="status" />
                 <!-- <field name="jenis_sarfas" />
                 <field name="nama_sarfas" />
                 <field name="uraian_pekerjaan" />                        
-
                 <field name="jenis_downtime" />
                 <field name="type_downtime" />
                 <field name="start_perbaikan" />                        
                 <field name="finish_perbaikan" />                        
-
                 <field name="km" />
-                <field name="standar_lama" /> -->
-                <field name="biaya_perbaikan" />                        
-                <!-- <field name="vendor" />                -->
+                <field name="standar_lama" /
+                <field name="biaya_perbaikan" />
+                <field name="vendor" />
+                -->
             </tree>
         </field>
     </record>

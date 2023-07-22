@@ -9,3 +9,4 @@ access_shipping_vessel_certificate,shipping.vessel.certificate,model_shipping_ve
 access_shipping_vessel_certificate,shipping.vessel.certificate,model_shipping_vessel_certificate,group_operation_user,1,1,1,1
 access_shipping_certificate_type,shipping.certificate.type,model_shipping_certificate_type,base.group_user,1,0,0,0
 access_shipping_certificate_type,shipping.certificate.type,model_shipping_certificate_type,group_operation_user,1,1,1,1
+
