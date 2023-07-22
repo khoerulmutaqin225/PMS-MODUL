@@ -21,13 +21,13 @@
             <form string="Gas Maintenance">
                 <sheet>
                     <div>
-                        <label for="no_ba_o" string="No Berita Acara" />
+                        <label for="name" string="No Berita Acara" />
                     </div>
                     <h1>
-                        <field name="no_ba_o" class="oe_inline" />
+                        <field name="name" class="oe_inline" />
                     </h1>
                     <group>
-                        <group name="no_ba_o" string="General">
+                        <group name="name" string="General">
                             <field name="vehicle_id" options="{'no_create': True}" />
                             <field name="tanggal_kerusakan" />
                             <field name="status" style="background-color:green; color: white;" />
@@ -61,7 +61,7 @@
         <field name="arch" type="xml">
             <tree string="Maintenance Armada" decoration-success="status == 'open'"
                 decoration-muted="status == ''" decoration-danger="status == 'finish'">
-                <field name="no_ba_o" />
+                <field name="name" />
                 <field name="vehicle_id" />
                 <field name="tanggal_kerusakan" />
                 <field name="pelapor" />

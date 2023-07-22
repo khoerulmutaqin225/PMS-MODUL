@@ -13,10 +13,10 @@ class gas_maintenance_vehicle(models.Model):
     def create(self, values):
         res = super(gas_maintenance_vehicle,self).create(values)
         for rec in res:
-            nama = rec.no_ba_o
+            nama = rec.name
             if nama == 'New':
                 names = self.env['ir.sequence'].next_by_code('gas.maintenance.vehicle')
-                rec.update({'no_ba_o':names})    
+                rec.update({'name':names})    
         return res
             
     def open_records(self):
@@ -25,7 +25,7 @@ class gas_maintenance_vehicle(models.Model):
         action = self.env['ir.actions.act_window'].for_xml_id('pms_module', 'act_job_crew_3_record_all')
         return dict(action, context=ctx)
     
-    no_ba_o = fields.Char(string="No Berita Acara" , default="New")
+    name = fields.Char(string="No Berita Acara" , default="New")
     tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan", required=False, readonly=False, select=True, default=lambda self: fields.datetime.now())                                                                
     pelapor = fields.Char(string="Pelapor")
     vehicle_id = fields.Many2one(

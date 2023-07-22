@@ -27,7 +27,7 @@
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <search string="Search Job Crew">
-                <field name="no_ba_o" string="Job" />
+                <field name="name" string="Job" />
                 <field name="vehicle_id" />
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
                 <separator />
@@ -336,7 +336,7 @@
         <field name="arch" type="xml">
             <tree string="Maintenance Armada" decoration-success="status == 'open'"
                 decoration-muted="status == ''" decoration-danger="status == 'finish'">
-                <field name="no_ba_o" />
+                <field name="name" />
                 <field name="vehicle_id" />
                 <field name="tanggal_kerusakan" />
                 <field name="status" />
