@@ -5,10 +5,32 @@ from datetime import datetime
 from datetime import timedelta
 import logging
 _logger = logging.getLogger(__name__)
+from collections import OrderedDict
+
 
 class gas_maintenance_vehicle(models.Model):
     _name = 'gas.maintenance.vehicle'
-    
+    _description = 'Gas Maintenance Vehicle'
+    # "Gas Maintenance Vendor"
+
+    @api.onchange('vehicle_id')
+    def _get_company(self):
+        for record in self:
+            if not record.vehicle_id:
+                return {}
+            else:
+                # function query untuk mendeteksi nama perusahan yang sedang login
+                x = self.env["res.company"].browse(self.env.company.id)
+                self.company_id = x
+                
+
+        
+    company_id = fields.Many2one(
+        'res.company',
+        compute='_get_company',
+        string='Company Id',
+    )    
+
     @api.model
     def create(self, values):
         res = super(gas_maintenance_vehicle,self).create(values)
@@ -16,8 +38,11 @@ class gas_maintenance_vehicle(models.Model):
             nama = rec.name
             if nama == 'New':
                 names = self.env['ir.sequence'].next_by_code('gas.maintenance.vehicle')
-                rec.update({'name':names})    
+                rec.update({'name':names})
         return res
+    
+
+    
             
     def open_records(self):
         ctx = dict(self._context)
@@ -25,8 +50,16 @@ class gas_maintenance_vehicle(models.Model):
         action = self.env['ir.actions.act_window'].for_xml_id('pms_module', 'act_job_crew_3_record_all')
         return dict(action, context=ctx)
     
+    
     name = fields.Char(string="No Berita Acara" , default="New")
-    tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan", required=False, readonly=False, select=True, default=lambda self: fields.datetime.now())                                                                
+    tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan",
+                                    required=False,
+                                    readonly=False,
+                                    select=True,
+                                    default=lambda self: fields.datetime.now()
+                                    )      
+    
+                                                                  
     pelapor = fields.Char(string="Pelapor")
     vehicle_id = fields.Many2one(
         'vehicle.vehicle',
@@ -35,8 +68,7 @@ class gas_maintenance_vehicle(models.Model):
         required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
         index=True, tracking=True, change_default=True)
     
-    
-    catatan = fields.Char(string="Catatan")
+    catatan = fields.Text(string="Catatan")
     status = fields.Selection(
         string='Status',
         selection=[('open', 'Open'),
@@ -47,20 +79,89 @@ class gas_maintenance_vehicle(models.Model):
         readonly=False,
     )
     
-    jenis_sarfas = fields.Char(string="Jenis Sarfas")
-    nama_sarfas = fields.Char(string="Nama Sarfas")
-    uraian_pekerjaan = fields.Char(string="Uraian Pekerjaan")
-    
-    jenis_downtime = fields.Char(string="Jenis Downtime")
-    type_downtime = fields.Char(string="Type Downtime")
-    start_perbaikan = fields.Date(string="Start Perbaikan")
-    finish_perbaikan = fields.Date(string="Finish Perbaikan")
-    
-    km = fields.Char(string="Km")
-    standar_lama = fields.Char(string="Standar Lama")
-    biaya_perbaikan = fields.Char(string="Biaya Perbaikan")
-    vendor = fields.Char(string="Vendor")
+        
+    jenis_downtime = fields.Selection(
+        string='Jenis Downtime',
+        selection=[
+            ('maintenance', 'Maintenance'),
+            ('downtime', 'Downtime'),
+        ],
+    )    
 
+    standar_lama = fields.Date(string="Tanggal Selesai" )      
     
+    biaya_perbaikan = fields.Char(string="Estimasi Biaya")
+
+    gas_line = fields.One2many(
+        'gas.report.line', 
+        'group_gas_id',
+        string="List PErbaikan Sarfas",
+        track_visibility='onchange'
+    ) 
+    
+
+
+class gas_maintenance_vendor(models.Model):
+    _name = "gas.maintenance.vendor"
+    _description ="Gas Maintenance Vendor"
+
+    name = fields.Char(string="Nama Vendor")
+
+class gas_maintenance_vehicle_line(models.Model):
+    _name = "gas.report.line"
+    _description="Gas Report Line"
+
+    @api.depends('start_perbaikan', 'finish_perbaikan')
+    def _compute_date_difference(self):
+        duration = 0
+        for record in self:
+            if record.start_perbaikan and record.finish_perbaikan:
+                dt_1 = fields.Datetime.from_string(record.start_perbaikan)
+                dt_2 = fields.Datetime.from_string(record.finish_perbaikan)
+                # duration = (dt_2 - dt_1).days
+                duration = (dt_2 - dt_1).total_seconds()
+                record.update({'lama_perbaikan':duration})
+            else:
+                record.update({'lama_perbaikan':duration})                
+    
+
+    lama_perbaikan = fields.Integer(
+        'Lama Perbaikan',
+        compute='_compute_date_difference',
+        store=True,
+    )
+    
+    
+    name = fields.Char(string="Nama Sarfas")
+    jenis_sarfas = fields.Char(string="Jenis Sarfas")
+    biaya_perbaikan = fields.Char(string="Biaya Perbaikan")
+    uraian_pekerjaan = fields.Text('Uraian Pekerjaan')
+    start_perbaikan = fields.Datetime(string="Tanggal Mulai")
+    finish_perbaikan = fields.Datetime(string="Tanggal Selesai")
+    
+    
+    
+    km = fields.Char(string="Kilometer")    
+    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor')
+    
+    
+    
+    status = fields.Selection(
+        string='Status',
+        selection=[('open', 'Open'),
+                   ('progress', 'Progress'), 
+                   ('finish', 'Finish') ],
+        default='open',
+        store=True,
+        readonly=False,
+    )
+    
+    group_gas_id = fields.Many2one(
+        'gas.maintenance.vehicle',
+        string='group_gas_id',
+        readonly=True
+    )
+    
+
     
     

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Shipping Company Management',
+    'name': 'Shipping Company Management V2',
     'version': '13.0.1.0.0',
     'summary': """Manages Shipping Management, Vessel, Crew Documents, etc.""",
     'description': """Manages Shipping Management, Vessel, Crew Documents, etc .""",
