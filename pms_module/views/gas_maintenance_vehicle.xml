@@ -19,45 +19,44 @@
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <form string="Gas Maintenance">
-                   <sheet>
+                <sheet>
                     <div>
                         <label for="name" string="No Berita Acara"/>
                     </div>
                     <h1>
-                        <field name="name" class="oe_inline"/>
+                        <field name="name" class="oe_inline" placeholder="Masukan No Berita Acara" readonly="1"/>
                     </h1>
                     <group>
                         <group name="name" string="General">
-                           <field name="vehicle_id" options="{'no_create': True}" />
-                            <field name="tanggal_kerusakan" />
-                            <field name="pelapor" style="" />
-                            <field name="status" style="background-color:green; color: white;" />
+                            <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle"/>
+                            <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan"/>
+                            <field name="pelapor" style="" placeholder="Masukan Nama Pelapor"/>
+                            <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status"/>
                         </group>
-                         <group name="records" string="Records">
-                            <field name="company_id" />
-                            <field name="jenis_downtime" />
-                            <field name="standar_lama" />
-                            <field name="biaya_perbaikan" />
+                        <group name="records" string="Records">
+                            <field name="company_id" placeholder="Select Company"/>
+
+                            <field name="jenis_downtime" placeholder="Masukan Jenis Downtime"/>
+                            <field name="standar_lama" placeholder="Masukan Tanggal Selesai"/>
+                            <field name="biaya_perbaikan" placeholder="Masukan Biaya Perbaikan"/>
                         </group>
                     </group>
                     <separator string="Catatan"/>
                     <label for="catatan" string="Catatan perbaikan:"/>
-                    <field name="catatan"/>
+                    <field name="catatan" placeholder="Masukan Catatan"/>
                     <notebook>
-                       <page string="Gas Line">
+                        <page string="Perbaikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
-                                    <field name="name" placeholder="Nama"/>
-                                    <field name="jenis_sarfas" optional="hide"/>
-                                    <field name="biaya_perbaikan" optional="hide"/>
-                                    <field name="uraian_pekerjaan"/>
-                                    <field name="start_perbaikan"/>
-                                    <field name="finish_perbaikan"/>
-                                    <field name="km"/>
-                                    <field name="vendor"/>
-                                    <field name="status" style="background-color:green; color: white;" />
-                                    <!--<field name="list_finding_item" invisible="1"/>-->
-                                    <!--<button string="Items" name="action_openListItemTreeView" type="object" icon="fa-folder-open-o"/>-->
+                                    <field name="name" placeholder="Masukan Nama"/>
+                                    <field name="jenis_sarfas" placeholder="Jenis Sarfas"/>
+                                    <field name="biaya_perbaikan" placeholder="Biaya Perbaikan"/>
+                                    <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan"/>
+                                    <field name="start_perbaikan" placeholder="Start Perbaikan"/>
+                                    <field name="finish_perbaikan" placeholder="Finish Perbaikan"/>
+                                    <field name="km" placeholder="Masukan KM"/>
+                                    <field name="vendor" placeholder="Vendor"/>
+                                    <field name="status" style="background-color:green; color: white;" placeholder="Masukan Status"/>
                                 </tree>
                             </field>
                         </page>
@@ -71,8 +70,7 @@
         <field name="name">pms.gas_maintenance_tree.tree</field>
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
-            <tree string="Maintenance Armada" decoration-success="status == 'open'"
-                decoration-muted="status == ''" decoration-danger="status == 'finish'">
+            <tree string="Maintenance Armada" decoration-success="status == 'open'" decoration-muted="status == ''" decoration-danger="status == 'finish'">
                 <field name="name" />
                 <!-- <field name="vehicle_id" />
                 <field name="tanggal_kerusakan" />
@@ -86,8 +84,7 @@
 
     <menuitem name="Maintenance Kendaraan" parent="menu_pms_mgt" id="gas" sequence="60" />
 
-    <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas"
-        action="gas_maintenance_vehicle_act_window" sequence="10" />
+    <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas" action="gas_maintenance_vehicle_act_window" sequence="10" />
 
 
 </odoo>
