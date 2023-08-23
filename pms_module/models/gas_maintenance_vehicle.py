@@ -52,6 +52,13 @@ class gas_maintenance_vehicle(models.Model):
     
     
     name = fields.Char(string="No Berita Acara" , default="New")
+    vehicle_id = fields.Many2one(
+        'vehicle.vehicle',
+        string='Vehicle',
+        readonly=False,
+        required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
+        index=True, tracking=True, change_default=True)
+    
     tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan",
                                     required=False,
                                     readonly=False,
@@ -61,13 +68,6 @@ class gas_maintenance_vehicle(models.Model):
     
                                                                   
     pelapor = fields.Char(string="Pelapor")
-    vehicle_id = fields.Many2one(
-        'vehicle.vehicle',
-        string='Vehicle',
-        readonly=False,
-        required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
-        index=True, tracking=True, change_default=True)
-    
     catatan = fields.Text(string="Catatan")
     status = fields.Selection(
         string='Status',
@@ -81,10 +81,11 @@ class gas_maintenance_vehicle(models.Model):
     
         
     jenis_downtime = fields.Selection(
-        string='Jenis Downtime',
+        string='Jenis Perawatan',
         selection=[
             ('maintenance', 'Maintenance'),
-            ('downtime', 'Downtime'),
+            ('repair ', 'Repair '),
+            ('breakdown ', 'Breakdown '),
         ],
     )    
 
