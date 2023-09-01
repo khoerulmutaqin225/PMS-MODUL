@@ -36,6 +36,7 @@
     <field name="model">vehicle.vehicle</field>
     <field name="arch" type="xml">
             <search string="Vehicle Search">
+                <field name="name" string="Filter Name"/>
                 <!--Group-->
                 <searchpanel>
                     <field name="type" icon="fa-list"/>

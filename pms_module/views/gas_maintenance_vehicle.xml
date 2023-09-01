@@ -28,17 +28,18 @@
                     </h1>
                     <group>
                         <group name="name" string="General">
-                            <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle"/>
-                            <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan"/>
-                            <field name="pelapor" style="" placeholder="Masukan Nama Pelapor"/>
-                            <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status"/>
+                            <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle" required="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
+                            <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
+                            <field name="vendor" placeholder="Vendor" required="1"/>
                         </group>
                         <group name="records" string="Records">
                             <field name="company_id" placeholder="Select Company"/>
-
-                            <field name="jenis_downtime" placeholder="Masukan Jenis Downtime"/>
-                            <field name="standar_lama" placeholder="Masukan Tanggal Selesai"/>
-                            <field name="biaya_perbaikan" placeholder="Masukan Biaya Perbaikan"/>
+                            <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1"/>
+                            <field name="standar_lama" placeholder="Masukan Tanggal Selesai" required="1"/>
+                            <field name="biaya_perbaikan" placeholder="Masukan Biaya Perbaikan" widget="monetary"/>
+                            <field name="no_ba_close" placeholder="No Berita Acara Close" readonly="1"/>
                         </group>
                     </group>
                     <separator string="Catatan"/>
@@ -48,15 +49,16 @@
                         <page string="Perbaikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
-                                    <field name="name" placeholder="Masukan Nama"/>
-                                    <field name="jenis_sarfas" placeholder="Jenis Sarfas"/>
-                                    <field name="biaya_perbaikan" placeholder="Biaya Perbaikan"/>
-                                    <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan"/>
-                                    <field name="start_perbaikan" placeholder="Start Perbaikan"/>
-                                    <field name="finish_perbaikan" placeholder="Finish Perbaikan"/>
-                                    <field name="km" placeholder="Masukan KM"/>
-                                    <field name="vendor" placeholder="Vendor"/>
-                                    <field name="status" style="background-color:green; color: white;" placeholder="Masukan Status"/>
+                                    <field name="name" placeholder="Masukan Nama" required="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="jenis_sarfas" placeholder="Jenis Sarfas" required="1"/>
+                                    <field name="biaya_perbaikan" placeholder="Biaya Perbaikan" required="1" widget="monetary"/>
+                                    <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan" required="1"/>
+                                    <field name="start_perbaikan" placeholder="Start Perbaikan" required="1"/>
+                                    <field name="finish_perbaikan" placeholder="Finish Perbaikan" required="1"/>
+                                    <field name="km" placeholder="Masukan KM" required="1"/>
+                                    <field name="status" style="background-color:green; color: white;" placeholder="Masukan Status" required="1"/>
+                                    <field name="jenis_downtime" placeholder="Masukan Jenis Downtime" required="1"/>
                                 </tree>
                             </field>
                         </page>

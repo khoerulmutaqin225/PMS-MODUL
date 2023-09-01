@@ -100,3 +100,29 @@ class Vehicle(models.Model):
     vehicle_image = fields.Binary(string="Image Vehicle",store=True)
     
     company = fields.Many2one('res.company','Armada')
+    
+    image_url = fields.Char(string="Image URL")
+
+    @api.depends("image_url")
+    def get_image_from_url(self):
+        """This method mainly use to get image from the url"""
+        image = False
+        if self.image_url:
+            if "http://" in self.image_url or "https://" in self.image_url:
+                image = base64.b64encode(requests.get(self.image_url).content)
+            else:
+                if "file:" in self.image_url:
+                    with open(self.image_url.split("file:///")[1], "rb") as file:
+                        image = base64.b64encode(file.read())
+                if "/home" in self.image_url:
+                    with open(self.image_url, "rb") as file:
+                        image = base64.b64encode(file.read())
+        self.vehicle_image = image
+
+    def write(self, value):
+        rec = super(Vehicle, self).write(value)
+        for img in self:  #
+            if "image_url" in value:
+                img.get_image_from_url()
+        return rec
+

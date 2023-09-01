@@ -9,6 +9,6 @@
         <field eval="True" name="use_date_range" />
         <field name="company_id" eval="False"/>
         <field name="padding">4</field>
-        <field name="suffix">/ASG/%(month)s/%(year)s</field>
+        <field name="suffix">/ASG/%(month)s/%(year)s/O</field>
     </record> 
 </odoo>
