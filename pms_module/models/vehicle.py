@@ -76,9 +76,6 @@ class Vehicle(models.Model):
         string='Job Crew',
         required=False)
     
-    nopol = fields.Char(
-        string = 'NO POLISI',
-    )
 
     persentase = fields.Float(
         string='Persentase (%)',
@@ -91,6 +88,12 @@ class Vehicle(models.Model):
         string='Active',
         default=True,
         required=False)
+    
+    # Batas tambahan atas
+    
+    nopol = fields.Char(
+        string = 'NO POLISI',
+    )
     
     remarks_vehicle = fields.Char(
         string = 'remarks Vehicle',
@@ -125,4 +128,6 @@ class Vehicle(models.Model):
             if "image_url" in value:
                 img.get_image_from_url()
         return rec
+    
+    # Batas tambahan bawah
 

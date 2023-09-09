@@ -21,6 +21,8 @@
         </field>
     </record>
 
+    <!-- # Batas tambahan atas -->
+
     <!-- field to monitoring Mobil -->
     <record model="ir.ui.view" id="job_gas_view_search">
         <field name="name">Recap Report Search</field>
@@ -39,6 +41,8 @@
             </search>
         </field>
     </record>
+
+    <!-- # Batas tambahan bawah -->
 
     <!-- field to monitoring Mobil -->
 

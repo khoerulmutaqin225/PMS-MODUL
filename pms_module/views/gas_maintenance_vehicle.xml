@@ -68,20 +68,23 @@
         </field>
     </record>
 
+    <!-- Batas Tambahan bawah -->
     <record id="gas_maintenance_tree" model="ir.ui.view">
         <field name="name">pms.gas_maintenance_tree.tree</field>
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <tree string="Maintenance Armada" decoration-success="status == 'open'" decoration-muted="status == ''" decoration-danger="status == 'finish'">
                 <field name="name" />
-                <!-- <field name="vehicle_id" />
-                <field name="tanggal_kerusakan" />
-                <field name="pelapor" />
-                <field name="status" /> -->
-                <field name="status" />
+                <field name="no_ba_close"/>
+                <field name="status"/>
+                <field name="tanggal_kerusakan"/>
+                <field name="standar_lama"/>
+                <field name="biaya_perbaikan" widget="monetary"/>
+                <field name="company_id" string="Perusahaan"/>
             </tree>
         </field>
     </record>
+    <!-- Batas Tambahan bawah -->
 
 
     <menuitem name="Maintenance Kendaraan" parent="menu_pms_mgt" id="gas" sequence="60" />

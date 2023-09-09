@@ -31,6 +31,7 @@
         </field>
     </record>
 
+    <!-- # Batas tambahan atas -->
     <record id="search_vehicle" model="ir.ui.view">
     <field name="name">Search Vehicle</field>
     <field name="model">vehicle.vehicle</field>
@@ -44,6 +45,8 @@
             </search>
         </field>
     </record>
+    <!-- # Batas tambahan bawah-->
+
 
         <record id="vehicle_form_view" model="ir.ui.view">
             <field name="name">pms.vehicle.form</field>

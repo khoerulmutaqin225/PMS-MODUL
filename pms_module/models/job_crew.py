@@ -154,11 +154,6 @@ class JobCrew(models.Model):
         readonly=False
     )
     
-    bobot = fields.Integer(
-        string='Bobot (%)',
-        store=True,
-        readonly=True,
-    )
 
     nilai_progress_temp = fields.Integer(
         string='Nilai Progress (1-100)',
@@ -174,3 +169,10 @@ class JobCrew(models.Model):
         store=True,
         required=True
     )
+    # Batas tambahan atas
+    bobot = fields.Integer(
+        string='Bobot (%)',
+        store=True,
+        readonly=True,
+    )
+    # Batas tambahan bawah
