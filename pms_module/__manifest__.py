@@ -31,7 +31,8 @@
         'wizard/submit_job_crew_line.xml',
         'views/gas_maintenance_vehicle.xml',
         'views/gas_maintenance_vehicle_sequence.xml',
-        'views/jobCrewEvidence_view.xml'
+        'views/jobCrewEvidence_view.xml',
+        'views/mom_request.xml',
         #'views/portal_view.xml',
     ],
     # only loaded in demonstration mode

@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+
+    <record id="view_mom_request_line_tree" model="ir.ui.view">
+        <field name="name">mom.request.line.tree</field>
+        <field name="model">mom.request.line</field>
+        <field name="arch" type="xml">
+            <tree string="MOM Request Line">
+                <field name="name"/>
+                <field name="plan"/>
+                <field name="status"/>
+                <field name="divisi" widget="many2many_tags"/>
+                <field name="businesunit" widget="many2many_tags"/>
+                <field name="pic"/>
+                <field name="opendate"/>
+                <field name="deadline"/>
+                <field name="closedate"/>
+                <field name="keterangan"/>
+                <field name="issue"/>
+                <field name="nilai"/>
+                <field name="mom_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mom_request_line_form" model="ir.ui.view">
+        <field name="name">mom.request.line.form</field>
+        <field name="model">mom.request.line</field>
+        <field name="arch" type="xml">
+            <form string="MOM Request Line">
+                <sheet>
+                    <group>
+                        <!-- Group 1 - Bagian Atas -->
+                        <group name="group_top">
+                            <!-- Topik -->
+                            <field name="name"/>
+                            <!-- Plan -->
+                            <field name="plan"/>
+                            <!-- Status -->
+                            <field name="status"/>
+                            <!-- Divisi -->
+                            <field name="divisi" widget="many2many_tags"/>
+                            <!-- Business Unit -->
+                            <field name="businesunit" widget="many2many_tags"/>
+                            <!-- PIC -->
+                            <field name="pic" />
+                        </group>
+
+                        <!-- Group 2 - Bagian Bawah -->
+                        <group name="group_bottom">
+                            <!-- Open Date -->
+                            <field name="opendate"/>
+                            <!-- Deadline -->
+                            <field name="deadline"/>
+                            <!-- Close Date -->
+                            <field name="closedate"/>
+                            <!-- Keterangan -->
+                            <field name="keterangan"/>
+                            <!-- Issue -->
+                            <field name="issue"/>
+                            <!-- Nilai -->
+                            <field name="nilai"/>
+                            <!-- Mom -->
+                            <field name="mom_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mom_request_view_search">
+        <field name="name">Recap Report Search</field>
+        <field name="model">mom.request.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Mom Request">
+                <field name="name" string="Mom" />
+                <field name="mom_id"/>
+                <field name="businesunit" />
+                <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
+                <separator />
+                <group expand="0" string="Group By">
+                    <!--                    <filter string="Report Date" name="recap_date" domain="[]" context="{'group_by': 'tanggal_rekap'}"/>-->
+                    <!-- <filter string="mom" name="mom" context="{'group_by': 'businesunit'}" /> -->
+                    <filter string="mom" name="mom" context="{'group_by': 'mom_id'}" />
+                    <filter string="businesunit" name="businesunit" domain="[]" context="{'group_by': 'businesunit'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="act_mom_request_2_record_all" model="ir.actions.act_window">
+        <field name="name">Mom Request Line</field>
+        <!-- <field name="businesunit" s tring="Tag" filter_domain="[('businesunit','ilike', self)]"/> -->
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_x_id': [active_id],
+            'default_x_id': active_id,
+            }</field>
+        <!-- <field name="context">{'search_default_group_status':1}</field> -->
+        <field name="search_view_id" ref="mom_request_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
+                this Mom. </p>
+            <p> Create and update Job to see performance of Mom.<br />
+ Make sure your data is up
+                to date. </p>
+        </field>
+        <!-- <field name="domain"></field>[('businesunit', '=', active_id)]</field> -->
+    </record>
+
+    <record id="act_mom_request_1_record_all" model="ir.actions.act_window">
+        <field name="name">Mom Request Line</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+            'search_default_mom_id': [active_id],
+            'default_mom_id': active_id,
+            }</field>
+        <field name="search_view_id" ref="mom_request_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
+                this Mom. </p>
+            <p> Create and update Job to see performance of Mom.<br />
+ Make sure your data is up
+                to date. </p>
+        </field>
+    </record>
+
+
+    <record id="mom_request_act_window" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <record id="mom_request_act_window" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- No Record -->
+    <record id="mom_request_act_window_filter" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('status', '=', 'open')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- SHIPPING -->
+    <record id="mom_request_act_window_filter_shipping" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'SHIPPING')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+    <!-- NLM -->
+    <record id="mom_request_act_window_filter_nlm" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'NLM')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- GAS -->
+    <record id="mom_request_act_window_filter_gas" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'GAS')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- FINANCE -->
+    <record id="mom_request_act_window_filter_finance" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'FINANCE')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- GALANGAN -->
+    <record id="mom_request_act_window_filter_galangan" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'GALANGAN')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- JAKARTA -->
+    <record id="mom_request_act_window_filter_jakarta" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'JAKARTA')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+
+    <record id="mom_request_form" model="ir.ui.view">
+        <field name="name">pms.mom_request.form</field>
+        <field name="model">mom.request</field>
+        <field name="arch" type="xml">
+            <form string="Mom Request">
+                <header>
+                    <field name="status" widget="statusbar" editable="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <group>
+                            <field name="issue" />
+                        </group>
+                    </group>
+                    <notebook>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_Mom" model="ir.ui.view">
+        <field name="name">Search Mom</field>
+        <field name="model">mom.request</field>
+        <field name="arch" type="xml">
+            <search string="Mom Search">
+                <field name="name" string="Filter Name"/>
+                <searchpanel>
+                    <field name="status" icon="fa-list"/>
+                    <field name="issue" icon="fa-list"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!--    view kanban-->
+    <record id="mom_request_kanban_view_id" model="ir.ui.view">
+        <field name="name">pms.mom_request_kanban_view_id</field>
+        <field name="model">mom.request</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="issue"/>
+                <field name="status"/>
+                <field name="record_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div class="o_project_kanban_main">
+                                <div class="o_kanban_card_content">
+                                    <div class="o_kanban_primary_left">
+                                        <div class="o_primary">
+                                            <span>
+                                                <strong>
+                                                    <h6>
+                                                        <t t-esc="record.name.value" />
+                                                    </h6>
+                                                </strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="o_project_kanban_boxes">
+                                <!-- <t t-if="record.type.value == 'Kapal'"> -->
+                                <t t-if="record.name.value == 'SHIPPING'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_shipping)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-if="record.name.value == 'NLM'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_nlm)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-elif="record.name.value == 'GAS'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_gas)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-elif="record.name.value == 'FINANCE'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_finance)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-elif="record.name.value == 'GALANGAN'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_galangan)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                              <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-if="record.name.value == 'JAKARTA'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_jakarta)d" type="action">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+
+                                <!-- <t t-else="">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter)d" type="action">
+                                        <div>
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t> -->
+
+                            </div>
+
+
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+
+
+
+    <record id="mom_request_tree" model="ir.ui.view">
+        <field name="name">pms.mom_request_tree.tree</field>
+        <field name="model">mom.request</field>
+        <field name="arch" type="xml">
+            <tree string="Mom Request">
+                <field name="name" />
+                <field name="status" />
+                <field name="issue" />
+            </tree>
+        </field>
+    </record>
+
+
+    <menuitem id="mom" name="Mom Request" sequence="10" parent="menu_pms_mgt" action="pms_module.mom_request_act_window" />
+    <!-- <menuitem name="Mom Request pagination" id="mom_request_menu_pagination" parent="mom" action="server_action_any_name" sequence="12" /> -->
+
+
+</odoo>
