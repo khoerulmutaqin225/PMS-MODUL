@@ -2,6 +2,56 @@
 
 <odoo>
 
+
+    <record id="gas_maintenance_vehicle_vendor_act_window" model="ir.actions.act_window">
+        <field name="name">Vendor</field>
+        <field name="res_model">gas.maintenance.vendor</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_gas_maintenance_vendor_form" model="ir.ui.view">
+        <field name="name">gas.maintenance.vendor.form</field>
+        <field name="model">gas.maintenance.vendor</field>
+        <field name="arch" type="xml">
+            <form string="Gas Maintenance Vendor">
+                <sheet>
+                    <group>
+                     <group name="General" string="General">
+                        <field name="name"/>
+                        <field name="number"/>
+                        <field name="alamat"/>
+                        <field name="accountNumber"/>
+                      </group>
+                     <group name="Photos" string="Photos">
+                        <field name="ktp" widget="image" options="{'widget': 'image', 'size': (170, 170)}"/>
+                        <field name="NPWP" widget="image" options="{'widget': 'image', 'size': (170, 170)}"/>
+                      </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>   
+
+
+    <!-- Tree View -->
+    <record id="view_gas_maintenance_vendor_tree" model="ir.ui.view">
+        <field name="name">gas.maintenance.vendor.tree</field>
+        <field name="model">gas.maintenance.vendor</field>
+        <field name="arch" type="xml">
+            <tree string="Gas Maintenance Vendors">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="alamat"/>
+                <field name="accountNumber"/>
+            </tree>
+        </field>
+    </record>     
+
     <record id="gas_maintenance_vehicle_act_window" model="ir.actions.act_window">
         <field name="name">Monitoring Perbaikan Mobil</field>
         <field name="res_model">gas.maintenance.vehicle</field>
@@ -12,7 +62,6 @@
             </p>
         </field>
     </record>
-
 
     <record id="gas_maintenance_vehicle_form" model="ir.ui.view">
         <field name="name">pms.gas_maintenance_vehicle.form</field>
@@ -26,27 +75,33 @@
                     <h1>
                         <field name="name" class="oe_inline" placeholder="Masukan No Berita Acara" readonly="1"/>
                     </h1>
+                    <div>
+                      <separator string="Catatan Keluhan :"/>
+                      <field name="catatan" placeholder="Masukan Catatan"/>
+                    </div>
                     <group>
-                        <group name="name" string="General">
+                        <group name="name" string="General :">
                             <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle" required="1"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
                             <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
                             <field name="vendor" placeholder="Vendor" required="1"/>
-                        </group>
-                        <group name="records" string="Records">
                             <field name="company_id" placeholder="Select Company"/>
-                            <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1"/>
-                            <field name="standar_lama" placeholder="Masukan Tanggal Selesai" required="1"/>
+                        </group>
+                        <group name="records" string="Records :">
+                            <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
+                            <field name="standar_lama" placeholder="Masukan Tanggal Selesai" />
                             <field name="biaya_perbaikan" placeholder="Masukan Biaya Perbaikan" widget="monetary"/>
+                            <field name="discount" widget="monetary"  style="background-color:yellow; color: black;" />
+                            <field name="final_price" widget="monetary"/>
                             <field name="no_ba_close" placeholder="No Berita Acara Close" readonly="1"/>
                         </group>
                     </group>
-                    <separator string="Catatan"/>
+                    <!-- <separator string="Catatan"/>
                     <label for="catatan" string="Catatan perbaikan:"/>
-                    <field name="catatan" placeholder="Masukan Catatan"/>
+                    <field name="catatan" placeholder="Masukan Catatan"/> -->
                     <notebook>
-                        <page string="Perbaikan Line">
+                        <page string="Per   baikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
                                     <field name="name" placeholder="Masukan Nama" required="1"/>
@@ -62,8 +117,30 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Upload Foto">
+                            <group name="FOTO 1" string="Foto Berita Open">
+                                <field name="vehicle_image1" />
+                                <field name="vehicle_image2" />
+                                <field name="vehicle_image3" />
+                            </group>
+                            <group>
+                                <group name="FOTO 2" string="Foto Berita Close">
+                                  <field name="vehicle_image4" />
+                                  <field name="vehicle_image5"/>
+                                  <field name="vehicle_image6"/>
+                                </group>
+                                
+                                <group name="nota" string="Foto Nota">
+                                  <field name="note_image"/>
+                                </group>
+                            </group>
+                        </page>                        
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_follower"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>                
             </form>
         </field>
     </record>
@@ -74,12 +151,15 @@
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <tree string="Maintenance Armada" decoration-success="status == 'open'" decoration-muted="status == ''" decoration-danger="status == 'finish'">
-                <field name="name" />
+                <field name="name"/>
                 <field name="no_ba_close"/>
+                <field name="vehicle_id"/>
+                <field name="vendor"/>
                 <field name="status"/>
                 <field name="tanggal_kerusakan"/>
                 <field name="standar_lama"/>
                 <field name="biaya_perbaikan" widget="monetary"/>
+                <field name="final_price" widget="monetary"/>
                 <field name="company_id" string="Perusahaan"/>
             </tree>
         </field>
@@ -87,9 +167,14 @@
     <!-- Batas Tambahan bawah -->
 
 
+
+
+
     <menuitem name="Maintenance Kendaraan" parent="menu_pms_mgt" id="gas" sequence="60" />
 
     <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas" action="gas_maintenance_vehicle_act_window" sequence="10" />
+
+    <menuitem name="Vendor" id="gas_maintenance_vehicle_vendor_menu" parent="gas" action="gas_maintenance_vehicle_vendor_act_window" sequence="12" />
 
 
 </odoo>

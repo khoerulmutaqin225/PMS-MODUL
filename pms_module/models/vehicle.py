@@ -52,6 +52,9 @@ class Vehicle(models.Model):
     name = fields.Char(string='Name',
         required=False)
 
+    brand = fields.Char(string='Brand',
+        required=False)
+    
     type = fields.Selection(
         string='Type',
         selection=[('kapal', 'Kapal'),

@@ -78,6 +78,7 @@
                                 <field name="persentase"/>
                                 <field name="active"/>
                                 <field name="remarks_vehicle" />
+                                <field name="brand" />
                             </group>
                             <group>
                                 <field name="vehicle_image" widget="image" class="oe_avatar" readonly="0" />
@@ -94,6 +95,7 @@
             <field name="arch" type="xml">
                 <tree string="Vehicle">
                     <field name="name"/>
+                    <field name="brand" />
                     <field name="company" />
                     <field name="code_vehicle"/>
                     <field name="nopol" />

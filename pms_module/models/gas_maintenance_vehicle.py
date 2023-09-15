@@ -12,6 +12,7 @@ from collections import OrderedDict
 
 class gas_maintenance_vehicle(models.Model):
     _name = 'gas.maintenance.vehicle'
+    _inherit ='mail.thread'
     _description = 'Gas Maintenance Vehicle'
     # "Gas Maintenance Vendor"
 
@@ -53,25 +54,26 @@ class gas_maintenance_vehicle(models.Model):
         return dict(action, context=ctx)
     
     
-    name = fields.Char(string="No Berita Acara" , default="New")
-    no_ba_close = fields.Char(string="No Berita Close")
+    name = fields.Char(string="No Berita Acara" , default="New" ,track_visibility='onchange')
+    no_ba_close = fields.Char(string="No Berita Close" ,track_visibility='onchange')
     vehicle_id = fields.Many2one(
         'vehicle.vehicle',
         string='Vehicle',
         readonly=False,
+        domain="[('type', '=', 'mobil')]",  # Tambahkan domain ini
         required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
-        index=True, tracking=True, change_default=True)
+        index=True, tracking=True, change_default=True  ,track_visibility='onchange')
     
-    tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan",
+    tanggal_kerusakan = fields.Datetime(string="Tanggal Kerusakan",
                                     required=False,
                                     readonly=False,
                                     select=True,
                                     default=lambda self: fields.datetime.now()
-                                    )      
+                             ,track_visibility='onchange')   
     
                                                                   
-    pelapor = fields.Char(string="Pelapor")
-    catatan = fields.Text(string="Catatan")
+    pelapor = fields.Char(string="Pelapor" ,track_visibility='onchange')
+    catatan = fields.Text(string="Catatan" ,track_visibility='onchange')
     status = fields.Selection(
         string='Status',
         selection=[('open', 'Open'),
@@ -80,7 +82,15 @@ class gas_maintenance_vehicle(models.Model):
         default='open',
         store=True,
         readonly=False,
-    )
+        track_visibility='onchange')
+    
+    @api.constrains('status', 'note_image')
+    def _check_status_image(self):
+        for record in self:
+            if record.status == 'finish' and not record.note_image:
+                raise ValidationError("Tidak dapat menetapkan status Master ke 'Selesai'. Jika nota belum di Upload .")
+            if record.status == 'finish':
+                print("OK")
 
     @api.constrains('status')
     def _check_status(self):
@@ -94,13 +104,33 @@ class gas_maintenance_vehicle(models.Model):
                     no_ba_close = ba_close + "/C"
                     record.no_ba_close = no_ba_close
                 else:
-                    record.no_ba_close = record.name
+                    record.no_ba_close = record.name      
+            if record.status == 'open':
+                ba_close =''
+                record.no_ba_close = ba_close
 
+            if record.status == 'progress':
+                ba_close =''
+                record.no_ba_close = ba_close
+              
     
-    standar_lama = fields.Date(string="Tanggal Selesai" )      
-    
-    biaya_perbaikan = fields.Monetary(string='Estimasi Biaya', store=True, readonly=True, compute='_amount_all')
+    # standar_lama = fields.Date(string="Tanggal Selesai"  ,track_visibility='onchange')     
 
+    standar_lama = fields.Datetime(string='Tanggal Selesai', compute='_compute_tanggal', store=True, track_visibility='onchange')    
+    
+    @api.depends('gas_line.start_perbaikan', 'gas_line.finish_perbaikan')
+    def _compute_tanggal(self):
+        for master in self:
+            child_dates = master.gas_line.mapped('finish_perbaikan')
+            if child_dates:
+                # Pilih tanggal terbesar/terlama
+                master.standar_lama = max(child_dates)
+                x = max(child_dates)
+                print(x)
+            else:
+                master.standar_lama = False    
+    
+    biaya_perbaikan = fields.Monetary(string='Estimasi Biaya', store=True, readonly=True, compute='_amount_all' ,track_visibility='onchange')
     gas_line = fields.One2many(
         'gas.report.line', 
         'group_gas_id',
@@ -108,7 +138,7 @@ class gas_maintenance_vehicle(models.Model):
         track_visibility='onchange'
     ) 
     
-    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor')    
+    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor' ,track_visibility='onchange')   
     
     @api.depends('gas_line.biaya_perbaikan')
     def _amount_all(self):
@@ -122,12 +152,49 @@ class gas_maintenance_vehicle(models.Model):
             })
         
 
+    vehicle_image1 = fields.Binary(string="Foto Open 1",store=True ,track_visibility='onchange')
+    vehicle_image2 = fields.Binary(string="Foto Open 2",store=True ,track_visibility='onchange')
+    vehicle_image3 = fields.Binary(string="Foto Open 3",store=True ,track_visibility='onchange')
+    
+    vehicle_image4 = fields.Binary(string="Foto Close 1",store=True ,track_visibility='onchange')
+    vehicle_image5 = fields.Binary(string="Foto Close 2",store=True ,track_visibility='onchange')
+    vehicle_image6 = fields.Binary(string="Foto Close 3",store=True ,track_visibility='onchange')
+    
+    note_image = fields.Binary(string="Foto Nota",store=True ,track_visibility='onchange')
+    
+    discount = fields.Monetary(string='Diskon' ,track_visibility='onchange')
+    
+    final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price' ,track_visibility='onchange')
+    
+        
+    @api.depends('final_price', 'discount', 'biaya_perbaikan')
+    def _final_price(self):
+        for record in self:
+            if not record.discount:
+                record.final_price = 0.0
+            else:
+                currency = record.currency_id or self.env.company.currency_id  
+                final_price   = record.biaya_perbaikan - record.discount
+                record.final_price = final_price
+            
 
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"
     _description ="Gas Maintenance Vendor"
 
     name = fields.Char(string="Nama Vendor")
+    
+    number = fields.Char('Telepon')
+    
+    alamat = fields.Char(string="Alamat")
+    
+    ktp = fields.Binary('KTP')
+    
+    accountNumber = fields.Char(string="Nomor Rekening")
+    
+    NPWP = fields.Binary('NPWP')
+    
+    
 
 class gas_maintenance_vehicle_line(models.Model):
     _name = "gas.report.line"
