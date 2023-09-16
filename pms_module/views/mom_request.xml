@@ -32,44 +32,38 @@
         <field name="arch" type="xml">
             <form string="MOM Request Line">
                 <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Masukkan Topik"/>
+                        </h1>
+                    </div>                    
                     <group>
-                        <!-- Group 1 - Bagian Atas -->
-                        <group name="group_top">
-                            <!-- Topik -->
-                            <field name="name"/>
-                            <!-- Plan -->
-                            <field name="plan"/>
-                            <!-- Status -->
-                            <field name="status"/>
-                            <!-- Divisi -->
-                            <field name="divisi" widget="many2many_tags"/>
-                            <!-- Business Unit -->
-                            <field name="businesunit" widget="many2many_tags"/>
-                            <!-- PIC -->
-                            <field name="pic" />
-                        </group>
+                      
+                          <group name="group_top">
+                             <!--<field name="name" placeholder="Masukkan Topik"/> -->
+                             <field name="plan" placeholder="Masukkan Plan"/> 
+                             <field name="status" placeholder="Masukkan Status"/>
+                             <field name="divisi" widget="many2many_tags" placeholder="Masukkan Divisi"/>
+                             <field name="businesunit" widget="many2many_tags" placeholder="Masukkan Business Unit"/>
+                             <field name="pic" placeholder="Masukkan PIC"/>
 
-                        <!-- Group 2 - Bagian Bawah -->
-                        <group name="group_bottom">
-                            <!-- Open Date -->
-                            <field name="opendate"/>
-                            <!-- Deadline -->
-                            <field name="deadline"/>
-                            <!-- Close Date -->
-                            <field name="closedate"/>
-                            <!-- Keterangan -->
-                            <field name="keterangan"/>
-                            <!-- Issue -->
-                            <field name="issue"/>
-                            <!-- Nilai -->
-                            <field name="nilai"/>
-                            <!-- Mom -->
-                            <field name="mom_id"/>
-                        </group>
+                          </group>
+                          
+                          <group name="group_bottom">
+                             <field name="opendate" placeholder="Masukkan Open Date"/>
+                             <field name="deadline" placeholder="Masukkan Deadline"/> 
+                             <field name="closedate" placeholder="Masukkan Close Date"/>
+                             <!--<field name="keterangan" placeholder="Masukkan Keterangan"/> -->
+                             <field name="issue" placeholder="Masukkan Issue"/> 
+                             <field name="nilai" placeholder="Masukkan Nilai"/>
+                             <field name="mom_id" readonly="0" placeholder="Masukkan Mom"/>
+                          </group>
                     </group>
+                    <separator string="Keterangan"/>
+                    <field name="keterangan"/>
                 </sheet>
             </form>
-
         </field>
     </record>
 
@@ -84,11 +78,14 @@
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
                 <separator />
                 <group expand="0" string="Group By">
-                    <!--                    <filter string="Report Date" name="recap_date" domain="[]" context="{'group_by': 'tanggal_rekap'}"/>-->
-                    <!-- <filter string="mom" name="mom" context="{'group_by': 'businesunit'}" /> -->
-                    <filter string="mom" name="mom" context="{'group_by': 'mom_id'}" />
-                    <filter string="businesunit" name="businesunit" domain="[]" context="{'group_by': 'businesunit'}"/>
-                </group>
+                    <filter string="Mom" name="mom" context="{'group_by': 'mom_id'}" />
+                    <filter string="Businesunit" name="businesunit" domain="[]" context="{'group_by': 'businesunit'}"/>
+                </group> 
+                <searchpanel>
+                    <field name="issue" />
+                    <field name="status"/>
+                    <!--<field name="partner_id" enable_counters="1"/>-->
+                </searchpanel>                                   
             </search>
         </field>
     </record>
@@ -136,20 +133,9 @@
     <record id="mom_request_act_window" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request</field>
-        <field name="view_mode">tree,form,kanban</field>
-        <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new data.
-            </p>
-        </field>
-    </record>
-
-    <record id="mom_request_act_window" model="ir.actions.act_window">
-        <field name="name">Mom Request</field>
-        <field name="res_model">mom.request</field>
-        <field name="view_mode">tree,form,kanban</field>
-        <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field>
+        <field name="view_mode">kanban,form,tree</field>
+        <!-- <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field> -->
+        <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new data.
@@ -254,6 +240,48 @@
         </field>
     </record>
 
+    <!-- SUPPLYCHAIN     -->
+    <record id="mom_request_act_window_filter_supply" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'SUPPLY CHAIN')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- TST -->
+    <record id="mom_request_act_window_filter_tst" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'TST')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- BALIKPAPAN -->
+    <record id="mom_request_act_window_filter_balikpapan" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[('businesunit', '=', 'BALIKPAPAN')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
 
     <record id="mom_request_form" model="ir.ui.view">
         <field name="name">pms.mom_request.form</field>
@@ -270,9 +298,29 @@
                         </group>
                         <group>
                             <field name="issue" />
+                            <field name="status" />
                         </group>
                     </group>
                     <notebook>
+                        <page string="LINE">
+                            <field name="record_id" >
+                                <tree edit="true" editable="bottom" create="true">
+                                    <field name="name" />
+                                    <field name="plan" />
+                                    <field name="status" />
+                                    <field name="divisi" />
+                                    <field name="businesunit" />
+                                    <field name="pic" />
+                                    <field name="opendate" />
+                                    <field name="deadline" />
+                                    <field name="closedate" />
+                                    <field name="keterangan" />
+                                    <field name="issue" />
+                                    <field name="nilai" />
+                                    <field name="mom_id" invisible="1" />
+                                </tree>
+                            </field>
+                        </page>                      
                     </notebook>
                 </sheet>
             </form>
@@ -285,10 +333,10 @@
         <field name="arch" type="xml">
             <search string="Mom Search">
                 <field name="name" string="Filter Name"/>
-                <searchpanel>
+                <!-- <searchpanel>
                     <field name="status" icon="fa-list"/>
                     <field name="issue" icon="fa-list"/>
-                </searchpanel>
+                </searchpanel> -->
             </search>
         </field>
     </record>
@@ -305,28 +353,75 @@
                 <field name="record_count"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div>
+                        <div t-attf-class="oe_kanban_global_click">
                             <div class="o_project_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
                                         <div class="o_primary">
-                                            <span>
+                                            <span class="o_right">
                                                 <strong>
                                                     <h6>
-                                                        <t t-esc="record.name.value" />
+                                                        <t t-esc="record.name.value"/>
                                                     </h6>
                                                 </strong>
+                                            </span>
+                                            <span>
+                                                <t t-if="record.name.value == 'NLM'">
+                                                    <i class="fa fa-users" role="img" aria-label="Meeting" title="Meeting"/>
+                                                </t>
+                                                
+                                                <t t-if="record.name.value == 'SHIPPING'">
+                                                    <i class="fa fa-ship" role="img" aria-label="Shipping" title="Shipping"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'SUPPLY CHAIN'">
+                                                    <i class="fa fa-cubes" role="img" aria-label="Supply Chain" title="Supply Chain"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'GAS'">
+                                                    <i class="fa fa-car" role="img" aria-label="GAS" title="GAS"/>                                                </t>
+                                                <t t-if="record.name.value == 'TST'">
+                                                    <i class="fa fa-check-circle" role="img" aria-label="TST" title="TST"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'FINANCE'">
+                                                  <i class="fa fa-money" role="img" aria-label="Finance" title="Finance"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'GALANGAN'">
+                                                  <i class="fa fa-industry" role="img" aria-label="Galangan" title="Galangan"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'JAKARTA'">
+                                                  <i class="fa fa-building" role="img" aria-label="Jakarta" title="Jakarta"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'BALIKPAPAN'">
+                                                  <i class="fa fa-map-marker" role="img" aria-label="Balikpapan" title="Balikpapan"/>
+                                                </t>
+                                            </span>                                           
+                                            <span>
+                                                <strong>
+                                                    <h6 t-att-style="'color: white;'">
+                                                        <t t-esc="record.status.value"/>
+                                                    </h6>
+                                                  </strong>                                                
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
+                            <div class="o_project_kanban_boxes">
+                                <div class="oe_kanban_bottom_left">
+                                    <strong>
+                                      <strong>
+                                          <span class="o_label">Issue&#160;&#160;&#160;&#160;&#160;&#160;:</span>
+                                          <!--<span class="o_label">Records :</span>-->
+                                      </strong>
+                                          <span class="o_label">Hot Issue / Medium / Normal</span>
+                                      </strong>
+                                    </div>
+                            </div>                            
 
                             <div class="o_project_kanban_boxes">
                                 <!-- <t t-if="record.type.value == 'Kapal'"> -->
                                 <t t-if="record.name.value == 'SHIPPING'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_shipping)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_shipping)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                             <strong>
                                                 <strong>
@@ -341,7 +436,7 @@
                                 </t>
 
                                 <t t-if="record.name.value == 'NLM'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_nlm)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_nlm)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                             <strong>
                                                 <strong>
@@ -356,7 +451,7 @@
                                 </t>
 
                                 <t t-elif="record.name.value == 'GAS'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_gas)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_gas)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                             <strong>
                                                 <strong>
@@ -371,7 +466,7 @@
                                 </t>
 
                                 <t t-elif="record.name.value == 'FINANCE'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_finance)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_finance)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                             <strong>
                                                 <strong>
@@ -386,7 +481,7 @@
                                 </t>
 
                                 <t t-elif="record.name.value == 'GALANGAN'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_galangan)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_galangan)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                               <strong>
                                                 <strong>
@@ -401,7 +496,52 @@
                                 </t>
 
                                 <t t-if="record.name.value == 'JAKARTA'">
-                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_jakarta)d" type="action">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_jakarta)d" type="action" href="#">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-if="record.name.value == 'SUPPLY CHAIN'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_supply)d" type="action" href="#">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-if="record.name.value == 'TST'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_tst)d" type="action" href="#">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
+                                <t t-if="record.name.value == 'BALIKPAPAN'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_balikpapan)d" type="action" href="#">
                                         <div class="oe_kanban_bottom_left">
                                             <strong>
                                                 <strong>
@@ -458,8 +598,11 @@
         </field>
     </record>
 
+    <!-- Menuitem 2 -->
+    <menuitem name="MOM" id="menu_mom_mgt"
+        web_icon="pms_module,static/description/icon.png" />
 
-    <menuitem id="mom" name="Mom Request" sequence="10" parent="menu_pms_mgt" action="pms_module.mom_request_act_window" />
+    <menuitem id="mom" name="Mom Request" sequence="10" parent="menu_mom_mgt" action="pms_module.mom_request_act_window" />
     <!-- <menuitem name="Mom Request pagination" id="mom_request_menu_pagination" parent="mom" action="server_action_any_name" sequence="12" /> -->
 
 

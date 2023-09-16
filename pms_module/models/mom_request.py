@@ -1,11 +1,3 @@
-from odoo import models, fields, _,api
-from datetime import date, datetime
-# from odoo.exceptions import ValidationError
-import xlrd
-import base64
-import os
-
-
 from odoo import models, fields, api, _
 import base64
 import requests
@@ -32,6 +24,7 @@ class mom_request_divisi(models.Model):
 
 class mom_request_line(models.Model):
     _name = "mom.request.line"
+    _inherit ='mail.thread'
     
     def show_tree_view(self):
         tree_view_id = self.env['ir.model.data'].xmlid_to_res_id('pms_module.mom_request_tree')
@@ -64,11 +57,11 @@ class mom_request_line(models.Model):
 
     name = fields.Char(
         string='Topik',
-        required=False)
+        required=False,track_visibility='onchange')
 
     plan = fields.Char(
         string='Plan',
-        required=False)
+        required=False,track_visibility='onchange')
 
     status = fields.Selection(
         [
@@ -77,6 +70,7 @@ class mom_request_line(models.Model):
             ("close", "Close"),
         ],
         default="open",
+        track_visibility='onchange'
     )
 
     divisi = fields.Many2many(
@@ -84,48 +78,27 @@ class mom_request_line(models.Model):
         'mom_request_divisi_rel',
         'mom_request_divisi_id',
         'brand_id',
-        string='Divisi Ids')
+        string='Divisi Ids',track_visibility='onchange')
 
     businesunit = fields.Many2many(
         'mom.request.bu',
         'mom_request_bu_rel',
         'mom_request_bu_id',
         'brand_id',
-        default=lambda self: self.env.context.get('default_x_id'),
-        string='Businesunit Ids')
+        default=lambda self: self.env.context.get('default_businesunit'),
+        string='Businesunit Ids',track_visibility='onchange')
     
     
-    @api.constrains('issue')
-    def _check_businesunit(self):
-        for record in self:
-            if record.issue == 'hotIssue':
-                record_nlm ={
-                    'name' : record.name,
-                    'plan' : record.plan,
-                    'status' : record.status,
-                    'divisi' : record.divisi,
-                    'businesunit' : record.businesunit,
-                    'pic' : record.pic,
-                    'opendate' : record.opendate,
-                    'deadline' : record.deadline,
-                    'closedate' : record.closedate,
-                    'keterangan' : record.keterangan,
-                    'issue' : record.issue,
-                    'nilai' : record.nilai,
-                    'nilai' : record.nilai,
-                    'mom_id' : 'NLM',
-                }
-                self.env['mom.request.line'].sudo().create(record_nlm)
                 
     pic = fields.Char(
         string='Pic',
-        required=False)
+        required=False,track_visibility='onchange')
 
-    opendate = fields.Date('Open Date')
-    deadline = fields.Date('Deadline')
-    closedate = fields.Date('Close Date')
+    opendate = fields.Date('Open Date',track_visibility='onchange')
+    deadline = fields.Date('Deadline',track_visibility='onchange')
+    closedate = fields.Date('Close Date',track_visibility='onchange')
     
-    keterangan = fields.Char('Keterangan')
+    keterangan = fields.Text('Keterangan',track_visibility='onchange')
     # issue = fields.Char('issue')
     issue = fields.Selection(
         [
@@ -134,9 +107,10 @@ class mom_request_line(models.Model):
             ("hotIssue", "Hot Issue"), 
         ],
         default="normal",
+        track_visibility='onchange'
     )
     
-    nilai = fields.Char('nilai')
+    nilai = fields.Char('Nilai',track_visibility='onchange')
     
     
     mom_id = fields.Many2one(
@@ -145,7 +119,7 @@ class mom_request_line(models.Model):
         readonly=True,
         required=False,
         default=lambda self: self.env.context.get('default_mom_id'),
-        index=True, tracking=True, change_default=True)
+        index=True, tracking=True, change_default=True,track_visibility='onchange')
 
 
 class mom_request(models.Model):
@@ -191,16 +165,3 @@ class mom_request(models.Model):
         'mom.request.line', 'mom_id',
         string='Mom Request',
         required=False)
-    
-    def func_to_approve(self):
-        for line in self:
-            if line.status == 'open':
-                if line.name == 'New':
-                    seq = self.env['ir.sequence'].next_by_code('mom.request') or '/'
-                    line.name = seq
-                line.status = 'on_progress'
-    
-
-
-
-    
