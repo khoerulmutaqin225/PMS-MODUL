@@ -36,6 +36,17 @@ class Vehicle(models.Model):
         result = dict((data['vehicle_id'][0], data['vehicle_id_count']) for data in record_data)
         for vehicle in self:
             vehicle.record_count = result.get(vehicle.id, 0)
+        # return res
+
+    def _compute_record_count_gas(self):
+        record_data = self.env['gas.maintenance.vehicle'].read_group(
+            [('vehicle_id', 'in', self.ids)],
+            ['vehicle_id'], ['vehicle_id'])
+        result = dict((data['vehicle_id'][0], data['vehicle_id_count']) for data in record_data)
+        for vehicle in self:
+            vehicle.record_count_gas = result.get(vehicle.id, 0)
+
+    record_count_gas = fields.Integer(compute='_compute_record_count_gas', string="Record Count")
 
     @api.depends('record_id.persentase')
     def _compute_persentase(self):

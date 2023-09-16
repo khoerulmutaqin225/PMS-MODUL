@@ -69,15 +69,15 @@
         <field name="res_model">gas.maintenance.vehicle</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{
-            'search_gas_default_vehicle_id': [active_id],
-            'gas_default_vehicle_id': active_id,
+            'search_default_vehicle_id': [active_id],
+            'default_vehicle_id': active_id,
             }</field>
         <field name="search_view_id" ref="job_gas_view_search" />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
                 this Vehicle. </p>
             <p> Create and update Job to see performance of vehicle.<br /> Make sure your data is up
-                to date. </p>
+                to date. </p>   
         </field>
     </record>
     <!-- field to monitoring Mobil -->
@@ -95,6 +95,7 @@
                 <field name="persentase" />
                 <field name="code_vehicle" />
                 <field name="record_count" />
+                <field name="record_count_gas" />
                 <field name="nopol" />
                 <field name="color" />
                 <field name="active" />
@@ -186,9 +187,9 @@
                                         type="action">
                                         <div>
                                             <span class="o_value">
-                                                <t t-esc="record.nopol.value" />
+                                                <t t-esc="record.record_count_gas.value" />
                                             </span>
-                                            <!-- <span class="o_label">Records</span> -->
+                                            <span class="o_label">Records</span>
                                         </div>
                                     </a>
                                 </t>
@@ -366,7 +367,7 @@
     <!-- Menu Ship-->
     <menuitem name="PMS" id="menu_pms_mgt"
         web_icon="pms_module,static/description/icon.png" />
-
+    
     <menuitem name="Main Menu" parent="menu_pms_mgt" id="pms_menu" sequence="30" />
 
     <menuitem action="job_crew_action" id="job_crew_menu" name="Job Crew"

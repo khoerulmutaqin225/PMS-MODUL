@@ -49,7 +49,7 @@ class gas_maintenance_vehicle(models.Model):
             
     def open_records(self):
         ctx = dict(self._context)
-        ctx.update({'search_gas_default_vehicle_id': self.id})
+        ctx.update({'search_default_vehicle_id': self.id})
         action = self.env['ir.actions.act_window'].for_xml_id('pms_module', 'act_job_crew_3_record_all')
         return dict(action, context=ctx)
     
@@ -61,7 +61,7 @@ class gas_maintenance_vehicle(models.Model):
         string='Vehicle',
         readonly=False,
         domain="[('type', '=', 'mobil')]",  # Tambahkan domain ini
-        required=False, default=lambda self: self.env.context.get('gas_default_vehicle_id'),
+        required=False, default=lambda self: self.env.context.get('default_vehicle_id'),
         index=True, tracking=True, change_default=True  ,track_visibility='onchange')
     
     tanggal_kerusakan = fields.Datetime(string="Tanggal Kerusakan",
