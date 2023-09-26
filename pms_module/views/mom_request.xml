@@ -8,22 +8,60 @@
         <field name="name">mom.request.line.tree</field>
         <field name="model">mom.request.line</field>
         <field name="arch" type="xml">
-            <tree string="MOM Request Line">
-                <field name="name"/>
-                <field name="plan"/>
+             <tree string="MOM Request Line" editable="bottom">
+                <!--NO 1 belum ada -->
+                <field name="meetingType" string="Jenis Meeting" />                
+
+                <!-- Jadi ke 2 -->
+                <field name="businesunit" widget="many2many_tags" string="Scope"/>
+
+                <!-- Jadi ke 3 -->
+                <field name="name" string="Topic"/>
+
+                <!--NO 4 (plan -> Deskripsi) -->
+                <field name="plan" string="Deskripsi"/>
+
+                <!--NO 5- (Status) -->
                 <field name="status"/>
-                <field name="divisi" widget="many2many_tags"/>
-                <field name="businesunit" widget="many2many_tags"/>
-                <field name="pic"/>
-                <field name="opendate"/>
-                <field name="deadline"/>
-                <field name="closedate"/>
-                <field name="keterangan"/>
-                <field name="issue"/>
-                <field name="nilai"/>
-                <field name="mom_id"/>
-            </tree>
-        </field>
+
+                <!-- NO 6 -->
+                <field name="divisi" widget="many2many_tags" string="Divisi"/>
+                
+                <!-- No 7 -->
+                <field name="issue" string="Priority"/>
+                
+                <!-- NO 8 progress -->
+                <field name="pic" string="PIC"/>
+                
+                <!-- No 9 belum ada -->
+                <field name="opendate" string="Open (Date)" readonly="1"/>
+                
+                <!-- No 10 target -->
+                <field name="nilai" string="Progres (%)"/>
+                
+                <!-- NO 11 -->
+                <field name="actionPlane"/>
+                
+                <!-- NO 12 -->
+                <field name="deadline" string="Target (Date)"/>
+                
+                <!-- No 13 -->
+                <field name="closedate" string="Actual (Date)"/>
+                
+                <!-- No 14 -->
+                <field name="mom_id" readonly="0" string="Related"/>
+                
+                <!-- No 15 -->
+                <field name="keterangan" string="Keterangan"/>
+                
+                <!-- No 16 -->
+                <field name="ajustment" widget="many2many_tags"/>
+                
+                <!-- No 17 -->
+                <field name="ajust"/>
+
+            </tree> 
+        </field>  
     </record>
 
     <record id="view_mom_request_line_form" model="ir.ui.view">
@@ -78,6 +116,8 @@
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
                 <separator />
                 <group expand="0" string="Group By">
+                    <filter string="Status" name="status" context="{'group_by': 'status'}" />
+                    <filter string="Issue" name="issue" context="{'group_by': 'issue'}" />
                     <filter string="Mom" name="mom" context="{'group_by': 'mom_id'}" />
                     <filter string="Businesunit" name="businesunit" domain="[]" context="{'group_by': 'businesunit'}"/>
                 </group> 
@@ -105,7 +145,7 @@
             <p class="o_view_nocontent_smiling_face"> Click <i>Create</i> to start a new Job for
                 this Mom. </p>
             <p> Create and update Job to see performance of Mom.<br />
- Make sure your data is up
+                Make sure your data is up
                 to date. </p>
         </field>
         <!-- <field name="domain"></field>[('businesunit', '=', active_id)]</field> -->
@@ -133,8 +173,10 @@
     <record id="mom_request_act_window" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request</field>
-        <field name="view_mode">kanban,form,tree</field>
+        <field name="view_mode">kanban,form</field>
         <!-- <field name="context">{'search_default_group_issue': 1, 'group_by': 'issue'}</field> -->
+        <field name="view_id" ref="mom_request_tree"/>        
+        <field name="search_view_id" ref="search_Mom"/>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
@@ -143,11 +185,14 @@
         </field>
     </record>
 
+
+
+
     <!-- No Record -->
     <record id="mom_request_act_window_filter" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('status', '=', 'open')]</field>
         <field name="help" type="html">
@@ -161,7 +206,7 @@
     <record id="mom_request_act_window_filter_shipping" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'SHIPPING')]</field>
         <field name="help" type="html">
@@ -174,7 +219,7 @@
     <record id="mom_request_act_window_filter_nlm" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'NLM')]</field>
         <field name="help" type="html">
@@ -188,7 +233,7 @@
     <record id="mom_request_act_window_filter_gas" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'GAS')]</field>
         <field name="help" type="html">
@@ -202,7 +247,7 @@
     <record id="mom_request_act_window_filter_finance" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'FINANCE')]</field>
         <field name="help" type="html">
@@ -216,7 +261,7 @@
     <record id="mom_request_act_window_filter_galangan" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'GALANGAN')]</field>
         <field name="help" type="html">
@@ -230,7 +275,7 @@
     <record id="mom_request_act_window_filter_jakarta" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'JAKARTA')]</field>
         <field name="help" type="html">
@@ -244,7 +289,7 @@
     <record id="mom_request_act_window_filter_supply" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'SUPPLY CHAIN')]</field>
         <field name="help" type="html">
@@ -258,7 +303,7 @@
     <record id="mom_request_act_window_filter_tst" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'TST')]</field>
         <field name="help" type="html">
@@ -272,9 +317,23 @@
     <record id="mom_request_act_window_filter_balikpapan" model="ir.actions.act_window">
         <field name="name">Mom Request</field>
         <field name="res_model">mom.request.line</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
         <field name="domain">[('businesunit', '=', 'BALIKPAPAN')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+    <!-- ALL -->
+    <record id="mom_request_act_window_filter_all" model="ir.actions.act_window">
+        <field name="name">Mom Request</field>
+        <field name="res_model">mom.request.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new data.
@@ -353,7 +412,8 @@
                 <field name="record_count"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_global_click">
+                        <div>
+                        <!-- <div t-attf-class="oe_kanban_global_click"> -->
                             <div class="o_project_kanban_main">
                                 <div class="o_kanban_card_content">
                                     <div class="o_kanban_primary_left">
@@ -392,6 +452,9 @@
                                                 </t>
                                                 <t t-if="record.name.value == 'BALIKPAPAN'">
                                                   <i class="fa fa-map-marker" role="img" aria-label="Balikpapan" title="Balikpapan"/>
+                                                </t>
+                                                <t t-if="record.name.value == 'ALL'">
+                                                  <i class="fa fa-book" role="img" aria-label="All" title="All"/>
                                                 </t>
                                             </span>                                           
                                             <span>
@@ -555,6 +618,21 @@
                                     </a>
                                 </t>
 
+                                <t t-if="record.name.value == 'ALL'">
+                                    <a class="o_project_kanban_box" name="%(mom_request_act_window_filter_all)d" type="action" href="#">
+                                        <div class="oe_kanban_bottom_left">
+                                            <strong>
+                                                <strong>
+                                                    <span class="o_label">Records :</span>
+                                                </strong>
+                                                <span class="o_value">
+                                                    <t t-esc="record.name.value"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                    </a>
+                                </t>
+
 
                                 <!-- <t t-else="">
                                     <a class="o_project_kanban_box" name="%(mom_request_act_window_filter)d" type="action">
@@ -598,11 +676,43 @@
         </field>
     </record>
 
+    <record id="view_mom_request_pivot" model="ir.ui.view">
+        <field name="name">mom.request.pivot</field>
+        <field name="model">mom.request</field>
+        <field name="arch" type="xml">
+            <pivot string="Mom Request">
+                <field name="name" type="row"/>
+                <field name="record_count" type="measure" operator="count"/>
+            </pivot>
+        </field>
+    </record>
+
+
+        <record model="ir.ui.view" id="view_mom_request_bu_tree">
+            <field name="name">mom.request.bu.tree</field>
+            <field name="model">mom.request.bu</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="group"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mom_request_bu">
+            <field name="name">MOM Request BU</field>
+            <field name="res_model">mom.request.bu</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
     <!-- Menuitem 2 -->
     <menuitem name="MOM" id="menu_mom_mgt"
         web_icon="pms_module,static/description/icon.png" />
 
     <menuitem id="mom" name="Mom Request" sequence="10" parent="menu_mom_mgt" action="pms_module.mom_request_act_window" />
+    <menuitem id="menu_mom_request_bu_tree"  sequence="14"  name="MOM Request BU" parent="menu_mom_mgt" action="action_mom_request_bu"/>
     <!-- <menuitem name="Mom Request pagination" id="mom_request_menu_pagination" parent="mom" action="server_action_any_name" sequence="12" /> -->
 
 

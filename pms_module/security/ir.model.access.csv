@@ -11,3 +11,4 @@ access_mom_request,mom.request,model_mom_request,base.group_user,1,1,1,1
 access_mom_request_line,mom.request.line,model_mom_request_line,base.group_user,1,1,1,1
 access_mom_request_divisi,mom.request.divisi,model_mom_request_divisi,base.group_user,1,1,1,1
 access_mom_request_bu,mom.request.bu,model_mom_request_bu,base.group_user,1,1,1,1
+access_mom_request_ajustment,mom.request.ajustment,model_mom_request_ajustment,base.group_user,1,1,1,1

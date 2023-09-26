@@ -7,12 +7,32 @@ from datetime import datetime
 from datetime import timedelta
 
 
+class mom_request_ajustment(models.Model):
+    _name = "mom.request.ajustment"
+
+    name = fields.Date(
+        string='Date',
+        required=False)
+    
+    # group = fields.Selection([
+    #     ('nlm', 'NLM'),
+    #     ('weeklyMeeting', 'Weekly Meeting'),
+    #     ('coordination', 'Coordination'),
+    # ], string='Group')
+
 class mom_request_bu(models.Model):
     _name = "mom.request.bu"
 
     name = fields.Char(
         string='Name',
         required=False)
+    
+    group = fields.Selection([
+        ('nlm', 'NLM'),
+        ('weeklyMeeting', 'Weekly Meeting'),
+        ('coordination', 'Coordination'),
+    ], string='Group')
+    
 
 class mom_request_divisi(models.Model):
     _name = "mom.request.divisi"
@@ -86,7 +106,31 @@ class mom_request_line(models.Model):
         'mom_request_bu_id',
         'brand_id',
         default=lambda self: self.env.context.get('default_businesunit'),
-        string='Businesunit Ids',track_visibility='onchange')
+        string='Business Unit', track_visibility='onchange',
+        # domain=lambda self:self._get_businesunit_domain()
+        )
+    
+
+    ajustment = fields.Many2many(
+        'mom.request.ajustment',
+        'mom_request_ajustment_rel',
+        'mom_request_ajustment_id',
+        'brand_id',
+        default=lambda self: self.env.context.get('default_ajustment'),
+        string='Adjustment Target', track_visibility='onchange',
+        # domain=lambda self:self._get_ajustment_domain()
+        )
+    
+    # @api.model
+    # def _get_businesunit_domain(self):
+    #     if self.meetingType == 'NLM':
+    #         return [('id', 'in', ['GALANGAN', 'FINANCE', 'TST','GAS','SUPPLY CHAIN'])]
+    #     elif self.meetingType == 'weeklyMeeting':
+    #         return [('id', 'in', ['FINANCE', 'GAS'])]
+    #     elif self.meetingType == 'coordination':
+    #         return [('id', 'in', ['GALANGAN'])]
+    #     else:
+    #         return []    
     
     
                 
@@ -94,32 +138,158 @@ class mom_request_line(models.Model):
         string='Pic',
         required=False,track_visibility='onchange')
 
-    opendate = fields.Date('Open Date',track_visibility='onchange')
+    opendate = fields.Date('Open Date',track_visibility='onchange',default=fields.Date.today())
     deadline = fields.Date('Deadline',track_visibility='onchange')
     closedate = fields.Date('Close Date',track_visibility='onchange')
     
-    keterangan = fields.Text('Keterangan',track_visibility='onchange')
+    keterangan = fields.Text('Information', track_visibility='onchange')
     # issue = fields.Char('issue')
     issue = fields.Selection(
         [
-            ("normal", "Normal"),
-            ("medium", "Medium"),
-            ("hotIssue", "Hot Issue"), 
+            ("urgent", "Urgent"),
+            ("major", "Major"),
+            ("medium", "Medium"), 
+            ("minor", "Minor"), 
+            ("info", "Info"), 
         ],
         default="normal",
         track_visibility='onchange'
     )
     
-    nilai = fields.Char('Nilai',track_visibility='onchange')
+    meetingType = fields.Selection(
+        string='Meeting Type',
+        selection=[('NLM', 'NLM'),
+                   ('weeklyMeeting', 'Weekly Meeting'),
+                   ('coordination', 'Coordination'),
+                   ]
+    )
     
+    actionPlane = fields.Text('Action Plane')
+
+    @api.onchange('meetingType')
+    def onchange_contrat_name(self):
+        if self.meetingType:
+            if self.meetingType == 'NLM':
+                return {'domain': {'businesunit': [('group', '=', 'nlm')]}}
+            elif self.meetingType == 'weeklyMeeting':
+                return {'domain': {'businesunit': [('group', '=', 'weeklyMeeting')]}}
+            elif self.meetingType == 'coordination':
+                return {'domain': {'businesunit': [('group', '=', 'coordination')]}}
+
+        # If no meetingType is selected or it doesn't match 'nlm' or 'weeklyMeeting', clear the domain
+        return {'domain': {'businesunit': []}}
+
     
+
+
+    nilai = fields.Text('Value (%)', track_visibility='onchange')
+
+    @api.onchange('issue', 'businesunit')
+    def _check_status_issue(self):
+        for record in self:
+            data_busines_example = []
+            for i in record.businesunit:
+                x = i.name
+                # Memasukan x kedalam array data_busines_example
+                data_busines_example.append(x)
+
+            # Data tanpa
+            data = data_busines_example
+            new_data = [value for value in data if value != 'NLM']
+            print(new_data)
+            array_tupple = tuple(new_data)
+            data_nlm = self.env['mom.request.bu'].search([('name', 'in', array_tupple)])
+
+            if record.issue == 'major':
+                # Update record.businessunit field with data_nlm
+                record.write({
+                    'businesunit': [(6, 0, data_nlm.ids)]
+                })
+            elif record.issue == 'medium':
+                # Update record.businessunit field with data_nlm
+                record.write({
+                    'businesunit': [(6, 0, data_nlm.ids)]
+                })
+            elif record.issue == 'minor':
+                # Update record.businessunit field with data_nlm
+                record.write({
+                    'businesunit': [(6, 0, data_nlm.ids)]
+                })
+            elif record.issue == 'info':
+                # Update record.businessunit field with data_nlm
+                record.write({
+                    'businesunit': [(6, 0, data_nlm.ids)]
+                })
+
+            print(record.businesunit)
+            print("Nice")
+
+    @api.constrains('issue', 'businesunit', 'mom_id')
+    def _check_status_bussinesunit(self):
+        for record in self:
+            data_mom = record.mom_id.name
+            data_busines_example = []
+            for i in record.businesunit:
+                x = i.name
+                # Memasukan x kedalam array data_busines_example
+                data_busines_example.append(x)
+
+            if 'NLM' in data_busines_example:
+                # Skip the loop if 'NLM' already exists in businesunit
+                continue
+
+            if data_mom in data_busines_example:
+                print("OK")
+            else:
+                print("Harus ada daya Business Unit yang bernilai MOM")
+                raise ValidationError("Harus ada daya Scope yang bernilai Related")
+
+            # Data dengan NLM
+            nlm = 'NLM'
+            print(data_busines_example)
+            data_busines_example.append(nlm)
+            array_tupple = tuple(data_busines_example)
+            data_nlm = self.env['mom.request.bu'].search([('name', 'in', array_tupple)])
+            
+            # record_data = self.env['mom.request.line'].read_group(
+            # [('mom_id', 'in', self.ids)],
+            # ['mom_id'], ['mom_id'])
+            # result = dict((data['mom_id'][0], data['mom_id_count']) for data in record_data)
+            # for Mom in self:
+            #     Mom.record_count = result.get(Mom.id, 0)
+
+            if record.issue == 'urgent':
+                # Update record.businessunit field with data_nlm
+                record.write({
+                    'businesunit': [(6, 0, data_nlm.ids)]
+                })
+
+            print(record.businesunit)
+            print("Nice")
+
     mom_id = fields.Many2one(
         'mom.request',
-        string='Mom',
+        string='MOM ID',
         readonly=True,
         required=False,
         default=lambda self: self.env.context.get('default_mom_id'),
-        index=True, tracking=True, change_default=True,track_visibility='onchange')
+        index=True, tracking=True, change_default=True, track_visibility='onchange')
+    
+    ajust = fields.Integer('Ajust', compute='get_ajust', store=True)
+    
+    @api.depends('ajust', 'ajustment')
+    def get_ajust(self):
+        for record in self:
+            if not record.ajustment:
+                record.ajust = 0
+            else:
+                x = len(record.ajustment)
+                print(x)
+                record.ajust = x
+    
+    
+
+    
 
 
 class mom_request(models.Model):
@@ -159,8 +329,9 @@ class mom_request(models.Model):
         for Mom in self:
             Mom.record_count = result.get(Mom.id, 0)
 
-    record_count = fields.Integer(compute='_compute_record_count', string="Record Count")
+    # record_count = fields.Integer(compute='_compute_record_count', string="Record Count")
 
+    record_count = fields.Integer(string="Record Count", compute='_compute_record_count', store=True)
     record_id = fields.One2many(
         'mom.request.line', 'mom_id',
         string='Mom Request',
