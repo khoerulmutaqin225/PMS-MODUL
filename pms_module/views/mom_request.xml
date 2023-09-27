@@ -13,7 +13,7 @@
                 <field name="meetingType" string="Jenis Meeting" />                
 
                 <!-- Jadi ke 2 -->
-                <field name="businesunit" widget="many2many_tags" string="Scope"/>
+                <field name="businesunit" widget="many2many_tags" string="Scope" />
 
                 <!-- Jadi ke 3 -->
                 <field name="name" string="Topic"/>
@@ -43,7 +43,9 @@
                 <field name="actionPlane"/>
                 
                 <!-- NO 12 -->
-                <field name="deadline" string="Target (Date)"/>
+                <field name="deadline" string="Target (Date)" attrs="{'readonly': [('changeDeadline', '=', 1)]}"/>
+                <field name="active" groups="pms_module.group_report_manager" />
+                <field name="changeDeadline" groups="pms_module.group_report_manager"/>
                 
                 <!-- No 13 -->
                 <field name="closedate" string="Actual (Date)"/>
@@ -121,11 +123,10 @@
                     <filter string="Mom" name="mom" context="{'group_by': 'mom_id'}" />
                     <filter string="Businesunit" name="businesunit" domain="[]" context="{'group_by': 'businesunit'}"/>
                 </group> 
-                <searchpanel>
+                <!-- <searchpanel>
                     <field name="issue" />
                     <field name="status"/>
-                    <!--<field name="partner_id" enable_counters="1"/>-->
-                </searchpanel>                                   
+                </searchpanel>                                    -->
             </search>
         </field>
     </record>

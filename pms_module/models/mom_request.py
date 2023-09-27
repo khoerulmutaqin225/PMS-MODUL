@@ -140,6 +140,24 @@ class mom_request_line(models.Model):
 
     opendate = fields.Date('Open Date',track_visibility='onchange',default=fields.Date.today())
     deadline = fields.Date('Deadline',track_visibility='onchange')
+    active = fields.Boolean(
+        string='Active',
+        default=False,
+        required=False)
+
+    changeDeadline = fields.Integer('Change Deadline', compute='get_deadline', store=True)
+    
+    @api.onchange('active', 'changeDeadline')
+    def get_deadline(self):
+        for record in self:
+            active = record.active
+            if active:
+                data = 1
+                record.changeDeadline = data
+            else:
+                data = 2
+                record.changeDeadline = data
+
     closedate = fields.Date('Close Date',track_visibility='onchange')
     
     keterangan = fields.Text('Information', track_visibility='onchange')
@@ -152,7 +170,7 @@ class mom_request_line(models.Model):
             ("minor", "Minor"), 
             ("info", "Info"), 
         ],
-        default="normal",
+        default="info",
         track_visibility='onchange'
     )
     
