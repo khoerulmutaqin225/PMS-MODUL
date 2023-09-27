@@ -202,6 +202,7 @@ class mom_request_line(models.Model):
 
     nilai = fields.Text('Value (%)', track_visibility='onchange')
 
+    # Batas Atas
     @api.onchange('issue', 'businesunit')
     def _check_status_issue(self):
         for record in self:
@@ -284,6 +285,7 @@ class mom_request_line(models.Model):
 
             print(record.businesunit)
             print("Nice")
+    # Batas Atas
 
     mom_id = fields.Many2one(
         'mom.request',

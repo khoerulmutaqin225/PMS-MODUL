@@ -3,13 +3,9 @@ access_job_crew,job.crew,model_job_crew,base.group_user,1,1,1,1
 access_job_crew_line,job.crew.line,model_job_crew_line,base.group_user,1,1,1,1
 access_vehicle_vehicle,vehicle.vehicle,model_vehicle_vehicle,base.group_user,1,1,1,1
 access_submit_job_crew_line_wizard,submit.job.crew.line.wizard,model_submit_job_crew_line_wizard,base.group_user,1,1,1,1
-access_gas_maintenance_vehicle_admin,gas.maintenance.vehicle,model_gas_maintenance_vehicle,pms_module.group_report_admin,1,1,1,1
-access_gas_maintenance_vehicle_manager,gas.maintenance.vehicle,model_gas_maintenance_vehicle,pms_module.group_report_manager,1,1,1,1
-access_gas_maintenance_vehicle,gas.maintenance.vehicle,model_gas_maintenance_vehicle,pms_module.group_report_user,1,0,0,0
-access_gas_maintenance_vendor_manager,gas.maintenance.vendor,model_gas_maintenance_vendor,pms_module.group_report_manager,1,1,1,1
-access_gas_maintenance_vendor,gas.maintenance.vendor,model_gas_maintenance_vendor,pms_module.group_report_user,1,0,0,0
-access_gas_report_line,gas.report.line,model_gas_report_line,pms_module.group_report_manager,1,1,1,1
-access_gas_report_line,gas.report.line,model_gas_report_line,pms_module.group_report_user,1,1,1,0
+access_gas_maintenance_vehicle,gas.maintenance.vehicle,model_gas_maintenance_vehicle,base.group_user,1,1,1,1
+access_gas_maintenance_vendor,gas.maintenance.vendor,model_gas_maintenance_vendor,base.group_user,1,1,1,1
+access_gas_report_line,gas.report.line,model_gas_report_line,base.group_user,1,1,1,1
 access_job_crew_evidence,job.crew.evidence,model_job_crew_evidence,base.group_user,1,1,1,1
 access_mom_request,mom.request,model_mom_request,base.group_user,1,1,1,1
 access_mom_request_line,mom.request.line,model_mom_request_line,base.group_user,1,1,1,1
