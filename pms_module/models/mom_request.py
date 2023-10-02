@@ -63,7 +63,7 @@ class mom_request_line(models.Model):
             'activity_user_type': action_user_type  # Set this to the appropriate value
         })
                 
-        domain =[('status' , '=', 'open')]
+        domain =[]
         result={
             'name': 'Mom Request',
             'type': 'ir.actions.act_window',
@@ -142,21 +142,26 @@ class mom_request_line(models.Model):
     deadline = fields.Date('Deadline',track_visibility='onchange')
     active = fields.Boolean(
         string='Active',
-        default=False,
+        default=True,
         required=False)
 
-    changeDeadline = fields.Integer('Change Deadline', compute='get_deadline', store=True)
+    changeDeadline = fields.Integer('Change Deadline',default=0 , readonly=True)
     
-    @api.onchange('active', 'changeDeadline')
+    @api.onchange('active','mom_id')
     def get_deadline(self):
         for record in self:
             active = record.active
-            if active:
-                data = 1
-                record.changeDeadline = data
+            related = record.mom_id
+            data = 0
+            if active and related:
+                record.write({
+                    'changeDeadline': 1
+                })
+
             else:
-                data = 2
-                record.changeDeadline = data
+                record.write({
+                    'changeDeadline': 0
+                })
 
     closedate = fields.Date('Close Date',track_visibility='onchange')
     
@@ -203,20 +208,23 @@ class mom_request_line(models.Model):
     nilai = fields.Text('Value (%)', track_visibility='onchange')
 
     # Batas Atas
-    @api.onchange('issue', 'businesunit')
+    @api.onchange('issue', 'businesunit', 'mom_id')
     def _check_status_issue(self):
         for record in self:
+            data_mom = record.mom_id.name
             data_busines_example = []
             for i in record.businesunit:
                 x = i.name
                 # Memasukan x kedalam array data_busines_example
                 data_busines_example.append(x)
 
-            # Data tanpa
+            # Data tanpa  
             data = data_busines_example
             new_data = [value for value in data if value != 'NLM']
+            new_data.append(data_mom)
             print(new_data)
             array_tupple = tuple(new_data)
+            
             data_nlm = self.env['mom.request.bu'].search([('name', 'in', array_tupple)])
 
             if record.issue == 'major':
@@ -253,17 +261,18 @@ class mom_request_line(models.Model):
                 # Memasukan x kedalam array data_busines_example
                 data_busines_example.append(x)
 
+            data_busines_example.append(data_mom)
             if 'NLM' in data_busines_example:
                 # Skip the loop if 'NLM' already exists in businesunit
                 continue
-
+            
             if data_mom in data_busines_example:
                 print("OK")
             else:
                 print("Harus ada daya Business Unit yang bernilai MOM")
                 raise ValidationError("Harus ada daya Scope yang bernilai Related")
 
-            # Data dengan NLM
+            # Data dengan NLM           
             nlm = 'NLM'
             print(data_busines_example)
             data_busines_example.append(nlm)
