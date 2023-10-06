@@ -33,15 +33,21 @@ class gas_maintenance_vehicle(models.Model):
         compute='_get_company',
         string='Company Id',
     )    
+    corporate = fields.Char(string='Perusahaan')
 
     @api.model
     def create(self, values):
         res = super(gas_maintenance_vehicle,self).create(values)
         for rec in res:
             nama = rec.name
+            data = ''
             if nama == 'New':
                 names = self.env['ir.sequence'].next_by_code('gas.maintenance.vehicle')
+                perusahaan = res.company_id.name
+                data = perusahaan
                 rec.update({'name':names})
+            # function untuk menambahkan nama perusahan agar statis
+            rec.update({'corporate':data})
         return res
     
 
@@ -63,7 +69,7 @@ class gas_maintenance_vehicle(models.Model):
         domain="[('type', '=', 'mobil')]",  # Tambahkan domain ini
         required=False, default=lambda self: self.env.context.get('default_vehicle_id'),
         index=True, tracking=True, change_default=True  ,track_visibility='onchange')
-    
+    brand = fields.Char('Merek', related='vehicle_id.brand')
     tanggal_kerusakan = fields.Datetime(string="Tanggal Kerusakan",
                                     required=False,
                                     readonly=False,

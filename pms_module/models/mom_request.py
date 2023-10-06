@@ -220,8 +220,8 @@ class mom_request_line(models.Model):
 
             # Data tanpa  
             data = data_busines_example
+            data.append(data_mom)
             new_data = [value for value in data if value != 'NLM']
-            new_data.append(data_mom)
             print(new_data)
             array_tupple = tuple(new_data)
             

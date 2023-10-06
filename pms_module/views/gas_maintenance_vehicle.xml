@@ -83,10 +83,12 @@
                         <group name="name" string="General :">
                             <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle" required="1"/>
                             <field name="currency_id" invisible="1"/>
+                            <field name="brand" />
                             <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
                             <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
                             <field name="vendor" placeholder="Vendor" required="1"/>
-                            <field name="company_id" placeholder="Select Company"/>
+                            <field name="company_id" placeholder="Select Company" invisible="1"/>
+                            <field name="corporate" placeholder="Select Company" readonly="1" force_save="1"/>
                         </group>
                         <group name="records" string="Records :">
                             <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
@@ -160,7 +162,8 @@
                 <field name="standar_lama"/>
                 <field name="biaya_perbaikan" widget="monetary"/>
                 <field name="final_price" widget="monetary"/>
-                <field name="company_id" string="Perusahaan"/>
+                <field name="company_id" string="Perusahaan"  invisible="1"/>
+                <field name="corporate" string="Perusahaan" />
             </tree>
         </field>
     </record>
