@@ -83,7 +83,7 @@
                         <group name="name" string="General :">
                             <field name="vehicle_id" options="{'no_create': True}" placeholder="Select Vehicle" required="1"/>
                             <field name="currency_id" invisible="1"/>
-                            <field name="brand" />
+                            <field name="brand" />                            
                             <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
                             <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
                             <field name="vendor" placeholder="Vendor" required="1"/>
@@ -103,7 +103,7 @@
                     <label for="catatan" string="Catatan perbaikan:"/>
                     <field name="catatan" placeholder="Masukan Catatan"/> -->
                     <notebook>
-                        <page string="Per   baikan Line">
+                        <page string="Perbaikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
                                     <field name="name" placeholder="Masukan Nama" required="1"/>

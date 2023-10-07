@@ -168,7 +168,7 @@ class gas_maintenance_vehicle(models.Model):
     
     note_image = fields.Binary(string="Foto Nota",store=True ,track_visibility='onchange')
     
-    discount = fields.Monetary(string='Diskon' ,track_visibility='onchange')
+    discount = fields.Float(string='Diskon' , default=0.0)
     
     final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price' ,track_visibility='onchange')
     
@@ -177,12 +177,13 @@ class gas_maintenance_vehicle(models.Model):
     def _final_price(self):
         for record in self:
             if not record.discount:
-                record.final_price = 0.0
+                data = record.biaya_perbaikan
+                record.final_price = data
             else:
                 currency = record.currency_id or self.env.company.currency_id  
                 final_price   = record.biaya_perbaikan - record.discount
                 record.final_price = final_price
-            
+                
 
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"
