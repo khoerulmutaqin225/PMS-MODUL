@@ -16,6 +16,7 @@ class gas_maintenance_vehicle(models.Model):
     _description = 'Gas Maintenance Vehicle'
     # "Gas Maintenance Vendor"
 
+    
     @api.onchange('vehicle_id')
     def _get_company(self):
         for record in self:
@@ -184,6 +185,18 @@ class gas_maintenance_vehicle(models.Model):
                 final_price   = record.biaya_perbaikan - record.discount
                 record.final_price = final_price
                 
+    def debug_gas(self):
+        print("Hello World")
+        testt = ["HERU", "LATIFA", "SILVIA"]
+        master = ["HERU", "LATIFA", "SILVIA"]                        
+        master_data = ["HERU", "LATIFA", "SILVIA"]        
+        data={
+            'form':self.read()[0],
+            'testt': testt,
+            'master': master,
+            'master_data': master_data,
+        }
+        return self.env.ref('pms_module.actions_print_gas_maintenance_vehicle').report_action(self, data=data)          
 
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"

@@ -63,11 +63,25 @@
         </field>
     </record>
 
+    
+    <record id="actions_print_gas_maintenance_vehicle" model="ir.actions.report">
+        <field name="name">model_gas_maintenance_vehicle</field>
+        <field name="model">gas.maintenance.vehicle</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pms_module.report_data_pms_module_id</field>
+        <field name="report_file">pms_module.report_data_pms_module_id</field>
+        <field name="binding_model_id" ref="model_gas_maintenance_vehicle" />
+        <field name="binding_type">report</field>
+    </record>
+
     <record id="gas_maintenance_vehicle_form" model="ir.ui.view">
         <field name="name">pms.gas_maintenance_vehicle.form</field>
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
             <form string="Gas Maintenance">
+            <header>
+            <button type="object" name="debug_gas" string="Print" class="btn-primary" />
+            </header>
                 <sheet>
                     <div>
                         <label for="name" string="No Berita Acara"/>

@@ -33,7 +33,7 @@
         'views/gas_maintenance_vehicle_sequence.xml',
         'views/jobCrewEvidence_view.xml',
         'views/mom_request.xml',
-        #'views/portal_view.xml',
+        'report/pms.xml',
     ],
     # only loaded in demonstration mode
     #'demo': [
