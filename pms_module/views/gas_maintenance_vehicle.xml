@@ -2,6 +2,19 @@
 
 <odoo>
 
+    <record model="ir.ui.view" id="res_company_form">
+        <field name="name">res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="kop_surat_1"/>
+                <field name="kop_surat_2"/>
+                <field name="kop_surat_3"/>
+            </xpath>
+        </field>
+    </record>
+
 
     <record id="gas_maintenance_vehicle_vendor_act_window" model="ir.actions.act_window">
         <field name="name">Vendor</field>
@@ -102,13 +115,15 @@
                             <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
                             <field name="vendor" placeholder="Vendor" required="1"/>
                             <field name="company_id" placeholder="Select Company" invisible="1"/>
-                            <field name="corporate" placeholder="Select Company" readonly="1" force_save="1"/>
+                            <field name="corporate" placeholder="Select Company" />
                         </group>
                         <group name="records" string="Records :">
                             <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
                             <field name="standar_lama" placeholder="Masukan Tanggal Selesai" />
                             <field name="biaya_perbaikan" placeholder="Masukan Biaya Perbaikan" widget="monetary"/>
-                            <field name="discount" widget="monetary"  style="background-color:yellow; color: black;" />
+                            <!-- <field name="discount" widget="monetary"  style="background-color:yellow; color: black;" />
+                            <field name="ppn" widget="monetary"  style="background-color:yellow; color: black;" />
+                            <field name="pph" widget="monetary"  style="background-color:yellow; color: black;" /> -->
                             <field name="final_price" widget="monetary"/>
                             <field name="no_ba_close" placeholder="No Berita Acara Close" readonly="1"/>
                         </group>
@@ -132,20 +147,41 @@
                                     <field name="jenis_downtime" placeholder="Masukan Jenis Downtime" required="1"/>
                                 </tree>
                             </field>
+                            
+                              <group class="oe_subtotal_footer oe_right">
+                                <field name="discount" widget="monetary" />
+                                <field name="biaya_perbaikan" widget="monetary" string="Biaya Tanpa Pajak"/>
+                                <field name="pph" string="PPH ( 2%)" widget="monetary" />
+                                <field name="ppn" string="PPH (10%)" widget="monetary" />
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="final_price" />
+                                </div>
+                                <field name="final_price" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" />
+                            </group>
+                            <div class="oe_clear"/>
+
                         </page>
                         <page string="Upload Foto">
-                            <group name="FOTO 1" string="Foto Berita Open">
-                                <field name="vehicle_image1" />
-                                <field name="vehicle_image2" />
-                                <field name="vehicle_image3" />
+                            <group>
+                                <group name="FOTO 1" string="Foto Berita Open">
+                                    <field name="vehicle_image1" />
+                                    <field name="vehicle_image2" />
+                                    <field name="vehicle_image3" />
+                                </group>                            
+                                
+                                <group name="FOTO TTD" string="FOTO TTD" invisible="1">
+                                    <field name="pic_bu"/>
+                                    <field name="corlog"/>
+                                    <field name="ttd_bu"/>
+                                </group>
+
                             </group>
                             <group>
                                 <group name="FOTO 2" string="Foto Berita Close">
                                   <field name="vehicle_image4" />
                                   <field name="vehicle_image5"/>
                                   <field name="vehicle_image6"/>
-                                </group>
-                                
+                                </group>                                
                                 <group name="nota" string="Foto Nota">
                                   <field name="note_image"/>
                                 </group>

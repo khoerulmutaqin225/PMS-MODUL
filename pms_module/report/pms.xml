@@ -7,6 +7,7 @@
 
         <template id="report_data_pms_module_id">
             <t t-call="web.html_container">
+            
                     <div class="header" style="padding-top:20px;">
                         <div class="gambar" align="center">
                             <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
@@ -63,7 +64,8 @@
                                     <span>:</span>
                                 </td>
                                 <td width="44%" align="center">
-                                    <b>068/SEU/GAS/SGT/IX/2023 </b>
+                                    <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
+                                     <t t-esc="data_list['name'][0]"/>
                                 </td>
 
                                 <td width="10%">
@@ -87,7 +89,8 @@
                                 </td>
                                 <td width="44%" align="center">
                                     <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                    <b>BENGKEL JAYA MANDIRI</b>
+                                    <!-- <b>BENGKEL JAYA MANDIRI</b> -->
+                                     <t t-esc="data_list['vendor'][0]"/>
                                 </td>
 
                                 <td width="10%">
@@ -206,61 +209,6 @@
                                 <!--11-->
                                 <td width="13%">
                                     <span>Amount </span>
-                                </td>
-                            </tr>
-                            <tr style="border:none;">
-                                <td width="5%">
-                                    <!--<span>1 </span>-->
-                                    <span t-esc="o"/>
-                                </td>
-                                <!--2-->
-                                <td width="10%">
-                                    <span t-esc="o_index"/>
-                                    <!--<span>HESTI </span>-->
-                                </td>
-                                <!--3-->
-                                <td width="15%">
-                                    <span>
-                                    OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
-                                    </span>
-                                </td>
-                                <!--4-->
-                                <td width="5%">
-                                    <span>
-                                    01.6-2260.002
-                                    </span>
-                                </td>
-                                <!--5-->
-                                <td width="20%">
-                                    <span>
-                                    PEKERJAAN PERBAIKAN RODA BELAKANG YANG BOCOR
-                                    </span>
-                                </td>
-                                <!--6-->
-                                <td width="10%">
-                                    <span>
-                                    Ban Mobil
-                                    </span>
-                                </td>
-                                <!--7-->
-                                <td width="5%">
-                                    <span>1 </span>
-                                </td>
-                                <!--8-->
-                                <td width="5%">
-                                    <span>Units </span>
-                                </td>
-                                <!--9-->
-                                <td width="5%">
-                                    <span>SGP </span>
-                                </td>
-                                <!--10-->
-                                <td width="12%">
-                                    <span>Rp. 450.000 </span>
-                                </td>
-                                <!--11-->
-                                <td width="13%">
-                                    <span>RP. 450.000 </span>
                                 </td>
                             </tr>
                             <tr style="border:none;">
