@@ -76,6 +76,19 @@
         </field>
     </record>
 
+    <record id="gas_report_line_act_window" model="ir.actions.act_window">
+        <field name="name">Gas Report Line</field>
+        <field name="res_model">gas.report.line</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new data.
+            </p>
+        </field>
+    </record>
+
+
+
     
     <record id="actions_print_gas_maintenance_vehicle" model="ir.actions.report">
         <field name="name">model_gas_maintenance_vehicle</field>
@@ -219,6 +232,34 @@
     </record>
     <!-- Batas Tambahan bawah -->
 
+    <record id="gas_report_line_tree" model="ir.ui.view">
+        <field name="name">pms.gas_report_line.tree</field>
+        <field name="model">gas.report.line</field>
+        <field name="arch" type="xml">
+            <tree string="Maintenance Kendaraan" >
+                <field name="no_ba_open"  />
+                <field name="corporate"/>
+                <field name="jenis_sarfas" string="Jenis Sarfas"/>
+                <field name="name" string="Nama Sarfas" />
+                <field name="jenis_downtime" string="Jenis Kegiatan" />
+                <field name="tanggal_kerusakan" string="Tanggal Downtime" />
+                <field name="uraian_pekerjaan" />
+                <field name="pelapor" />
+                <field name="start_perbaikan" />
+                <field name="finish_perbaikan" />
+                <field name="finish_perbaikan" />
+                <field name="brand" />
+                <field name="vehicle_id" />
+                <field name="km" />
+                <field name="no_ba_close" />
+                <field name="lama_perbaikan" />
+                <field name="biaya_perbaikan" widget="monetary"/>
+                <field name="vendor" />
+            </tree>
+        </field>
+    </record>
+    <!-- Batas Tambahan bawah -->
+
 
 
 
@@ -227,7 +268,8 @@
 
     <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas" action="gas_maintenance_vehicle_act_window" sequence="10" />
 
-    <menuitem name="Vendor" id="gas_maintenance_vehicle_vendor_menu" parent="gas" action="gas_maintenance_vehicle_vendor_act_window" sequence="12" />
+    <menuitem name="Vendor" id="gas_maintenance_vehicle_vendor_menu" parent="gas" action="gas_maintenance_vehicle_vendor_act_window" sequence="24" />
+    <menuitem name="Laporan Perbaikan" id="gas_report_line_menu" parent="gas" action="gas_report_line_act_window" sequence="14" />
 
 
 </odoo>

@@ -29,8 +29,73 @@ class gas_maintenance_vehicle(models.Model):
     _name = 'gas.maintenance.vehicle'
     _inherit ='mail.thread'
     _description = 'Gas Maintenance Vehicle'
-    # "Gas Maintenance Vendor"
+
+
+
+
+    # Batas Atas
+    @api.depends('vehicle_image1','vehicle_image2', 'vehicle_image3', 'vehicle_image4', 'vehicle_image5' ,'vehicle_image6' , 'note_image')   
+    def _compute_image_64(self):
+        for template in self:
+            if template.note_image:
+                template.note_image = self._compress_image(template.note_image)
+            if template.vehicle_image6:
+                template.vehicle_image6 = self._compress_image(template.vehicle_image6)
+            if template.vehicle_image5:
+                template.vehicle_image5 = self._compress_image(template.vehicle_image5)
+            if template.vehicle_image4:
+                template.vehicle_image4 = self._compress_image(template.vehicle_image4)
+            if template.vehicle_image3:
+                template.vehicle_image3 = self._compress_image(template.vehicle_image3)
+            if template.vehicle_image2:
+                template.vehicle_image2 = self._compress_image(template.vehicle_image2)
+            if template.vehicle_image1:
+                template.vehicle_image1 = self._compress_image(template.vehicle_image1)
+
+    def _set_image_64(self):
+        for template in self:
+            if template.note_image:
+                template.note_image = self._compress_image(template.note_image)
+            if template.vehicle_image6:
+                template.vehicle_image6 = self._compress_image(template.vehicle_image6)
+            if template.vehicle_image5:
+                template.vehicle_image5 = self._compress_image(template.vehicle_image5)
+            if template.vehicle_image4:
+                template.vehicle_image4 = self._compress_image(template.vehicle_image4)
+            if template.vehicle_image3:
+                template.vehicle_image3 = self._compress_image(template.vehicle_image3)
+            if template.vehicle_image2:
+                template.vehicle_image2 = self._compress_image(template.vehicle_image2)
+            if template.vehicle_image1:
+                template.vehicle_image1 = self._compress_image(template.vehicle_image1)
+
+    def _compress_image(self, image_data):
+        # Decode the image data from base64
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+
+        # Compress the image
+        compressed_image = io.BytesIO()
+        image.save(compressed_image, format='JPEG', optimize=True, quality=60)
+
+        # Encode the compressed image data to base64
+        return base64.b64encode(compressed_image.getvalue())
     
+    image_1920     = fields.Binary("Image", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    image_1920_2   = fields.Binary("Image 2", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image1 = fields.Binary("Foto Open 1", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image2 = fields.Binary("Foto Open 2", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image3 = fields.Binary("Foto Open 3", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image4 = fields.Binary("Foto Open 4", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image6 = fields.Binary("Foto Open 5", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    note_image     = fields.Binary("Foto Open 6", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    
+    # vehicle_image1 = fields.Binary( string="Foto Open 1", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # vehicle_image2 = fields.Binary( string="Foto Open 2",compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # vehicle_image3 = fields.Binary( string="Foto Open 3", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # vehicle_image4 = fields.Binary( tring="Foto Close 1", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # vehicle_image5 = fields.Binary( tring="Foto Close 2", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # vehicle_image6 = fields.Binary( tring="Foto Close 3", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
+    # note_image     = fields.Binary( string="Foto Nota"  , compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
     
     ttd_bu = fields.Binary('Anggota BU')
     pic_bu = fields.Binary('PIC BU')
@@ -117,12 +182,10 @@ class gas_maintenance_vehicle(models.Model):
             nama = rec.name
             data = ''
             if nama == 'New':
-                domain = rec.corporate
-                increment =  self.env['gas.maintenance.vehicle'].search([('corporate', '=', domain)])
-                length  = len(increment)
-                print(length)
-                no = length
                 perusahaan = rec.corporate
+                increment =  self.env['gas.maintenance.vehicle'].search([('corporate', '=', rec.corporate)])
+                length  = len(increment)
+                no = length
                 bulan = rec.create_date.month
                 bulan = intToRoman(bulan)                
                 year = rec.create_date.year                
@@ -442,7 +505,6 @@ class gas_maintenance_vehicle_line(models.Model):
                 record.update({'lama_perbaikan':duration})
             else:
                 record.update({'lama_perbaikan':duration})                
-    
 
     lama_perbaikan = fields.Integer(
         'Lama Perbaikan',
@@ -478,8 +540,44 @@ class gas_maintenance_vehicle_line(models.Model):
     group_gas_id = fields.Many2one(
         'gas.maintenance.vehicle',
         string='group_gas_id',
+        ondelete='cascade',
         readonly=True
     )
+    
+    no_ba_open =  fields.Char('NO BA (OPEN)' , related= "group_gas_id.name", readonly=True, store=True )
+    
+    no_ba_close = fields.Char('NO BA (CLOSE)',  related="group_gas_id.no_ba_close", readonly=True, store=True )
+    
+    corporate = fields.Selection([
+        ('GEMILANG KARYA ENERGI', 'PT. GEMILANG KARYA ENERGI'),
+        ('DHIRABRATA GAS NUSANTARA', 'PT. DHIRABRATA GAS NUSANTARA'),
+        ('SEGAH PRIMA GAS', 'PT. SEGAH PRIMA GAS'),
+        ('PASER ENERGY ABADI', 'PT. PASER ENERGY ABADI'),
+        ('GEMILANG ENERGY NUSANTARA', 'PT. GEMILANG ENERGY NUSANTARA'),
+        ('SANGKULIRANG ENERGI UTAMA', 'PT. SANGKULIRANG ENERGI UTAMA'),
+        ('BAROKAH GEMILANG PERKASA', 'PT. BAROKAH GEMILANG PERKASA'),
+        ('ANUGERAH SANGATTA ENERGI ', 'PT. ANUGERAH SANGATTA ENERGI '),
+        ('BERKAH ETAM NUSANTARA', 'PT. BERKAH ETAM NUSANTARA'),
+        ('SINERGI JAYA ENERGI', 'PT. SINERGI JAYA ENERGI'),
+        ('ANUGERAH SANGATTA ENERGI', 'PT. ANUGERAH SANGATTA ENERGI'),
+        ('TAKA ENERGY NUSANTARA', 'PT. TAKA ENERGY NUSANTARA'),
+    ], string='corporate' , required=True, related="group_gas_id.corporate")  
+        
+    tanggal_kerusakan = fields.Datetime('Tanggal Downtime',  related="group_gas_id.tanggal_kerusakan", readonly=True, store=True )
+    
+    pelapor = fields.Char('Pelapor',  related="group_gas_id.pelapor", readonly=True, store=True )
+    
+    vehicle_id = fields.Many2one(
+        'vehicle.vehicle',
+        string='Vehicle',
+        related="group_gas_id.vehicle_id")
+    
+    # vehicle_id = fields.Char('NO POLISI',  related="group_gas_id.vehicle_id", readonly=True, store=True )
+    
+    brand = fields.Char('Jenis Kendaraan',  related="group_gas_id.brand", readonly=True, store=True )
+    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor' ,track_visibility='onchange', related="group_gas_id.vendor")   
+       
+    # vendor = fields.Char('Jenis Kendaraan',  related="group_gas_id.vendor", readonly=True, store=True )
         
     jenis_downtime = fields.Selection(
         string='Jenis Perawatan',
