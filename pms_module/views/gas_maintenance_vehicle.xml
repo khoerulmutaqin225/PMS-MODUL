@@ -221,7 +221,7 @@
                 <field name="vehicle_id"/>
                 <field name="vendor"/>
                 <field name="status"/>
-                <field name="tanggal_kerusakan"/>
+                <field name="tanggal_kerusakan" widget="date"/>
                 <field name="standar_lama"/>
                 <field name="biaya_perbaikan" widget="monetary"/>
                 <field name="final_price" widget="monetary"/>
@@ -236,7 +236,7 @@
         <field name="name">pms.gas_report_line.tree</field>
         <field name="model">gas.report.line</field>
         <field name="arch" type="xml">
-            <tree string="Maintenance Kendaraan" >
+            <tree string="Maintenance Kendaraan" decoration-success="status == 'finish'" decoration-muted="status == ''" decoration-danger="status == 'open'">
                 <field name="no_ba_open"  />
                 <field name="corporate"/>
                 <field name="jenis_sarfas" string="Jenis Sarfas"/>
@@ -249,6 +249,7 @@
                 <field name="finish_perbaikan" />
                 <field name="finish_perbaikan" />
                 <field name="brand" />
+                <field name="status" />
                 <field name="vehicle_id" />
                 <field name="km" />
                 <field name="no_ba_close" />

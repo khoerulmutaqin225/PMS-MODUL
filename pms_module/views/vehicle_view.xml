@@ -70,8 +70,8 @@
                         <group>
                             <group>
                                 <field name="type"/>
-                                <field name="code_vehicle"/>
-                                <field name="nopol" />
+                                <field name="code_vehicle"  attrs="{'invisible': [('type', '!=', 'kapal')]}" />
+                                <field name="nopol"  string="No Polisi" attrs="{'invisible': [('type', '!=', 'mobil')]}" />
                                 <field name="company" />
                             </group>
                             <group>
@@ -82,6 +82,13 @@
                             </group>
                             <group>
                                 <field name="vehicle_image" widget="image" class="oe_avatar" readonly="0" />
+                            </group>
+                            <group>
+                                <field name="typeCar"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />
+                                <field name="year"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />
+                                <field name="cylinderContents"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />
+                                <field name="numberFrame"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />
+                                <field name="numberMachine"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />
                             </group>
                         </group>
                     </sheet>

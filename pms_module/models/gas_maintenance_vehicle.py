@@ -414,7 +414,7 @@ class gas_maintenance_vehicle(models.Model):
             ttd_1 = self.pic_bu
             ttd_2 = self.corlog
             ttd_3 = self.ttd_bu
-            
+  
             ttd.append(ttd_1)            
             ttd.append(ttd_2)            
             ttd.append(ttd_3)            
@@ -566,7 +566,15 @@ class gas_maintenance_vehicle_line(models.Model):
     tanggal_kerusakan = fields.Datetime('Tanggal Downtime',  related="group_gas_id.tanggal_kerusakan", readonly=True, store=True )
     
     pelapor = fields.Char('Pelapor',  related="group_gas_id.pelapor", readonly=True, store=True )
-    
+    status = fields.Selection(
+        string='Status',
+        selection=[('open', 'Open'),
+                   ('progress', 'Progress'), 
+                   ('finish', 'Finish') ],
+        default='open',
+        store=True,
+        readonly=False,
+        track_visibility='onchange', related="group_gas_id.status")   
     vehicle_id = fields.Many2one(
         'vehicle.vehicle',
         string='Vehicle',

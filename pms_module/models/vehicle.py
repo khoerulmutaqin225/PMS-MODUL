@@ -90,7 +90,16 @@ class Vehicle(models.Model):
         string='Job Crew',
         required=False)
     
-
+    year = fields.Char('Tahun')
+    
+    cylinderContents = fields.Char('Isi Cylinder')
+    
+    numberFrame = fields.Char('No Rangka')
+    
+    numberMachine = fields.Char('No Mesin')
+    
+    typeCar = fields.Char('Tipe Mobil')
+    
     persentase = fields.Float(
         string='Persentase (%)',
         store=True,
