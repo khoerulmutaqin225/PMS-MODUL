@@ -312,21 +312,22 @@ class gas_maintenance_vehicle(models.Model):
     note_image = fields.Binary(string="Foto Nota",store=True ,track_visibility='onchange')
     
     discount = fields.Float(string='Diskon' , default=0.0)
+    afterDiscount = fields.Float(string='Diskon' , default=0.0)
     
     final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price' ,track_visibility='onchange')
-    
         
-    @api.depends('final_price', 'discount', 'biaya_perbaikan','ppn','pph')
+    @api.depends('final_price', 'discount', 'biaya_perbaikan','ppn','pph','afterDiscount')
     def _final_price(self):
         for record in self:
             if not record.discount:
-                data = record.biaya_perbaikan
-                
+                data = record.biaya_perbaikan            
                 record.final_price = data + record.pph + record.ppn
+                record.afterDiscount = data 
                 
             else:
                 currency = record.currency_id or self.env.company.currency_id  
                 final_price   = record.biaya_perbaikan - record.discount
+                record.afterDiscount = final_price
                 record.final_price = final_price + record.pph + record.ppn
                 
     def debug_gas(self):
@@ -347,7 +348,14 @@ class gas_maintenance_vehicle(models.Model):
         no_ba_close         = []
         kop_surat           = []
         ttd                 = []
-        
+
+        pph                 = []
+        ppn                 = []
+        afterDiscount       = []
+        cuy                 = [1,2,3,4]
+        text_value          = []
+
+      
                 
         data_list = {
                 'id': id,
@@ -365,6 +373,11 @@ class gas_maintenance_vehicle(models.Model):
                 'no_ba_close': no_ba_close,
                 'kop_surat': kop_surat,
                 'ttd': ttd,
+                'afterDiscount': afterDiscount,
+                'ppn': ppn,
+                'pph': pph,
+                'cuy': cuy,
+                'text_value': text_value,
             }
         nama                    = []
         jenis_sarfas            = []
@@ -374,6 +387,7 @@ class gas_maintenance_vehicle(models.Model):
         vol    = []
         sat    = []
         supply = []
+
 
         dict_list = {
                 'id': id,
@@ -398,9 +412,16 @@ class gas_maintenance_vehicle(models.Model):
             rec_tanggal_kerusakan   = line.tanggal_kerusakan
             rec_standar_lama        = line.standar_lama
             
-            rec_biaya_perbaikan     = line.biaya_perbaikan
-            rec_discount            = line.discount
-            rec_final_price         = line.final_price
+            rec_biaya_perbaikan     = "Rp. " + str(f"{int(line.biaya_perbaikan):,}")            
+            rec_discount            = "Rp. " + str(f"{int(line.discount):,}")
+            rec_afterDiscount       = "Rp. " + str(f"{int(line.afterDiscount):,}")
+            rec_ppn                 = "Rp. " + str(f"{int(line.ppn):,}")
+            rec_pph                 = "Rp. " + str(f"{int(line.pph):,}")
+            Text_sample             = "Pada hari jumat, 01 september 2023 kami memberitahukan bahwa akan dilakukan perbaikan roda belakang bocor pada skid Hino 500 KT 8061 RN Di bengkel JAYA MANDIRI yang berlokasi di Jln. Kawasan Rt. 06, Gg. Keluarga, Kel. Jawa, Kec. Sanga - Sanga, Kutai Kartenegara, Kaltim . Dengan gambar sebagai berikut :"
+            Katas                   = "\t{}".format(Text_sample)
+            text_value.append(Katas)
+            
+            rec_final_price         = "Rp. " + str(f"{int(line.final_price):,}")
             rec_no_ba_close         = line.no_ba_close
             # Foto pertamina + seu
             kop_surat_1 = self.company_id.kop_surat_1
@@ -434,6 +455,10 @@ class gas_maintenance_vehicle(models.Model):
             standar_lama.append(rec_standar_lama)
             biaya_perbaikan.append(rec_biaya_perbaikan)
             discount.append(rec_discount)
+            afterDiscount.append(rec_afterDiscount)
+            ppn.append(rec_ppn)
+            pph.append(rec_pph)
+            
             final_price.append(rec_final_price)
             no_ba_close.append(rec_no_ba_close)            
             
@@ -441,7 +466,7 @@ class gas_maintenance_vehicle(models.Model):
                 rec_nama = list.name
                 rec_jenis_sarfas = list.jenis_sarfas
                 rec_uraian_pekerjaan = list.uraian_pekerjaan
-                rec_line_biaya_perbaikan = list.biaya_perbaikan
+                rec_line_biaya_perbaikan = "Rp. " + str(f"{int(list.biaya_perbaikan):,}")
                 code = 'NULL'
                 vol = 1
                 sat     = "UNIT"
@@ -487,6 +512,11 @@ class gas_maintenance_vendor(models.Model):
     
     NPWP = fields.Binary('NPWP')
     
+    bankName = fields.Char('Nama Bank')
+    
+    ownerBank = fields.Char('Nama Pemilik')
+    
+    photoAcountBank = fields.Char('Foto Buku Rekening')
     
 
 class gas_maintenance_vehicle_line(models.Model):
@@ -599,4 +629,4 @@ class gas_maintenance_vehicle_line(models.Model):
     
 
     
-    
+        

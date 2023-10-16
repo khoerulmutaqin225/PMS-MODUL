@@ -81,7 +81,7 @@
                                 <field name="brand" />
                             </group>
                             <group>
-                                <field name="vehicle_image" widget="image" class="oe_avatar" readonly="0" />
+                                <field name="vehicle_image" widget="image" class="oe_avatar"  options="{'widget': 'image', 'size': (250, 250)}" readonly="0"/>
                             </group>
                             <group>
                                 <field name="typeCar"  attrs="{'invisible': [('type', '!=', 'mobil')]}" />

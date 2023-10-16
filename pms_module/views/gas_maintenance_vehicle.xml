@@ -39,6 +39,10 @@
                         <field name="number"/>
                         <field name="alamat"/>
                         <field name="accountNumber"/>
+                        <field name="bankName"/>
+                        <field name="ownerBank"/>
+                        <field name="photoAcountBank"/>
+
                       </group>
                      <group name="Photos" string="Photos">
                         <field name="ktp" widget="image" options="{'widget': 'image', 'size': (170, 170)}"/>
@@ -107,6 +111,9 @@
             <form string="Gas Maintenance">
             <header>
             <button type="object" name="debug_gas" string="Print" class="btn-primary" />
+            <!-- <button type="object" name="debug_gas" string="Print" class="btn-primary" /> -->
+            <field name="status" widget="statusbar"
+            />
             </header>
                 <sheet>
                     <div>
@@ -125,10 +132,10 @@
                             <field name="currency_id" invisible="1"/>
                             <field name="brand" />                            
                             <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
-                            <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1"/>
+                            <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1" widget="radio" />
                             <field name="vendor" placeholder="Vendor" required="1"/>
                             <field name="company_id" placeholder="Select Company" invisible="1"/>
-                            <field name="corporate" placeholder="Select Company" />
+                            <field name="corporate" placeholder="Select Company" string="Perusahaan" />
                         </group>
                         <group name="records" string="Records :">
                             <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
@@ -163,7 +170,7 @@
                             
                               <group class="oe_subtotal_footer oe_right">
                                 <field name="discount" widget="monetary" />
-                                <field name="biaya_perbaikan" widget="monetary" string="Biaya Tanpa Pajak"/>
+                                <field name="afterDiscount" widget="monetary" string="Setelah Discount" force_save="1" readonly="1"/>
                                 <field name="pph" string="PPH ( 2%)" widget="monetary" />
                                 <field name="ppn" string="PPH (10%)" widget="monetary" />
                                 <div class="oe_subtotal_footer_separator oe_inline">

@@ -3,8 +3,6 @@
 
     <data>
         <report id="menu_report_pms_module_id" model="gas.maintenance.vehicle" string="Print PDF" report_type="qweb-pdf" name="pms_module.report_data_pms_module_id" file="pms_module.report_data_pms_module_id" />
-
-
         <template id="report_data_pms_module_id">
             <t t-call="web.html_container">
             
@@ -15,24 +13,23 @@
                     </div>
                     <div class="page" style="padding-top:40px; ">
                         <style>
-                        table{
-                        margin-left: 8px
-                        
-                        }
-                        table, th, td {
+                          table, th, td table, th, td {
                             border-collapse: collapse;
-                        }
-
+                            font-size:10px;
+                            margin-left: 8px;
+                            border: 1px solid #000;
+                            width: 1%;
+                            }
+                            
                         </style>
                         <!--<br/>-->
-                        <table border="0" width="98.5%">
+                        <table border="0" style="width: 100%;">
                             <!--Baris Atas-->
                             <tr style="border:none;">
                                 <td colspan="6" width="100%" align="center">
-                                    <span>
+                                    <span class="class12">
                                         <b>
-                                          
-                                            <u>ORDER PEKERJAAN</u>
+                                          <u>ORDER PEKERJAAN</u>
                                         </b>
                                     </span>
                                 </td>
@@ -148,65 +145,73 @@
                             </tr>
                         </table>
 
-                        <style>
-                          table, th, td { border-collapse: collapse;}
-                        </style>
-
                         <br/>
-                        <table border="1" width="98.5%">
+                        <table style="width: 100%;">
                             <!--Batas A  -->
                             <tr style="border:none;">
-                                <td colspan="11" width="100%">
-                                    <span>A </span>
+                                <td colspan="11" width="100%" style="font-size:8px">
+                                    <span >A </span>
                                 </td>
                             </tr>
-
+                        </table>
+                        <table style="width: 100%;">
                             <!--Looping Halaman-->
                             <!--<t t-foreach="master" t-as="o">-->
                             <tr style="border:none;">
-                                <td width="5%">
+                                <td>
+                                <!-- <td width="1%"> -->
                                     <span>No </span>
                                     <!--<span t-esc="o"/> -->
                                 </td>
 
                                 <!--2-->
-                                <td width="10%">
+                                <td>
+                                <!-- <td width="10%"> -->
                                     <span>Request By </span>
                                 </td>
                                 <!--3-->
-                                <td width="15%">
+                                <td>
+                                <!-- <td width="15%"> -->
                                     <span>Vessel / Unit / Job desc </span>
                                 </td>
                                 <!--4-->
-                                <td width="5%">
+                                <td>
+                                <!-- <td width="5%"> -->
                                     <span>Kode Budget </span>
                                 </td>
                                 <!--5-->
-                                <td width="20%">
+                                <td>
+                                <!-- <td width="20%"> -->
                                     <span>Uraian / Description </span>
                                 </td>
                                 <!--6-->
-                                <td width="10%">
+                                <td>
+                                <!-- <td width="10%"> -->
                                     <span>Jenis /type </span>
                                 </td>
                                 <!--7-->
-                                <td width="5%">
+                                <td>
+                                <!-- <td width="5%"> -->
                                     <span>Vol </span>
                                 </td>
                                 <!--8-->
-                                <td width="5%">
+                                <td>
+                                <!-- <td width="5%"> -->
                                     <span>Sat </span>
                                 </td>
                                 <!--9-->
-                                <td width="5%">
+                                <td>
+                                <!-- <td width="5%"> -->
                                     <span>Supply </span>
                                 </td>
                                 <!--10-->
-                                <td width="12%">
+                                <td>
+                                <!-- <td width="12%"> -->
                                     <span>Unit Price </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%">
+                                <td>
+                                <!-- <td width="17%"> -->
                                     <span>Amount </span>
                                 </td>
                             </tr>
@@ -214,120 +219,131 @@
                             <t t-foreach="dict_list['nama']" t-as="o">
                               <tr style="border:none;">
                                   <t t-set="i" t-value="i+1"/>
-                                  <td width="5%">
+                                  <td>
+                                  <!-- <td width="1%"> -->
                                       <!--<span>1 </span>-->
                                       <span t-esc="i"/>
                                   </td>
                                   <!--2-->
-                                  <td width="10%">
+                                  <td>
+                                  <!-- <td width="10%"> -->
                                       <span t-esc="data_list['pelapor'][0]"/>
                                       <!--<span>HESTI </span>-->
                                   </td>
                                   <!--3-->
-                                  <td width="15%">
+                                  <td>
+                                  <!-- <td width="15%"> -->
                                       <span>
                                       OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
                                       </span>
                                   </td>
                                   <!--4-->
-                                  <td width="5%">
+                                  <td>
+                                  <!-- <td width="5%"> -->
                                       <span>
                                       01.6-2260.002
                                       </span>
                                   </td>
                                   <!--5-->
-                                  <td width="20%">
+                                  <td>
+                                  <!-- <td width="20%"> -->
                                         <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>                                    
                                   </td>
                                   <!--6-->
-                                  <td width="10%">
+                                  <td>
+                                  <!-- <td width="10%"> -->
                                         <span t-esc="dict_list['jenis_sarfas'][o_index]"/>                                    
                                   </td>
                                   <!--7-->
-                                  <td width="5%">
+                                  <td>
+                                  <!-- <td width="5%"> -->
                                       <span>1 </span>
                                   </td>
                                   <!--8-->
-                                  <td width="5%">
+                                  <td>
+                                  <!-- <td width="5%"> -->
                                       <span>Units </span>
                                   </td>
                                   <!--9-->
-                                  <td width="5%">
+                                  <td>
+                                  <!-- <td width="5%"> -->
                                       <span>SGP </span>
                                   </td>
                                   <!--10-->
-                                  <td width="12%">
+                                  <td>
+                                  <!-- <td width="12%"> -->
                                         <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>                                    
                                   </td>
                                   <!--11-->
-                                  <td width="13%">
+                                  <td>
+                                  <!-- <td width="17%"> -->
                                         <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>                                    
                                   </td>
                               </tr>
                             </t>
                             
                             <!--Batas Kosong Atas-->
-                            <t t-if="i &lt; 6">
-                            <t t-foreach="[1,2]" t-as="j">
-                              <tr style="border:none;">
-                                  <td width="5%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--<t t-if="i &lt; 1">-->
+                            <!--<t t-foreach="[1,2]" t-as="j">-->
+                            <!--  <tr style="border:none;">-->
+                            <!--      <td width="1%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--2-->
-                                  <td width="10%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="10%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--3-->
-                                  <td width="15%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="15%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--4-->
-                                  <td width="5%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="5%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--5-->
-                                  <td width="20%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="20%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--6-->
-                                  <td width="10%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="10%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--7-->
-                                  <td width="5%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="5%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--8-->
-                                  <td width="5%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="5%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--9-->
-                                  <td width="5%">
-                                      <span><p style="color:green">x</p></span>
-                                  </td>
+                            <!--      <td width="5%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
+                            <!--      </td>-->
                                   <!--10-->
-                                  <td width="12%">
-                                      <span><p style="color:green">x</p></span>
+                            <!--      <td width="12%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
 
-                                  </td>
+                            <!--      </td>-->
                                   <!--11-->
-                                  <td width="13%">
-                                      <span><p style="color:green">x</p></span>
+                            <!--      <td width="17%">-->
+                            <!--          <span><p style="color:green">x</p></span>-->
                                       
-                                  </td>
-                              </tr>
-                              </t>                            
-                            </t>                            
+                            <!--      </td>-->
+                            <!--  </tr>-->
+                            <!--  </t>                            -->
+                            <!--</t>                            -->
                             <!--Batas Kosong Atas-->
                         
                             <!-- Batas Total -->
                             <tr style="border:1;">
                                 <!--1-10-->
-                                <td colspan="10" width="87%" align="center">
+                                <td colspan="10" width="83%" align="left">
                                     <span>Total </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%">
+                                <td width="17%" align="left">
                                     <span t-esc="data_list['biaya_perbaikan'][0]"/>   
                                 </td>
                             </tr>
@@ -335,7 +351,7 @@
                             <!-- Line -->
                             <tr style="border:1;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" width="43%" align="left">
                                     <span/>
                                 </td>
                                 <td colspan="3" width="40%">
@@ -346,7 +362,7 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td width="17%" align="left">
                                     <span t-esc="data_list['discount'][0]"/> 
                                 </td>
                             </tr>
@@ -354,7 +370,7 @@
                             <!-- Line 2-->
                             <tr style="border:1;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" width="43%" align="left">
                                     <span/>
                                 </td>
                                 <td colspan="3" width="40%">
@@ -365,8 +381,8 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
-                                    <span>-</span>
+                                <td width="17%" align="left">
+                               <span t-esc="data_list['afterDiscount'][0]"/> 
                                 </td>
                             </tr>
 
@@ -374,7 +390,7 @@
                             <!-- Line 4-->
                             <tr style="border:1;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" width="43%" align="left">
                                     <span/>
                                 </td>
                                 <td colspan="3" width="40%">
@@ -385,14 +401,14 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
-                                    <span>-</span>
+                                <td width="17%" align="left">
+                                  <span t-esc="data_list['ppn'][0]"/> 
                                 </td>
                             </tr>
                             <!-- Line 5-->
                             <tr style="border:1;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" width="43%" align="left">
                                     <span/>
                                 </td>
                                 <td colspan="3" width="40%">
@@ -403,14 +419,14 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
-                                    <span>-</span>
+                                <td width="17%" align="left">
+                                   <span t-esc="data_list['pph'][0]"/> 
                                 </td>
                             </tr>
                             <!-- Line 6-->
                             <tr style="border:1;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" width="43%" align="left">
                                     <span/>
                                 </td>
                                 <td colspan="3" width="40%">
@@ -421,8 +437,9 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
-                                    <span>Rp. 450.000</span>
+                                <td width="17%" align="left">
+                                    <!--<span>Rp. 450.000</span>-->
+                                    <span t-esc="data_list['final_price'][0]"/> 
                                 </td>
                             </tr>
                             <!--Batas B  -->
@@ -470,81 +487,93 @@
                                 </td>
                             </tr>
                             <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Syarifah Huzaifah </span>
+                                <td width="34%" colspan="3" align="center">
+                                    <!--<span> Syarifah Huzaifah </span>-->
+                                    <!--<span t-esc="data_list['ttd'][0]"/> -->
+                                   <img
+                                                t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}"
+                                                t-att-alt="data_list['ttd'][0]"
+                                                style="width: 200px;" />
                                 </td>
-                                <td width="33%" colspan="4">
-                                    <span> AN. HAKIM </span>
+                                <td width="33%" colspan="4" align="center">
+                                    <!--<span> AN. HAKIM </span>-->
+                                   <img
+                                                t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}"
+                                                t-att-alt="data_list['ttd'][1]"
+                                                style="width: 200px;" />
                                 </td>
-                                <td width="33%" colspan="4">
-                                    <span> FAJAR GUMILANG </span>
+                                <td width="33%" colspan="4" align="center">
+                                    <!--<span> FAJAR GUMILANG </span>-->
+                                   <img
+                                                t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}"
+                                                t-att-alt="data_list['ttd'][2]"
+                                                style="width: 200px;" />
                                 </td>
                             </tr>
                             <tr style="border:none;">
-                                <td width="34%" colspan="3">
+                                <td width="34%" colspan="3" align="center">
                                     <span> PIC SEU </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center">
                                     <span> CORPORATE LOGISTIK </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center">
                                     <span> B.U SEU </span>
                                 </td>
                             </tr>
                         </table>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <table>
-                            <tr>
-                                <td>
-                                    <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
-                                </td>
-                            </tr>
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Dibuat Oleh : </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> Disetujui Oleh : </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> Payment Method : </span>
-                                    <span> Disetujui Oleh : </span>
-                                </td>
-                            </tr> 
+
+
+                        <!--<br/>-->
+                        <!--<br/>-->
+                        <!--<br/>-->
+                        <!--<br/>-->
+                        <!--<br/>-->
+                        <!--<br/>-->
+                        <!--<table>-->
+                        <!--    <tr>-->
+                        <!--        <td>-->
+                        <!--            <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--            <span> Dibuat Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> Disetujui Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> Payment Method : </span>-->
+                        <!--            <span> Disetujui Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--    </tr> -->
                             <!-- Nama -->
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Syarifah Huzaifah </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> AN. HAKIM </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> FAJAR GUMILANG </span>
-                                </td>
-                            </tr>
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> PIC SEU </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> CORPORATE LOGISTIK </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> B.U SEU </span>
-                                </td>
-                            </tr>
-                        </table>
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--            <span> Syarifah Huzaifah </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> AN. HAKIM </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> FAJAR GUMILANG </span>-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--            <span> PIC SEU </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> CORPORATE LOGISTIK </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> B.U SEU </span>-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--</table>-->
                     </div>
             </t>    
-    
-
-            
         </template>
     </data>
 </odoo>
