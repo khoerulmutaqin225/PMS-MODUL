@@ -506,17 +506,51 @@ class gas_maintenance_vendor(models.Model):
     
     alamat = fields.Char(string="Alamat")
     
-    ktp = fields.Binary('KTP')
     
     accountNumber = fields.Char(string="Nomor Rekening")
     
-    NPWP = fields.Binary('NPWP')
     
     bankName = fields.Char('Nama Bank')
     
     ownerBank = fields.Char('Nama Pemilik')
     
-    photoAcountBank = fields.Char('Foto Buku Rekening')
+    # Batas Atas
+    @api.depends('photoAcountBank','ktp', 'NPWP')   
+    def _ci_64(self):
+        for template in self:
+            if template.NPWP:
+                template.NPWP = self._c_i(template.NPWP)
+            if template.ktp:
+                template.ktp = self._c_i(template.ktp)
+            if template.photoAcountBank:
+                template.photoAcountBank = self._c_i(template.photoAcountBank)
+
+    def _s_i_64(self):
+        for template in self:
+            if template.NPWP:
+                template.NPWP = self._c_i(template.NPWP)
+            if template.ktp:
+                template.ktp = self._c_i(template.ktp)
+            if template.photoAcountBank:
+                template.photoAcountBank = self._c_i(template.photoAcountBank)
+
+    def _c_i(self, image_data):
+        # Decode the image data from base64
+        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+
+        # Compress the image
+        compressed_image = io.BytesIO()
+        image.save(compressed_image, format='JPEG', optimize=True, quality=60)
+
+        # Encode the compressed image data to base64
+        return base64.b64encode(compressed_image.getvalue())
+    
+    
+    
+    photoAcountBank = fields.Binary("Foto Buku Rekening'", compute='_ci_64', inverse='_s_i_64', store=True)
+    ktp = fields.Binary("Foto Ktp", compute='_ci_64', inverse='_s_i_64', store=True)
+    NPWP = fields.Binary("Foto NPWP", compute='_ci_64', inverse='_s_i_64', store=True)
+ 
     
 
 class gas_maintenance_vehicle_line(models.Model):

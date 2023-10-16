@@ -41,7 +41,7 @@
                         <field name="accountNumber"/>
                         <field name="bankName"/>
                         <field name="ownerBank"/>
-                        <field name="photoAcountBank"/>
+                        <field name="photoAcountBank" widget="image" options="{'widget': 'image', 'size': (170, 170)}"/>
 
                       </group>
                      <group name="Photos" string="Photos">
