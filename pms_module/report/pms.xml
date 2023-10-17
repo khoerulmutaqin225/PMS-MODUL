@@ -3,8 +3,6 @@
 
     <data>
         <report id="menu_report_pms_module_id" model="gas.maintenance.vehicle" string="Print PDF" report_type="qweb-pdf" name="pms_module.report_data_pms_module_id" file="pms_module.report_data_pms_module_id" />
-
-
         <template id="report_data_pms_module_id">
             <t t-call="web.html_container">
             
@@ -13,22 +11,19 @@
                             <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
                         </div>
                     </div>
-                    <div class="page" style="padding-top:40px; ">
-                        <style>
-                        table{
-                        margin-left: 8px
-                        
-                        }
-                        table, th, td {
-                            border-collapse: collapse;
-                        }
-
-                        </style>
+                    <div class="page" style="padding-top:50px; ">
                         <!--<br/>-->
-                        <table border="0" width="98.5%">
-                            <!--Baris Atas-->
-                            <tr style="border:none;">
-                                <td colspan="6" width="100%" align="center">
+                        <t t-foreach="data_list['cuy']" t-as="cuy">
+                        <!--<table style="margin-left: 8px; border-collapse: collapse; margin-left: 8px;">-->
+                        <table style="width: 100%; border-collapse: collapse;">
+                        <!--Baris Atas-->
+                            <tr width="100%" >
+                                <td  colspan="6" align="center">
+                                     <span t-esc="cuy"/>
+                                </td>
+                            </tr>
+                            <tr width="100%" >
+                                <td  colspan="6" align="center">
                                     <span>
                                         <b>
                                           
@@ -37,44 +32,46 @@
                                     </span>
                                 </td>
                             </tr>
-                            <tr style="border:none;">
-                                <td colspan="6" width="100%" align="center">
+                            <tr width="100%" >
+                                <td  colspan="6" align="center">
                                     <span>
                                         <b>
                                             <i>WORKING ORDER</i>
                                         </b>
                                     </span>
                                 </td>
+
                             </tr>
-                            <!--Ini kosong-->
-                            <tr style="border:none;">
-                                <td colspan="6" width="100%" align="center">
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%;">                            <!--Ini kosong-->
+                            <tr width="100%" >
+                                <td  align="center"  colspan="6">
                                     <span>
                                         <p style="color:#FFFFFF;">A red paragraph.</p>
                                     </span>
                                 </td>
                             </tr>
-
-                            <!--Baris Pertama-->
-                            <tr style="border:none;">
-                                <td width="10%">
+                        </table>
+                        <table style="border-collapse: collapse;  width: 100%;">                            <!--Baris Pertama-->
+                            <tr style="border:none;" width="100%">
+                                <td >
                                     <span>No. WO </span>
                                 </td>
                                 <td width="1%">
                                     <span>:</span>
                                 </td>
-                                <td width="44%" align="center">
+                                <td align="center">
                                     <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
                                      <t t-esc="data_list['name'][0]"/>
                                 </td>
 
-                                <td width="10%">
+                                <td >
                                     <span>Tgl. WO </span>
                                 </td>
-                                <td width="1%">
+                                <td >
                                     <span>:</span>
                                 </td>
-                                <td width="34%" align="center">
+                                <td align="center">
                                     <b>09 September 2023 </b>
                                 </td>
                             </tr>
@@ -148,119 +145,139 @@
                             </tr>
                         </table>
 
-                        <style>
-                          table, th, td { border-collapse: collapse;}
-                        </style>
-
                         <br/>
-                        <table border="1" width="98.5%">
+                        <table style="border-collapse: collapse;  width=:100%;">
                             <!--Batas A  -->
                             <tr style="border:none;">
                                 <td colspan="11" width="100%">
                                     <span>A </span>
                                 </td>
                             </tr>
-
+                        </table>
+                        
+                        <table style="border-collapse: collapse;  width=:100%;">
                             <!--Looping Halaman-->
                             <!--<t t-foreach="master" t-as="o">-->
                             <tr style="border:none;">
-                                <td width="5%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="5%"> -->
                                     <span>No </span>
                                     <!--<span t-esc="o"/> -->
                                 </td>
 
                                 <!--2-->
-                                <td width="10%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="10%"> -->
                                     <span>Request By </span>
                                 </td>
                                 <!--3-->
-                                <td width="15%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="15%"> -->
                                     <span>Vessel / Unit / Job desc </span>
                                 </td>
                                 <!--4-->
-                                <td width="5%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="5%"> -->
                                     <span>Kode Budget </span>
                                 </td>
                                 <!--5-->
-                                <td width="20%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="20%"> -->
                                     <span>Uraian / Description </span>
                                 </td>
                                 <!--6-->
-                                <td width="10%">
+                                <td style="border: 1px solid #000; white-space: nowrap; ">
+                                <!-- <td width="10%"> -->
                                     <span>Jenis /type </span>
                                 </td>
                                 <!--7-->
-                                <td width="5%">
+                                <td style="border: 1px solid #000; white-space: nowrap;" >
+                                <!-- <td width="5%"> -->
                                     <span>Vol </span>
                                 </td>
                                 <!--8-->
-                                <td width="5%">
+                                <td style="border: 1px solid #000; white-space: nowrap;" >
+                                <!-- <td width="5%"> -->
                                     <span>Sat </span>
                                 </td>
                                 <!--9-->
-                                <td width="5%">
+                                <td style="border: 1px solid #000; white-space: nowrap;" >
+                                <!-- <td width="5%"> -->
                                     <span>Supply </span>
                                 </td>
                                 <!--10-->
-                                <td width="12%">
+                                <td style="border: 1px solid #000; white-space: nowrap;" >
+                                <!-- <td width="12%"> -->
                                     <span>Unit Price </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%">
+                                <td style="border: 1px solid #000; white-space: nowrap;">
+                                <!-- <td width="13%"> -->
                                     <span>Amount </span>
                                 </td>
                             </tr>
                             <t t-set="i" t-value="0"/>
                             <t t-foreach="dict_list['nama']" t-as="o">
-                              <tr style="border:none;">
+                              <tr style="border:none; width:5%;">
                                   <t t-set="i" t-value="i+1"/>
-                                  <td width="5%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="5%"> -->
                                       <!--<span>1 </span>-->
                                       <span t-esc="i"/>
                                   </td>
                                   <!--2-->
-                                  <td width="10%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="10%"> -->
                                       <span t-esc="data_list['pelapor'][0]"/>
                                       <!--<span>HESTI </span>-->
                                   </td>
                                   <!--3-->
-                                  <td width="15%">
+                                  <td style="border: 1px solid #000; white-space: nowrap; ">
+                                  <!-- <td width="15%"> -->
                                       <span>
                                       OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
                                       </span>
                                   </td>
                                   <!--4-->
-                                  <td width="5%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;">
+                                  <!-- <td width="5%"> -->
                                       <span>
                                       01.6-2260.002
                                       </span>
                                   </td>
                                   <!--5-->
-                                  <td width="20%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="20%"> -->
                                         <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>                                    
                                   </td>
                                   <!--6-->
-                                  <td width="10%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="10%"> -->
                                         <span t-esc="dict_list['jenis_sarfas'][o_index]"/>                                    
                                   </td>
                                   <!--7-->
-                                  <td width="5%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="5%"> -->
                                       <span>1 </span>
                                   </td>
                                   <!--8-->
-                                  <td width="5%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="5%"> -->
                                       <span>Units </span>
                                   </td>
                                   <!--9-->
-                                  <td width="5%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="5%"> -->
                                       <span>SGP </span>
                                   </td>
                                   <!--10-->
-                                  <td width="12%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;" >
+                                  <!-- <td width="12%"> -->
                                         <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>                                    
                                   </td>
                                   <!--11-->
-                                  <td width="13%">
+                                  <td style="border: 1px solid #000; white-space: nowrap;">
+                                  <!-- <td width="13%"> -->
                                         <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>                                    
                                   </td>
                               </tr>
@@ -269,7 +286,7 @@
                             <!--Batas Kosong Atas-->
                             <t t-if="i &lt; 6">
                             <t t-foreach="[1,2]" t-as="j">
-                              <tr style="border:none;">
+                              <tr style="border:none; width:5%;">
                                   <td width="5%">
                                       <span><p style="color:green">x</p></span>
                                   </td>
@@ -321,24 +338,25 @@
                             <!--Batas Kosong Atas-->
                         
                             <!-- Batas Total -->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-10-->
-                                <td colspan="10" width="87%" align="center">
+                                <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                <!--<td colspan="10" width="87%" align="center">-->
                                     <span>Total </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%">
+                                <td style="border: 1px solid #000; white-space: nowrap;">
                                     <span t-esc="data_list['biaya_perbaikan'][0]"/>   
                                 </td>
                             </tr>
 
                             <!-- Line -->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
                                     <span/>
                                 </td>
-                                <td colspan="3" width="40%">
+                                <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
                                     <span>
                                         <b>
                               Discount 
@@ -346,18 +364,18 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span t-esc="data_list['discount'][0]"/> 
                                 </td>
                             </tr>
 
                             <!-- Line 2-->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span/>
                                 </td>
-                                <td colspan="3" width="40%">
+                                <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
                                     <span>
                                         <b>
                                             Setelah Discount 
@@ -365,19 +383,19 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span>-</span>
                                 </td>
                             </tr>
 
           
                             <!-- Line 4-->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span/>
                                 </td>
-                                <td colspan="3" width="40%">
+                                <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
                                     <span>
                                         <b>
                               PPN (11%)
@@ -385,17 +403,17 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span>-</span>
                                 </td>
                             </tr>
                             <!-- Line 5-->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span/>
                                 </td>
-                                <td colspan="3" width="40%">
+                                <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
                                     <span>
                                         <b>
                               PPH (2%)
@@ -403,17 +421,17 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span>-</span>
                                 </td>
                             </tr>
                             <!-- Line 6-->
-                            <tr style="border:1;">
+                            <tr style="border:1; width:5%;">
                                 <!--1-15-->
-                                <td colspan="7" width="47%" align="center">
+                                <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span/>
                                 </td>
-                                <td colspan="3" width="40%">
+                                <td colspan="3" style="border: 1px solid #000; white-space: nowrap;" >
                                     <span>
                                         <b>
                               Harga Total
@@ -421,16 +439,16 @@
                                     </span>
                                 </td>
                                 <!--11-->
-                                <td width="13%" align="center">
+                                <td style="border: 1px solid #000; white-space: nowrap;" align="center">
                                     <span>Rp. 450.000</span>
                                 </td>
                             </tr>
                             <!--Batas B  -->
-                            <tr style="border:none;">
-                                <td width="10%">
+                            <tr style="border:none; width:5%;">
+                                <td style="border: 1px solid #000; white-space: nowrap;" >
                                     <span>B </span>
                                 </td>
-                                <td colspan="10" width="90%">
+                                <td colspan="10" >
                                     <span>
                                         <b>
                                         PEMBAYARAN / PAYMENT
@@ -492,13 +510,10 @@
                                 </td>
                             </tr>
                         </table>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <table>
+                        
+                        
+                        <table style="border-collapse: collapse; margin-left: 8px;">
+     
                             <tr>
                                 <td>
                                     <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
@@ -540,11 +555,10 @@
                                 </td>
                             </tr>
                         </table>
+                        <p style="page-break-before:always;"> </p> 
+                    </t>    
                     </div>
-            </t>    
-    
-
-            
+            </t>            
         </template>
     </data>
 </odoo>
