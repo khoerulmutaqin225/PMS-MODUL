@@ -146,6 +146,7 @@
                         </table>
 
                         <br/>
+                        
                         <table style="border-collapse: collapse;  width=:100%;">
                             <!--Batas A  -->
                             <tr style="border:none;">
@@ -477,88 +478,107 @@
                                 </td>
                             </tr>
                             <tr style="border:none;">
-                                <td width="34%" colspan="3">
+                                <td width="34%" colspan="3" align="center">
                                     <span> Dibuat Oleh : </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center" >
                                     <span> Disetujui Oleh : </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center">
                                     <span> Disetujui Oleh : </span>
                                 </td>
                             </tr>
                             <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Syarifah Huzaifah </span>
+                                <td width="34%" colspan="3" align="center" >
+                                   <img
+                                        t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}"
+                                        t-att-alt="data_list['ttd'][0]"
+                                        style="width: 200px;" />
                                 </td>
-                                <td width="33%" colspan="4">
-                                    <span> AN. HAKIM </span>
+                                <td width="33%" colspan="4" align="center" >
+                                  
+                                   <img
+                                        t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}"
+                                        t-att-alt="data_list['ttd'][1]"
+                                        style="width: 200px;" />
                                 </td>
-                                <td width="33%" colspan="4">
-                                    <span> FAJAR GUMILANG </span>
+                                <td width="33%" colspan="4" align="center" >
+                                   <img
+                                        t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}"
+                                        t-att-alt="data_list['ttd'][2]"
+                                        style="width: 200px;" />
                                 </td>
                             </tr>
                             <tr style="border:none;">
-                                <td width="34%" colspan="3">
+                                <td width="34%" colspan="3" align="center" >
                                     <span> PIC SEU </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center">
                                     <span> CORPORATE LOGISTIK </span>
                                 </td>
-                                <td width="33%" colspan="4">
+                                <td width="33%" colspan="4" align="center" >
                                     <span> B.U SEU </span>
                                 </td>
                             </tr>
                         </table>
                         
                         
-                        <table style="border-collapse: collapse; margin-left: 8px;">
+                        <!--<table style="border-collapse: collapse; margin-left: 8px;">-->
      
-                            <tr>
-                                <td>
-                                    <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
-                                </td>
-                            </tr>
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Dibuat Oleh : </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> Disetujui Oleh : </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> Payment Method : </span>
-                                    <span> Disetujui Oleh : </span>
-                                </td>
-                            </tr> 
+                        <!--    <tr>-->
+                        <!--        <td>-->
+                        <!--            <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--            <span> Dibuat Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> Disetujui Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> Payment Method : </span>-->
+                        <!--            <span> Disetujui Oleh : </span>-->
+                        <!--        </td>-->
+                        <!--    </tr> -->
                             <!-- Nama -->
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> Syarifah Huzaifah </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> AN. HAKIM </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> FAJAR GUMILANG </span>
-                                </td>
-                            </tr>
-                            <tr style="border:none;">
-                                <td width="34%" colspan="3">
-                                    <span> PIC SEU </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> CORPORATE LOGISTIK </span>
-                                </td>
-                                <td width="33%" colspan="4">
-                                    <span> B.U SEU </span>
-                                </td>
-                            </tr>
-                        </table>
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--           <img-->
+                        <!--                t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}"-->
+                        <!--                t-att-alt="data_list['ttd'][0]"-->
+                        <!--                style="width: 200px;" />-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--           <img-->
+                        <!--                t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}"-->
+                        <!--                t-att-alt="data_list['ttd'][1]"-->
+                        <!--                style="width: 200px;" />-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--           <img-->
+                        <!--                t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}"-->
+                        <!--                t-att-alt="data_list['ttd'][2]"-->
+                        <!--                style="width: 200px;" />-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--    <tr style="border:none;">-->
+                        <!--        <td width="34%" colspan="3">-->
+                        <!--            <span> PIC SEU </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> CORPORATE LOGISTIK </span>-->
+                        <!--        </td>-->
+                        <!--        <td width="33%" colspan="4">-->
+                        <!--            <span> B.U SEU </span>-->
+                        <!--        </td>-->
+                        <!--    </tr>-->
+                        <!--</table>-->
                         <p style="page-break-before:always;"> </p> 
                     </t>    
                     </div>
-            </t>            
+            </t>                    
         </template>
     </data>
 </odoo>
