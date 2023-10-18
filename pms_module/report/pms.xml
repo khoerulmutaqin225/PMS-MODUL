@@ -4,2147 +4,1158 @@
     <data>
         <report id="menu_report_pms_module_id" model="gas.maintenance.vehicle" string="Print PDF" report_type="qweb-pdf" name="pms_module.report_data_pms_module_id" file="pms_module.report_data_pms_module_id" />
         <template id="report_data_pms_module_id">
-        <t t-call="web.html_container">
+            <t t-call="web.html_container">
 
-        <div class="header" style="padding-top:20px;">
-            <div class="gambar" align="center">
-                <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
-            </div>
-        </div>
-        <div class="page" style="padding-top:-10px; ">
-            <!--<br/>-->
-            <t t-foreach="data_list['cuy']" t-as="cuy">
-                <t t-if="cuy == 1">
-                    <!-- <table style="width: 100%; border-collapse: collapse;">
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                              <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 200px" />
-                           </td>
-                        </tr>
-                    </table> -->
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <!-- <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span t-esc="cuy"/>
-                            </td>
-                        </tr> -->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-
-                                        <u>ORDER PEKERJAAN</u>
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-                                        <i>WORKING ORDER</i>
-                                    </b>
-                                </span>
-                            </td>
-
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse; width: 100%;">                        <!--Ini kosong-->
-                        <tr width="100%">
-                            <td align="center" colspan="6">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse;  width: 100%;">                        <!--Baris Pertama-->
-                        <tr style="border:none;" width="100%">
-                            <td >
-                                <span>No. WO </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
-                                <t t-esc="data_list['name'][0]"/>
-                            </td>
-
-                            <td >
-                                <span>Tgl. WO </span>
-                            </td>
-                            <td >
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <b>09 September 2023 </b>
-                            </td>
-                        </tr>
-
-                        <!--Baris Kedua-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Kepada </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <!-- <b>BENGKEL JAYA MANDIRI</b> -->
-                                <t t-esc="data_list['vendor'][0]"/>
-                            </td>
-
-                            <td width="10%">
-                                <span>Faksimili </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b/>
-                            </td>
-                        </tr>
-                        <!--Baris Ketiga-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Alamat </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <b>SANGA-SANGA</b>
-                            </td>
-
-                            <td width="10%">
-                                <span>Telepon </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b>0831-2704-8901</b>
-                            </td>
-                        </tr>
-
-                        <!--Kosongan-->
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%" align="center">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Sesuai Invoice Dari Perusahaan Anda Dengan Nomor : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Tertanggal : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <br/>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Batas A  -->
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>A </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Looping Halaman-->
-                        <tr style="border:none;">
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>No </span>
-                                <!--<span t-esc="o"/> -->
-                            </td>
-
-                            <!--2-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Request By </span>
-                            </td>
-                            <!--3-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="15%"> -->
-                                <span>Vessel / Unit / Job desc </span>
-                            </td>
-                            <!--4-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>Kode Budget </span>
-                            </td>
-                            <!--5-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="20%"> -->
-                                <span>Uraian / Description </span>
-                            </td>
-                            <!--6-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Jenis /type </span>
-                            </td>
-                            <!--7-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Vol </span>
-                            </td>
-                            <!--8-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Sat </span>
-                            </td>
-                            <!--9-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Supply </span>
-                            </td>
-                            <!--10-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="12%"> -->
-                                <span>Unit Price </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="13%"> -->
-                                <span>Amount </span>
-                            </td>
-                        </tr>
-                        <t t-set="i" t-value="0"/>
-                        <t t-foreach="dict_list['nama']" t-as="o">
-                            <tr style="border:none; width:5%;">
-                                <t t-set="i" t-value="i+1"/>
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <!--<span>1 </span>-->
-                                    <span t-esc="i"/>
+                <div class="header" style="padding-top:20px;">
+                    <div class="gambar" align="center">
+                        <img align="center" width="100%" src="pms_module/static/description/KOP-SEU 5.png" alt="no image"/>
+                    </div>
+                </div>
+                <div class="page" style="padding-top:50px; ">
+                    <!--<br/>-->
+                    <t t-foreach="data_list['cuy']" t-as="cuy">
+                        <t t-if="cuy == 1">
+                            <!-- <table style="width: 100%; border-collapse: collapse;">
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                    <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 200px" />
                                 </td>
-                                <!--2-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="data_list['pelapor'][0]"/>
-                                    <!--<span>HESTI </span>-->
-                                </td>
-                                <!--3-->
-                                <td style="border: 1px solid #000; white-space: nowrap; ">
-                                    <!-- <td width="15%"> -->
-                                    <span>
-                                      OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
-                                    </span>
-                                </td>
-                                <!--4-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>
-                                      01.6-2260.002
-                                    </span>
-                                </td>
-                                <!--5-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="20%"> -->
-                                    <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>
-                                </td>
-                                <!--6-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="dict_list['jenis_sarfas'][o_index]"/>
-                                </td>
-                                <!--7-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>1 </span>
-                                </td>
-                                <!--8-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>Units </span>
-                                </td>
-                                <!--9-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>SGP </span>
-                                </td>
-                                <!--10-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="12%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                                <!--11-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="13%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                            </tr>
-                        </t>
-
-                        <!--Batas Kosong Atas-->
-                        <t t-if="i &lt; 6">
-                            <t t-foreach="[1,2]" t-as="j">
-                                <tr style="border: 1pt solid black;">
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                </tr>
+                            </table> -->
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <!--Baris Atas-->
+                                <!-- <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span t-esc="cuy"/>
                                     </td>
-                                    <!--2-->
-                                    <td width="10%">
+                                </tr> -->
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
                                         <span>
-                                            <p style="color:white">x</p>
+                                            <h1>
+                                                <b>
+                                                    <u>ORDER PEKERJAAN</u>
+                                                </b>
+                                            </h1>
                                         </span>
-                                    </td>
-                                    <!--3-->
-                                    <td width="15%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--4-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--5-->
-                                    <td width="20%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--6-->
-                                    <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--7-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--8-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--9-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--10-->
-                                    <td width="12%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-
-                                    </td>
-                                    <!--11-->
-                                    <td width="13%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-
                                     </td>
                                 </tr>
-                            </t>
-                        </t>
-                        <!--Batas Kosong Atas-->
-
-                        <!-- Batas Total -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-10-->
-                            <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <!--<td colspan="10" width="87%" align="center">-->
-                                <span>Total </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span t-esc="data_list['biaya_perbaikan'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span t-esc="data_list['discount'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line 2-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                                            Setelah Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-
-
-                        <!-- Line 4-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPN (11%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 5-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPH (2%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 6-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Harga Total
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>Rp. 450.000</span>
-                            </td>
-                        </tr>
-                        <!--Batas B  -->
-                        <tr style="border:none; width:5%;">
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span>B </span>
-                            </td>
-                            <td colspan="10">
-                                <span>
-                                    <b>
-                                        PEMBAYARAN / PAYMENT
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11">
-                                <span>Jadwal Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Payment Schedule : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Cara Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span> Payment Method : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <!-- Batasan Tanda tangan -->
-                    <table style="border-collapse: collapse; width: 100%">
-                        <tr style="border: none">
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Dibuat Oleh : </span>
-                            </td>
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                            <td width="33%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33,3" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px" />
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> PIC SEU </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> CORPORATE LOGISTIK </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> B.U SEU </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <p style="page-break-before:always;"></p>
-                </t>
-                <t t-if="cuy == 2">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <!-- <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span t-esc="cuy"/>
-                            </td>
-                        </tr> -->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-
-                                        <u>ORDER PEKERJAAN</u>
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-                                        <i>WORKING ORDER</i>
-                                    </b>
-                                </span>
-                            </td>
-
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse; width: 100%;">                        <!--Ini kosong-->
-                        <tr width="100%">
-                            <td align="center" colspan="6">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse;  width: 100%;">                        <!--Baris Pertama-->
-                        <tr style="border:none;" width="100%">
-                            <td >
-                                <span>No. WO </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
-                                <t t-esc="data_list['name'][0]"/>
-                            </td>
-
-                            <td >
-                                <span>Tgl. WO </span>
-                            </td>
-                            <td >
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <b>09 September 2023 </b>
-                            </td>
-                        </tr>
-
-                        <!--Baris Kedua-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Kepada </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <!-- <b>BENGKEL JAYA MANDIRI</b> -->
-                                <t t-esc="data_list['vendor'][0]"/>
-                            </td>
-
-                            <td width="10%">
-                                <span>Faksimili </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b/>
-                            </td>
-                        </tr>
-                        <!--Baris Ketiga-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Alamat </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <b>SANGA-SANGA</b>
-                            </td>
-
-                            <td width="10%">
-                                <span>Telepon </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b>0831-2704-8901</b>
-                            </td>
-                        </tr>
-
-                        <!--Kosongan-->
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%" align="center">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Sesuai Invoice Dari Perusahaan Anda Dengan Nomor : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Tertanggal : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <br/>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Batas A  -->
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>A </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Looping Halaman-->
-                        <tr style="border:none;">
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>No </span>
-                                <!--<span t-esc="o"/> -->
-                            </td>
-
-                            <!--2-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Request By </span>
-                            </td>
-                            <!--3-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="15%"> -->
-                                <span>Vessel / Unit / Job desc </span>
-                            </td>
-                            <!--4-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>Kode Budget </span>
-                            </td>
-                            <!--5-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="20%"> -->
-                                <span>Uraian / Description </span>
-                            </td>
-                            <!--6-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Jenis /type </span>
-                            </td>
-                            <!--7-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Vol </span>
-                            </td>
-                            <!--8-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Sat </span>
-                            </td>
-                            <!--9-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Supply </span>
-                            </td>
-                            <!--10-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="12%"> -->
-                                <span>Unit Price </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="13%"> -->
-                                <span>Amount </span>
-                            </td>
-                        </tr>
-                        <t t-set="i" t-value="0"/>
-                        <t t-foreach="dict_list['nama']" t-as="o">
-                            <tr style="border:none; width:5%;">
-                                <t t-set="i" t-value="i+1"/>
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <!--<span>1 </span>-->
-                                    <span t-esc="i"/>
-                                </td>
-                                <!--2-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="data_list['pelapor'][0]"/>
-                                    <!--<span>HESTI </span>-->
-                                </td>
-                                <!--3-->
-                                <td style="border: 1px solid #000; white-space: nowrap; ">
-                                    <!-- <td width="15%"> -->
-                                    <span>
-                                      OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
-                                    </span>
-                                </td>
-                                <!--4-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>
-                                      01.6-2260.002
-                                    </span>
-                                </td>
-                                <!--5-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="20%"> -->
-                                    <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>
-                                </td>
-                                <!--6-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="dict_list['jenis_sarfas'][o_index]"/>
-                                </td>
-                                <!--7-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>1 </span>
-                                </td>
-                                <!--8-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>Units </span>
-                                </td>
-                                <!--9-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>SGP </span>
-                                </td>
-                                <!--10-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="12%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                                <!--11-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="13%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                            </tr>
-                        </t>
-
-                        <!--Batas Kosong Atas-->
-                        <t t-if="i &lt; 6">
-                            <t t-foreach="[1,2]" t-as="j">
-                                <tr style="border: 1pt solid black;">
-                                    <td width="5%">
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
                                         <span>
-                                            <p style="color:white">x</p>
+                                            <h3>
+                                                <b>
+                                                    <i>WORKING ORDER</i>
+                                                </b>
+                                            </h3>
                                         </span>
                                     </td>
-                                    <!--2-->
-                                    <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--3-->
-                                    <td width="15%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--4-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--5-->
-                                    <td width="20%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--6-->
-                                    <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--7-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--8-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--9-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--10-->
-                                    <td width="12%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
 
-                                    </td>
-                                    <!--11-->
-                                    <td width="13%">
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse; width: 100%;">                                <!--Ini kosong-->
+                                <tr width="100%">
+                                    <td align="center" colspan="6">
                                         <span>
-                                            <p style="color:white">x</p>
+                                            <p style="color:#FFFFFF;">A red paragraph.</p>
                                         </span>
-
                                     </td>
                                 </tr>
-                            </t>
-                        </t>
-                        <!--Batas Kosong Atas-->
-
-                        <!-- Batas Total -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-10-->
-                            <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <!--<td colspan="10" width="87%" align="center">-->
-                                <span>Total </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span t-esc="data_list['biaya_perbaikan'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span t-esc="data_list['discount'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line 2-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                                            Setelah Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-
-
-                        <!-- Line 4-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPN (11%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 5-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPH (2%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 6-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Harga Total
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>Rp. 450.000</span>
-                            </td>
-                        </tr>
-                        <!--Batas B  -->
-                        <tr style="border:none; width:5%;">
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span>B </span>
-                            </td>
-                            <td colspan="10">
-                                <span>
-                                    <b>
-                                        PEMBAYARAN / PAYMENT
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11">
-                                <span>Jadwal Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Payment Schedule : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Cara Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span> Payment Method : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <!-- Batasan Tanda tangan -->
-                    <table style="border-collapse: collapse; width: 100%">
-                        <tr style="border: none">
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Dibuat Oleh : </span>
-                            </td>
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                            <td width="33%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33,3" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px" />
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> PIC SEU </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> CORPORATE LOGISTIK </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> B.U SEU </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <p style="page-break-before:always;"></p>
-                </t>
-                <t t-if="cuy == 3">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <!-- <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span t-esc="cuy"/>
-                            </td>
-                        </tr> -->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-
-                                        <u>ORDER PEKERJAAN</u>
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-                                        <i>WORKING ORDER</i>
-                                    </b>
-                                </span>
-                            </td>
-
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse; width: 100%;">                        <!--Ini kosong-->
-                        <tr width="100%">
-                            <td align="center" colspan="6">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse;  width: 100%;">                        <!--Baris Pertama-->
-                        <tr style="border:none;" width="100%">
-                            <td >
-                                <span>No. WO </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
-                                <t t-esc="data_list['name'][0]"/>
-                            </td>
-
-                            <td >
-                                <span>Tgl. WO </span>
-                            </td>
-                            <td >
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <b>09 September 2023 </b>
-                            </td>
-                        </tr>
-
-                        <!--Baris Kedua-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Kepada </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <!-- <b>BENGKEL JAYA MANDIRI</b> -->
-                                <t t-esc="data_list['vendor'][0]"/>
-                            </td>
-
-                            <td width="10%">
-                                <span>Faksimili </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b/>
-                            </td>
-                        </tr>
-                        <!--Baris Ketiga-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Alamat </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <b>SANGA-SANGA</b>
-                            </td>
-
-                            <td width="10%">
-                                <span>Telepon </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b>0831-2704-8901</b>
-                            </td>
-                        </tr>
-
-                        <!--Kosongan-->
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%" align="center">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Sesuai Invoice Dari Perusahaan Anda Dengan Nomor : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Tertanggal : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <br/>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Batas A  -->
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>A </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Looping Halaman-->
-                        <tr style="border:none;">
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>No </span>
-                                <!--<span t-esc="o"/> -->
-                            </td>
-
-                            <!--2-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Request By </span>
-                            </td>
-                            <!--3-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="15%"> -->
-                                <span>Vessel / Unit / Job desc </span>
-                            </td>
-                            <!--4-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>Kode Budget </span>
-                            </td>
-                            <!--5-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="20%"> -->
-                                <span>Uraian / Description </span>
-                            </td>
-                            <!--6-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Jenis /type </span>
-                            </td>
-                            <!--7-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Vol </span>
-                            </td>
-                            <!--8-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Sat </span>
-                            </td>
-                            <!--9-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Supply </span>
-                            </td>
-                            <!--10-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="12%"> -->
-                                <span>Unit Price </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="13%"> -->
-                                <span>Amount </span>
-                            </td>
-                        </tr>
-                        <t t-set="i" t-value="0"/>
-                        <t t-foreach="dict_list['nama']" t-as="o">
-                            <tr style="border:none; width:5%;">
-                                <t t-set="i" t-value="i+1"/>
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <!--<span>1 </span>-->
-                                    <span t-esc="i"/>
-                                </td>
-                                <!--2-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="data_list['pelapor'][0]"/>
-                                    <!--<span>HESTI </span>-->
-                                </td>
-                                <!--3-->
-                                <td style="border: 1px solid #000; white-space: nowrap; ">
-                                    <!-- <td width="15%"> -->
-                                    <span>
-                                      OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
-                                    </span>
-                                </td>
-                                <!--4-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>
-                                      01.6-2260.002
-                                    </span>
-                                </td>
-                                <!--5-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="20%"> -->
-                                    <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>
-                                </td>
-                                <!--6-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="dict_list['jenis_sarfas'][o_index]"/>
-                                </td>
-                                <!--7-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>1 </span>
-                                </td>
-                                <!--8-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>Units </span>
-                                </td>
-                                <!--9-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>SGP </span>
-                                </td>
-                                <!--10-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="12%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                                <!--11-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="13%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                            </tr>
-                        </t>
-
-                        <!--Batas Kosong Atas-->
-                        <t t-if="i &lt; 6">
-                            <t t-foreach="[1,2]" t-as="j">
-                                <tr style="border: 1pt solid black;">
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                            </table>
+                            <table style="border-collapse: collapse;  width: 100%;">                                <!--Baris Pertama-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>No. WO </span>
                                     </td>
-                                    <!--2-->
-                                    <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                    <td width="1%">
+                                        <span>:</span>
                                     </td>
-                                    <!--3-->
-                                    <td width="15%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                    <td align="center">
+                                        <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
+                                        <t t-esc="data_list['name'][0]"/>
                                     </td>
-                                    <!--4-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--5-->
-                                    <td width="20%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--6-->
-                                    <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--7-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--8-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--9-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--10-->
-                                    <td width="12%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
 
+                                    <td >
+                                        <span>Tgl. WO </span>
                                     </td>
-                                    <!--11-->
-                                    <td width="13%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-
+                                    <td >
+                                        <span>:</span>
+                                    </td>
+                                    <td align="center">
+                                        <b>09 September 2023 </b>
                                     </td>
                                 </tr>
-                            </t>
-                        </t>
-                        <!--Batas Kosong Atas-->
 
-                        <!-- Batas Total -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-10-->
-                            <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <!--<td colspan="10" width="87%" align="center">-->
-                                <span>Total </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span t-esc="data_list['biaya_perbaikan'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span t-esc="data_list['discount'][0]"/>
-                            </td>
-                        </tr>
-
-                        <!-- Line 2-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                                            Setelah Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-
-
-                        <!-- Line 4-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPN (11%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 5-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPH (2%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 6-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Harga Total
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>Rp. 450.000</span>
-                            </td>
-                        </tr>
-                        <!--Batas B  -->
-                        <tr style="border:none; width:5%;">
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span>B </span>
-                            </td>
-                            <td colspan="10">
-                                <span>
-                                    <b>
-                                        PEMBAYARAN / PAYMENT
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11">
-                                <span>Jadwal Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Payment Schedule : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Cara Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span> Payment Method : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <!-- Batasan Tanda tangan -->
-                    <table style="border-collapse: collapse; width: 100%">
-                        <tr style="border: none">
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Dibuat Oleh : </span>
-                            </td>
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                            <td width="33%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33,3" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px" />
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> PIC SEU </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> CORPORATE LOGISTIK </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> B.U SEU </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <p style="page-break-before:always;"></p>
-                </t>
-                <t t-if="cuy == 4">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
-                          </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <!--Baris Atas-->
-                        <!-- <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span t-esc="cuy"/>
-                            </td>
-                        </tr> -->
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-
-                                        <u>ORDER PEKERJAAN</u>
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr width="100%">
-                            <td colspan="6" align="center">
-                                <span>
-                                    <b>
-                                        <i>WORKING ORDER</i>
-                                    </b>
-                                </span>
-                            </td>
-
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse; width: 100%;">                        <!--Ini kosong-->
-                        <tr width="100%">
-                            <td align="center" colspan="6">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="border-collapse: collapse;  width: 100%;">                        <!--Baris Pertama-->
-                        <tr style="border:none;" width="100%">
-                            <td >
-                                <span>No. WO </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <!-- <b>068/SEU/GAS/SGT/IX/2023 </b> -->
-                                <t t-esc="data_list['name'][0]"/>
-                            </td>
-
-                            <td >
-                                <span>Tgl. WO </span>
-                            </td>
-                            <td >
-                                <span>:</span>
-                            </td>
-                            <td align="center">
-                                <b>09 September 2023 </b>
-                            </td>
-                        </tr>
-
-                        <!--Baris Kedua-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Kepada </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <!-- <b>BENGKEL JAYA MANDIRI</b> -->
-                                <t t-esc="data_list['vendor'][0]"/>
-                            </td>
-
-                            <td width="10%">
-                                <span>Faksimili </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b/>
-                            </td>
-                        </tr>
-                        <!--Baris Ketiga-->
-                        <tr style="border:none;">
-                            <td width="10%">
-                                <span>Alamat </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="44%" align="center">
-                                <!--<t t-esc="form['nomor_do'][1]"/>-->
-                                <b>SANGA-SANGA</b>
-                            </td>
-
-                            <td width="10%">
-                                <span>Telepon </span>
-                            </td>
-                            <td width="1%">
-                                <span>:</span>
-                            </td>
-                            <td width="34%" align="center">
-                                <b>0831-2704-8901</b>
-                            </td>
-                        </tr>
-
-                        <!--Kosongan-->
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%" align="center">
-                                <span>
-                                    <p style="color:#FFFFFF;">A red paragraph.</p>
-                                </span>
-                            </td>
-                        </tr>
-
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Sesuai Invoice Dari Perusahaan Anda Dengan Nomor : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="6" width="100%">
-                                <span>Tertanggal : </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <br/>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Batas A  -->
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>A </span>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table style="border-collapse: collapse; width=:100%;">
-                        <!--Looping Halaman-->
-                        <tr style="border:none;">
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>No </span>
-                                <!--<span t-esc="o"/> -->
-                            </td>
-
-                            <!--2-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Request By </span>
-                            </td>
-                            <!--3-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="15%"> -->
-                                <span>Vessel / Unit / Job desc </span>
-                            </td>
-                            <!--4-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="5%"> -->
-                                <span>Kode Budget </span>
-                            </td>
-                            <!--5-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="20%"> -->
-                                <span>Uraian / Description </span>
-                            </td>
-                            <!--6-->
-                            <td style="border: 1px solid #000; white-space: nowrap; ">
-                                <!-- <td width="10%"> -->
-                                <span>Jenis /type </span>
-                            </td>
-                            <!--7-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Vol </span>
-                            </td>
-                            <!--8-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Sat </span>
-                            </td>
-                            <!--9-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="5%"> -->
-                                <span>Supply </span>
-                            </td>
-                            <!--10-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="12%"> -->
-                                <span>Unit Price </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <!-- <td width="13%"> -->
-                                <span>Amount </span>
-                            </td>
-                        </tr>
-                        <t t-set="i" t-value="0"/>
-                        <t t-foreach="dict_list['nama']" t-as="o">
-                            <tr style="border:none; width:5%;">
-                                <t t-set="i" t-value="i+1"/>
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <!--<span>1 </span>-->
-                                    <span t-esc="i"/>
-                                </td>
-                                <!--2-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="data_list['pelapor'][0]"/>
-                                    <!--<span>HESTI </span>-->
-                                </td>
-                                <!--3-->
-                                <td style="border: 1px solid #000; white-space: nowrap; ">
-                                    <!-- <td width="15%"> -->
-                                    <span>
-                                      OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
-                                    </span>
-                                </td>
-                                <!--4-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>
-                                      01.6-2260.002
-                                    </span>
-                                </td>
-                                <!--5-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="20%"> -->
-                                    <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>
-                                </td>
-                                <!--6-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="10%"> -->
-                                    <span t-esc="dict_list['jenis_sarfas'][o_index]"/>
-                                </td>
-                                <!--7-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>1 </span>
-                                </td>
-                                <!--8-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>Units </span>
-                                </td>
-                                <!--9-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="5%"> -->
-                                    <span>SGP </span>
-                                </td>
-                                <!--10-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="12%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                                <!--11-->
-                                <td style="border: 1px solid #000; white-space: nowrap;">
-                                    <!-- <td width="13%"> -->
-                                    <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
-                                </td>
-                            </tr>
-                        </t>
-
-                        <!--Batas Kosong Atas-->
-                        <t t-if="i &lt; 6">
-                            <t t-foreach="[1,2]" t-as="j">
-                                <tr style="border: 1pt solid black;">
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--2-->
+                                <!--Baris Kedua-->
+                                <tr style="border:none;">
                                     <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                        <span>Kepada </span>
                                     </td>
-                                    <!--3-->
-                                    <td width="15%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                    <td width="1%">
+                                        <span>:</span>
                                     </td>
-                                    <!--4-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                    <td width="44%" align="center">
+                                        <!--<t t-esc="form['nomor_do'][1]"/>-->
+                                        <!-- <b>BENGKEL JAYA MANDIRI</b> -->
+                                        <t t-esc="data_list['vendor'][0]"/>
                                     </td>
-                                    <!--5-->
-                                    <td width="20%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--6-->
+
                                     <td width="10%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                        <span>Faksimili </span>
                                     </td>
-                                    <!--7-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
+                                    <td width="1%">
+                                        <span>:</span>
                                     </td>
-                                    <!--8-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--9-->
-                                    <td width="5%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-                                    </td>
-                                    <!--10-->
-                                    <td width="12%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-
-                                    </td>
-                                    <!--11-->
-                                    <td width="13%">
-                                        <span>
-                                            <p style="color:white">x</p>
-                                        </span>
-
+                                    <td width="34%" align="center">
+                                        <b/>
                                     </td>
                                 </tr>
-                            </t>
+                                <!--Baris Ketiga-->
+                                <tr style="border:none;">
+                                    <td width="10%">
+                                        <span>Alamat </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="44%" align="center">
+                                        <!--<t t-esc="form['nomor_do'][1]"/>-->
+                                        <b>SANGA-SANGA</b>
+                                    </td>
+
+                                    <td width="10%">
+                                        <span>Telepon </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="34%" align="center">
+                                        <b>0831-2704-8901</b>
+                                    </td>
+                                </tr>
+
+                                <!--Kosongan-->
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%" align="center">
+                                        <span>
+                                            <p style="color:#FFFFFF;">A red paragraph.</p>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>Sesuai Invoice Dari Perusahaan Anda Dengan Nomor : </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>Tertanggal : </span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <br/>
+
+                            <table style="border-collapse: collapse; width=:100%;">
+                                <!--Batas A  -->
+                                <tr style="border:none;">
+                                    <td colspan="11" width="100%">
+                                        <span>A </span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="border-collapse: collapse; width=:100%;">
+                                <!--Looping Halaman-->
+                                <tr style="border:none;">
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="5%"> -->
+                                        <span>No </span>
+                                        <!--<span t-esc="o"/> -->
+                                    </td>
+
+                                    <!--2-->
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="10%"> -->
+                                        <span>Request By </span>
+                                    </td>
+                                    <!--3-->
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="15%"> -->
+                                        <span>Vessel / Unit / Job desc </span>
+                                    </td>
+                                    <!--4-->
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="5%"> -->
+                                        <span>Kode Budget </span>
+                                    </td>
+                                    <!--5-->
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="20%"> -->
+                                        <span>Uraian / Description </span>
+                                    </td>
+                                    <!--6-->
+                                    <td style="border: 1px solid #000; white-space: nowrap; ">
+                                        <!-- <td width="10%"> -->
+                                        <span>Jenis /type </span>
+                                    </td>
+                                    <!--7-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <!-- <td width="5%"> -->
+                                        <span>Vol </span>
+                                    </td>
+                                    <!--8-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <!-- <td width="5%"> -->
+                                        <span>Sat </span>
+                                    </td>
+                                    <!--9-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <!-- <td width="5%"> -->
+                                        <span>Supply </span>
+                                    </td>
+                                    <!--10-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <!-- <td width="12%"> -->
+                                        <span>Unit Price </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <!-- <td width="13%"> -->
+                                        <span>Amount </span>
+                                    </td>
+                                </tr>
+                                <t t-set="i" t-value="0"/>
+                                <t t-foreach="dict_list['nama']" t-as="o">
+                                    <tr style="border:none; width:5%;">
+                                        <t t-set="i" t-value="i+1"/>
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="5%"> -->
+                                            <!--<span>1 </span>-->
+                                            <span t-esc="i"/>
+                                        </td>
+                                        <!--2-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="10%"> -->
+                                            <span t-esc="data_list['pelapor'][0]"/>
+                                            <!--<span>HESTI </span>-->
+                                        </td>
+                                        <!--3-->
+                                        <td style="border: 1px solid #000; white-space: nowrap; ">
+                                            <!-- <td width="15%"> -->
+                                            <span>
+                                            OPRS (TRUCK SKIDTANK KT 8061 RN HINO 500 FL 260 JW)
+                                            </span>
+                                        </td>
+                                        <!--4-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="5%"> -->
+                                            <span>
+                                            01.6-2260.002
+                                            </span>
+                                        </td>
+                                        <!--5-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="20%"> -->
+                                            <span t-esc="dict_list['uraian_pekerjaan'][o_index]"/>
+                                        </td>
+                                        <!--6-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="10%"> -->
+                                            <span t-esc="dict_list['jenis_sarfas'][o_index]"/>
+                                        </td>
+                                        <!--7-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="5%"> -->
+                                            <span>1 </span>
+                                        </td>
+                                        <!--8-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="5%"> -->
+                                            <span>Units </span>
+                                        </td>
+                                        <!--9-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="5%"> -->
+                                            <span>SGP </span>
+                                        </td>
+                                        <!--10-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="12%"> -->
+                                            <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
+                                        </td>
+                                        <!--11-->
+                                        <td style="border: 1px solid #000; white-space: nowrap;">
+                                            <!-- <td width="13%"> -->
+                                            <span t-esc="dict_list['line_biaya_perbaikan'][o_index]"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!--Batas Kosong Atas-->
+                                <t t-if="i &lt; 6">
+                                    <t t-foreach="[1,2]" t-as="j">
+                                        <tr style="border: 1pt solid black;">
+                                            <td width="5%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--2-->
+                                            <td width="10%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--3-->
+                                            <td width="15%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--4-->
+                                            <td width="5%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--5-->
+                                            <td width="20%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--6-->
+                                            <td width="10%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--7-->
+                                            <td width="5%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--8-->
+                                            <td width="5%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--9-->
+                                            <td width="5%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+                                            </td>
+                                            <!--10-->
+                                            <td width="12%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+
+                                            </td>
+                                            <!--11-->
+                                            <td width="13%">
+                                                <span>
+                                                    <p style="color:white">x</p>
+                                                </span>
+
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <!--Batas Kosong Atas-->
+
+                                <!-- Batas Total -->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-10-->
+                                    <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <!--<td colspan="10" width="87%" align="center">-->
+                                        <span>Total </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <span t-esc="data_list['biaya_perbaikan'][0]"/>
+                                    </td>
+                                </tr>
+
+                                <!-- Line -->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-15-->
+                                    <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span/>
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>
+                                            <b>
+                                    Discount 
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span t-esc="data_list['discount'][0]"/>
+                                    </td>
+                                </tr>
+
+                                <!-- Line 2-->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-15-->
+                                    <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span/>
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>
+                                            <b>
+                                                    Setelah Discount 
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <!--11-->
+                                    <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span>-</span>
+                                    </td>
+                                </tr>
+
+
+                                <!-- Line 4-->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-15-->
+                                    <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span/>
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>
+                                            <b>
+                                    PPN (11%)
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span>-</span>
+                                    </td>
+                                </tr>
+                                <!-- Line 5-->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-15-->
+                                    <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span/>
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>
+                                            <b>
+                                    PPH (2%)
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span>-</span>
+                                    </td>
+                                </tr>
+                                <!-- Line 6-->
+                                <tr style="border:1; width:5%;">
+                                    <!--1-15-->
+                                    <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span/>
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>
+                                            <b>
+                                    Harga Total
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <!--11-->
+                                    <td style="border: 1px solid #000; white-space: nowrap;" align="center">
+                                        <span>Rp. 450.000</span>
+                                    </td>
+                                </tr>
+                                <!--Batas B  -->
+                                <tr style="border:none; width:5%;">
+                                    <td style="border: 1px solid #000; white-space: nowrap;">
+                                        <span>B </span>
+                                    </td>
+                                    <td colspan="10">
+                                        <span>
+                                            <b>
+                                                PEMBAYARAN / PAYMENT
+                                            </b>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="11">
+                                        <span>Jadwal Pembayaran : </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="11" width="100%">
+                                        <span>Payment Schedule : </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="11" width="100%">
+                                        <span>Cara Pembayaran : </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="11" width="100%">
+                                        <span> Payment Method : </span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Batasan Tanda tangan -->
+                            <table style="border-collapse: collapse; width: 100%">
+                                <tr style="border: none">
+                                    <td width="33,3%" colspan="3" align="center">
+                                        <span> Dibuat Oleh : </span>
+                                    </td>
+                                    <td width="33,3%" colspan="3" align="center">
+                                        <span> Disetujui Oleh : </span>
+                                    </td>
+                                    <td width="33%" colspan="3" align="center">
+                                        <span> Disetujui Oleh : </span>
+                                    </td>
+                                </tr>
+                                <tr style="border: none">
+                                    <td width="33,3" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px" />
+                                    </td>
+                                </tr>
+                                <tr style="border: none">
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <span> PIC SEU </span>
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <span> CORPORATE LOGISTIK </span>
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <span> B.U SEU </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="page-break-before:always;"></p>
                         </t>
-                        <!--Batas Kosong Atas-->
+                        <t t-if="cuy == 2">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <!--Baris Atas-->
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <!--Baris Atas-->
+                                <!-- <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span t-esc="cuy"/>
+                                    </td>
+                                </tr> -->
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h1>
+                                                <u>
+                                                    <b>BERITA ACARA</b>
+                                                </u>
+                                            </h1>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h3>
+                                                <b>
+                                                    <i>025/OPS-WO/IX.2023</i>
+                                                </b>
+                                            </h3>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse; width: 100%;">                                <!--Ini kosong-->
+                                <tr width="100%">
+                                    <td align="center" colspan="6">
+                                        <span>
+                                            <p style="color:#FFFFFF;">A red paragraph.</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse;  width: 100%;">                                <!--Baris Pertama-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>Hari/ tanggal </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td align="left">
+                                        <span>Sabtu, 02 September 2023 </span>
+                                    </td>
+                                    <td >
+                                        <span >
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td >
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td align="left">
+                                        <b>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </b>
+                                    </td>
+                                </tr>
 
-                        <!-- Batas Total -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-10-->
-                            <td colspan="10" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <!--<td colspan="10" width="87%" align="center">-->
-                                <span>Total </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span t-esc="data_list['biaya_perbaikan'][0]"/>
-                            </td>
-                        </tr>
+                                <!--Baris Kedua-->
+                                <tr style="border:none;">
+                                    <td width="10%">
+                                        <span>Perihal </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="44%" align="left">
+                                        <span>Open Perbaikan Roda Belakang Bocor SKID Hino 500KT 8061 RN</span>
+                                    </td>
+                                    <td width="10%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="34%" align="left">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!--Baris Ketiga-->
+                                <tr style="border:none;">
+                                    <td width="10%">
+                                        <span>Lampiran </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="44%" align="left">
+                                        <!--<t t-esc="form['nomor_do'][1]"/>-->
+                                        <b>-</b>
+                                    </td>
+                                    <td width="10%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="34%" align="center">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table style="width: 100%">
+                                <!--Kosongan-->
 
-                        <!-- Line -->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" align="center" style="border: 1px solid #000; white-space: nowrap;">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span t-esc="data_list['discount'][0]"/>
-                            </td>
-                        </tr>
+                                <tr style="border:none;">
+                                    <td align="justify">
+                                        <p> &#160; &#160; &#160; Pada hari jumat, 01 september 2023 kami memberitahukan bahwa akan dilakukan perbaikan roda belakang bocor pada skid Hino
+                                                500 KT 8061 RN Di bengkel JAYA MANDIRI yang berlokasi di Jln. Kawasan Rt. 06, Gg. Keluarga, Kel. Jawa, Kec. Sanga - Sanga, Kutai
+                                                Kartenegara, Kaltim . Dengan gambar sebagai berikut  : </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
 
-                        <!-- Line 2-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                                            Setelah Discount 
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td width="13%" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
+                            <!-- Batasan Tanda tangan -->
+                            <table style="border-collapse: collapse; width: 100%">
+                                <tr style="border: none">
+                                    <td width="33,3" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][0]}}" t-att-alt="data_list['foto'][0]" style="width: 300px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][1]}}" t-att-alt="data_list['foto'][1]" style="width: 300px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][2]}}" t-att-alt="data_list['foto'][2]" style="width: 300px" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <!-- Teks Terakhir -->
+                            <table style="border-collapse: collapse; width: 100%">
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>&#160; &#160; &#160; Demikian berita acara ini dibuat dengan sebaik-baiknya dan agar dapat digunakan sebagai mana mestinya. </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="page-break-before:always;"></p>
+                        </t>
+                        <t t-if="cuy == 3">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <!--Baris Atas-->
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <!--Baris Atas-->
+                                <!-- <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span t-esc="cuy"/>
+                                    </td>
+                                </tr> -->
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h1>
+                                                <b>
+                                                    <u>BERITA ACARA</u>
+                                                </b>
+                                            </h1>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h3>
+                                                <b>
+                                                    <i>025/OPS-WO/IX.2023</i>
+                                                </b>
+                                            </h3>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse; width: 100%;">                                <!--Ini kosong-->
+                                <tr width="100%">
+                                    <td align="center" colspan="6">
+                                        <span>
+                                            <p style="color:#FFFFFF;">A red paragraph.</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse;  width: 100%;">                                <!--Baris Pertama-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>Hari/ tanggal </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td align="left">
+                                        <span>Sabtu, 02 September 2023 </span>
+                                    </td>
+                                    <td >
+                                        <span >
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td >
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td align="left">
+                                        <b>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </b>
+                                    </td>
+                                </tr>
+
+                                <!--Baris Kedua-->
+                                <tr style="border:none;">
+                                    <td width="10%">
+                                        <span>Perihal </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="44%" align="left">
+                                        <span>Close Perbaikan Roda Belakang Bocor SKID Hino 500KT 8061 RN</span>
+                                    </td>
+                                    <td width="10%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="34%" align="left">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!--Baris Ketiga-->
+                                <tr style="border:none;">
+                                    <td width="10%">
+                                        <span>Lampiran </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td width="44%" align="left">
+                                        <!--<t t-esc="form['nomor_do'][1]"/>-->
+                                        <b>-</b>
+                                    </td>
+                                    <td width="10%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                    <td width="34%" align="center">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table style="width: 100%">
+                                <!--Kosongan-->
+
+                                <tr style="border:none;">
+                                    <td align="justify">
+                                        <p> &#160; &#160; &#160; Pada hari jumat, 01 september 2023 kami memberitahukan bahwa telah dilakukan perbaikan roda belakang bocor pada skid Hino
+                                                500 KT 8061 RN Di bengkel JAYA MANDIRI yang berlokasi di Jln. Kawasan Rt. 06, Gg. Keluarga, Kel. Jawa, Kec. Sanga - Sanga, Kutai
+                                                Kartenegara, Kaltim . Dengan gambar sebagai berikut  : </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <!-- Batasan Tanda tangan -->
+                            <table style="border-collapse: collapse; width: 100%">
+                                <tr style="border: none">
+                                    <td width="33,3" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][0]}}" t-att-alt="data_list['foto'][0]" style="width: 300px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][1]}}" t-att-alt="data_list['foto'][1]" style="width: 300px" />
+                                    </td>
+                                    <td width="33.3%" colspan="3" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto'][2]}}" t-att-alt="data_list['foto'][2]" style="width: 300px" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <!-- Teks Terakhir -->
+                            <table style="border-collapse: collapse; width: 100%">
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>&#160; &#160; &#160; Demikian berita acara ini dibuat dengan sebaik-baiknya dan agar dapat digunakan sebagai mana mestinya. </span>
+                                    </td>
+                                </tr>
+                                <tr style="border:none;">
+                                    <td colspan="6" width="100%">
+                                        <span>
+                                            <p style="color:#FFFFFF;">Ini Kosong</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="page-break-before:always;"></p>
+                        </t>
+                        <t t-if="cuy == 4">
+                            <!-- <table style="width: 100%; border-collapse: collapse;">
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <img t-attf-src="data:image/*;base64,{{data_list['kop_surat'][cuy_index]}}" style="width: 1200px" />
+                                    </td>
+                                </tr>
+                            </table> -->
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h1 >
+                                                <u>
+                                                    <b>LAMPIRAN</b>
+                                                </u>
+                                            </h1>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td colspan="6" align="center">
+                                        <span>
+                                            <h3 style="font-size:120% ">
+                                                <b>
+                                                    <i>025/OPS-WO/IX.2023</i>
+                                                </b>
+                                            </h3>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse; width: 100%;">                                <!--Ini kosong-->
+                                <tr width="100%">
+                                    <td align="center" colspan="6">
+                                        <span>
+                                            <p style="color:#FFFFFF;">A red paragraph.</p>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="border-collapse: collapse;  width: 100%;">                                <!--Baris Pertama-->
+                                <!--Baris Kesatu-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>VENDOR </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td >
+                                        JAYA MANDIRI ( PAK.ROI )
+                                                                                                                                                <!-- <t t-esc="data_list['name'][0]"/> -->
+                                    </td>
+
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                </tr>
+                                <!--Baris Kedua-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>NO TELP. </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td >
+                                        <span>
+                                            0813-3435-5139
+                                        </span>
+                                        <!-- <t t-esc="data_list['name'][0]"/> -->
+                                    </td>
+
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                </tr>
+                                <!--Baris Ketiga-->
+                                <tr style="border:none;" width="100%">
+                                    <td >
+                                        <span>ALAMAT </span>
+                                    </td>
+                                    <td width="1%">
+                                        <span>:</span>
+                                    </td>
+                                    <td >
+                                        <span>
+                                            JLN. KAWASAN, RT. 06, GG. KELUARGA, KEL. JAWA, KEC. SANGA - SANGA, KUTAI KERTANEGARA, KALTIM
+                                        </span>
+                                        <!-- <t t-esc="data_list['name'][0]"/> -->
+                                    </td>
+
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                    <td >
+                                        <p style="color:#FFFFFF;">A red paragraph.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                            <table style=" border-collapse: collapse; width:100%;">
+                                <!-- table 1 -->
+                                <tr>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:red; color:white;">
+                                            <b>NOTA</b>
+                                        </p>
+                                    </td>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                                <!-- table 2 -->
+                                <tr>
+                                    <td colspan="3" align="center">
+                                        <p align="center">DATA NOTA</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:red; color:white;">
+                                            <b>KTP</b>
+                                        </p>
+                                    </td>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                                <!-- table 2 -->
+                                <tr>
+                                    <td colspan="3" align="center">
+                                        <p align="center">DATA KTP</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:red; color:white;">
+                                            <b>REKENING</b>
+                                        </p>
+                                    </td>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                                <!-- table 2 -->
+                                <tr>
+                                    <td colspan="3" align="center">
+                                        <p align="center">DATA REKENING</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:red; color:white;">
+                                            <b>NPWP</b>
+                                        </p>
+                                    </td>
+                                    <td style="text-color:green;" align="center">
+                                        <p style="background-color:white; color:white;">
+                                            <b>TEKS KOSONG</b>
+                                        </p>
+                                    </td>
+
+                                </tr>
+                                <!-- table 2 -->
+                                <tr>
+                                    <td colspan="3" align="center">
+                                        <p align="center">DATA NPWP</p>
+                                    </td>
+                                </tr>
+                            </table>
 
 
-                        <!-- Line 4-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPN (11%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 5-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              PPH (2%)
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>-</span>
-                            </td>
-                        </tr>
-                        <!-- Line 6-->
-                        <tr style="border:1; width:5%;">
-                            <!--1-15-->
-                            <td colspan="7" style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span/>
-                            </td>
-                            <td colspan="3" style="border: 1px solid #000; white-space: nowrap;">
-                                <span>
-                                    <b>
-                              Harga Total
-                                    </b>
-                                </span>
-                            </td>
-                            <!--11-->
-                            <td style="border: 1px solid #000; white-space: nowrap;" align="center">
-                                <span>Rp. 450.000</span>
-                            </td>
-                        </tr>
-                        <!--Batas B  -->
-                        <tr style="border:none; width:5%;">
-                            <td style="border: 1px solid #000; white-space: nowrap;">
-                                <span>B </span>
-                            </td>
-                            <td colspan="10">
-                                <span>
-                                    <b>
-                                        PEMBAYARAN / PAYMENT
-                                    </b>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11">
-                                <span>Jadwal Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Payment Schedule : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span>Cara Pembayaran : </span>
-                            </td>
-                        </tr>
-                        <tr style="border:none;">
-                            <td colspan="11" width="100%">
-                                <span> Payment Method : </span>
-                            </td>
-                        </tr>
-                    </table>
 
-                    <!-- Batasan Tanda tangan -->
-                    <table style="border-collapse: collapse; width: 100%">
-                        <tr style="border: none">
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Dibuat Oleh : </span>
-                            </td>
-                            <td width="33,3%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                            <td width="33%" colspan="3" align="center">
-                                <span> Disetujui Oleh : </span>
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33,3" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px" />
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px" />
-                            </td>
-                        </tr>
-                        <tr style="border: none">
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> PIC SEU </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> CORPORATE LOGISTIK </span>
-                            </td>
-                            <td width="33.3%" colspan="3" align="center">
-                                <span> B.U SEU </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <p style="page-break-before:always;"></p>
-                </t>
+                            <p style="page-break-before:always;"></p>
+                        </t>
+                    </t>
+                </div>
             </t>
-        </div>
-    </t>
-                                 
         </template>
     </data>
 </odoo>

@@ -34,7 +34,8 @@
                 <field name="pic" string="PIC" required="1"/>
                 
                 <!-- No 9 belum ada -->
-                <field name="opendate" string="Open (Date)" readonly="1" required="1"/>
+                <field name="opendate" string="Open (Date)" attrs="{'readonly':[('is_editable_by_manager','=',False)]}" />
+                <field name="is_editable_by_manager" invisible="1"/>
                 
                 <!-- No 10 target -->
                 <field name="nilai" string="Progres (%)" required="1"/>
@@ -89,7 +90,8 @@
                             <field name="divisi" widget="many2many_tags"  required="1" string="Divisi" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}" placeholder="Masukan Divisi" />
                             <field name="issue" string="Priority" required="1" placeholder="Masukan Priority" />
                             <field name="pic" string="PIC" required="1" placeholder="Masukan PIC" />
-                            <field name="opendate" string="Open (Date)"  required="1" placeholder="Masukan Open (Date)" />
+                            <field name="opendate" string="Open (Date)" attrs="{'readonly':[('is_editable_by_manager','=',False)]}" />
+                            <field name="is_editable_by_manager" invisible="1"/>
                           </group>
 
                           <group name="group_bottom">

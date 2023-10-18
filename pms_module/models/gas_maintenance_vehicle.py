@@ -354,6 +354,7 @@ class gas_maintenance_vehicle(models.Model):
         afterDiscount       = []
         cuy                 = [1,2,3,4]
         text_value          = []
+        foto                = []
 
       
                 
@@ -378,6 +379,7 @@ class gas_maintenance_vehicle(models.Model):
                 'pph': pph,
                 'cuy': cuy,
                 'text_value': text_value,
+                'foto': foto,
             }
         nama                    = []
         jenis_sarfas            = []
@@ -411,6 +413,21 @@ class gas_maintenance_vehicle(models.Model):
             rec_corporate           = line.corporate
             rec_tanggal_kerusakan   = line.tanggal_kerusakan
             rec_standar_lama        = line.standar_lama
+            rec_vehicle_image1      = line.vehicle_image1
+            rec_vehicle_image2      = line.vehicle_image2
+            rec_vehicle_image3      = line.vehicle_image3
+            rec_vehicle_image4      = line.vehicle_image4
+            rec_vehicle_image5      = line.vehicle_image5
+            rec_vehicle_image6      = line.vehicle_image6
+            rec_note_image     = line.note_image
+            foto.append(rec_vehicle_image1)
+            foto.append(rec_vehicle_image2)
+            foto.append(rec_vehicle_image3)
+            foto.append(rec_vehicle_image4)
+            foto.append(rec_vehicle_image5)
+            foto.append(rec_vehicle_image6)
+            foto.append(rec_note_image)
+            
             
             rec_biaya_perbaikan     = "Rp. " + str(f"{int(line.biaya_perbaikan):,}")            
             rec_discount            = "Rp. " + str(f"{int(line.discount):,}")

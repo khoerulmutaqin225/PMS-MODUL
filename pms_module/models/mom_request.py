@@ -179,6 +179,21 @@ class mom_request_line(models.Model):
         track_visibility='onchange'
     )
     
+    @api.onchange("meetingType")
+    def _compute_is_editable_by_manager(self):
+        curr_man = self.env['res.users'].browse(self.env.uid).has_group('pms_module.group_report_manager')
+        for rec in self:
+            rec.is_editable_by_manager = True
+            if curr_man:
+                rec.is_editable_by_manager = True
+            else: 
+                rec.is_editable_by_manager = False
+
+    is_editable_by_manager = fields.Boolean(
+            string='is_editable_by_manager',
+            compute="_compute_is_editable_by_manager",
+            readonly=True
+        )
     meetingType = fields.Selection(
         string='Meeting Type',
         selection=[('NLM', 'NLM'),
