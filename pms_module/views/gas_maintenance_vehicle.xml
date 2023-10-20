@@ -2,19 +2,6 @@
 
 <odoo>
 
-    <record model="ir.ui.view" id="res_company_form">
-        <field name="name">res.company.form</field>
-        <field name="model">res.company</field>
-        <field name="inherit_id" ref="base.view_company_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='favicon']" position="after">
-                <field name="kop_surat_1"/>
-                <field name="kop_surat_2"/>
-                <field name="kop_surat_3"/>
-            </xpath>
-        </field>
-    </record>
-
 
     <record id="gas_maintenance_vehicle_vendor_act_window" model="ir.actions.act_window">
         <field name="name">Vendor</field>
@@ -111,9 +98,9 @@
             <form string="Gas Maintenance">
             <header>
             <button type="object" name="debug_gas" string="Print" class="btn-primary" />
-            <!-- <button type="object" name="debug_gas" string="Print" class="btn-primary" /> -->
-            <field name="status" widget="statusbar"
-            />
+            <button type="object" name="buttonCorpLog" string="Approved" class="btn-primary" />
+            <button type="object" name="action_draft" string="Reset Default" class="btn-primary" />
+            <field name="state" widget="statusbar"/>
             </header>
                 <sheet>
                     <div>
@@ -136,6 +123,7 @@
                             <field name="vendor" placeholder="Vendor" required="1"/>
                             <field name="company_id" placeholder="Select Company" invisible="1"/>
                             <field name="corporate" placeholder="Select Company" string="Perusahaan" />
+                            <field name="corporate_select" widget="selection" placeholder="Select Company" string="Perusahaan Select" />
                         </group>
                         <group name="records" string="Records :">
                             <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
@@ -188,13 +176,6 @@
                                     <field name="vehicle_image2" />
                                     <field name="vehicle_image3" />
                                 </group>                            
-                                
-                                <group name="FOTO TTD" string="FOTO TTD" invisible="1">
-                                    <field name="pic_bu"/>
-                                    <field name="corlog"/>
-                                    <field name="ttd_bu"/>
-                                </group>
-
                             </group>
                             <group>
                                 <group name="FOTO 2" string="Foto Berita Close">
@@ -204,9 +185,24 @@
                                 </group>                                
                                 <group name="nota" string="Foto Nota">
                                   <field name="note_image"/>
+                                  <field name="note_image1"/>
+                                  <field name="note_image2"/>
+                                  <field name="note_image3"/>
+                                  <field name="note_image4"/>
                                 </group>
                             </group>
                         </page>                        
+                        <page string="Foto TTD">
+                           <group>
+                             <group>
+                                <field name="pic_seu" widget="image" options="{'widget': 'image', 'size': (250, 250)}" readonly="0"/>
+                                <field name="bu_seu" widget="image"   options="{'widget': 'image', 'size': (250, 250)}" readonly="0"/>
+                             </group>
+                             <group>
+                                <field name="sign_corlog" widget="image"  options="{'widget': 'image', 'size': (250, 250)}" readonly="0"/>
+                             </group>
+                           </group>
+                        </page>                       
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

@@ -521,13 +521,13 @@
                                 </tr>
                                 <tr style="border: none">
                                     <td width="33,3" colspan="3" align="center">
-                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 200px"/>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][0]}}" t-att-alt="data_list['ttd'][0]" style="width: 400px"/>
                                     </td>
                                     <td width="33.3%" colspan="3" align="center">
-                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 200px"/>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][1]}}" t-att-alt="data_list['ttd'][1]" style="width: 400px"/>
                                     </td>
                                     <td width="33.3%" colspan="3" align="center">
-                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 200px"/>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['ttd'][2]}}" t-att-alt="data_list['ttd'][2]" style="width: 400px"/>
                                     </td>
                                 </tr>
                                 <tr style="border: none">
@@ -541,7 +541,7 @@
                                         <span> B.U SEU </span>
                                     </td>
                                 </tr>
-                            </table>
+                            </table>                              
                             <p style="page-break-before:always;"/>
                         </t>
                         <t t-if="cuy == 2">
@@ -1064,7 +1064,7 @@
                                 <!-- table 2 -->
                                 <tr>
                                     <td colspan="3" align="center">
-                                        <p align="center">DATA NOTA</p>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto2'][0]}}" style="width: 300px"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1089,7 +1089,7 @@
                                 <!-- table 2 -->
                                 <tr>
                                     <td colspan="3" align="center">
-                                        <p align="center">DATA KTP</p>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto2'][1]}}" style="width: 300px"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1101,7 +1101,7 @@
 
                                     <td style="text-color:green;" align="center">
                                         <p style="background-color:red; color:white;">
-                                            <b>REKENING</b>
+                                            <b>NO. REKENING</b>
                                         </p>
                                     </td>
                                     <td style="text-color:green;" align="center">
@@ -1114,7 +1114,7 @@
                                 <!-- table 2 -->
                                 <tr>
                                     <td colspan="3" align="center">
-                                        <p align="center">DATA REKENING</p>
+                                        <t t-esc="data_list['foto2'][2]"/>
                                     </td>
                                 </tr>
 
@@ -1127,7 +1127,7 @@
 
                                     <td style="text-color:green;" align="center">
                                         <p style="background-color:red; color:white;">
-                                            <b>NPWP</b>
+                                            <b>NPWP (Jika Ada)</b>
                                         </p>
                                     </td>
                                     <td style="text-color:green;" align="center">
@@ -1140,18 +1140,15 @@
                                 <!-- table 2 -->
                                 <tr>
                                     <td colspan="3" align="center">
-                                        <p align="center">DATA NPWP</p>
+                                        <img t-attf-src="data:image/*;base64,{{data_list['foto2'][3]}}" style="width: 300px"/>
                                     </td>
                                 </tr>
                             </table>
-
-
-
                             <p style="page-break-before:always;"/>
                         </t>
                     </t>
                 </div>
-            </t>                
+            </t>    
         </template>
     </data>
 </odoo>

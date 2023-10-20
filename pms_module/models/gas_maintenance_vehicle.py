@@ -32,6 +32,58 @@ class gas_maintenance_vehicle(models.Model):
 
 
 
+    def unlink(self):
+        alloc_to_unlink = self.env["gas.maintenance.vehicle"].search([('id', '=', self.id)])
+        for record in self:
+            if record.state != 'draft':
+                raise ValidationError("Rubah dahulu menjadi draft .")
+        data = super(gas_maintenance_vehicle, self).unlink()
+        return data
+    
+    state = fields.Selection(
+        string='State',
+        selection=[
+            ('draft', 'Draft'),
+            ('approved', 'Approved'),
+            ('done', 'Done'),
+        ],    
+        default='approved',
+        store=True,
+        readonly=False,
+        track_visibility='onchange')
+        
+    def action_draft(self):
+        self.write({'state': 'draft'})
+    
+    def buttonCorpLog(self):
+        corlog = self.env["res.users"].search([('name', '=', 'HAKIM')])
+        pic_bu = self.env["res.users"].search([('name', '=', 'SYARIFAH HUZAIFAH')])
+        bu_seu = self.env["res.users"].search([('name', '=', 'FAJAR GUMILANG')])
+        company_id = self.env.company.id
+        self.write({'state': 'done'})
+        #[5] PT ARMADA SAMUDRA GLOBAL
+        #[6] PT BAHTERA NUSANTARA INTERNASIONAL
+        #[7] PT BAROKAH GEMILANG PERKASA
+        # if (company_id in [5, 6, 7]):
+        if company_id:
+            return self.write({
+                'sign_corlog': corlog.sign_x,
+                'pic_seu': pic_bu.sign_x,
+                'bu_seu':bu_seu.sign_x,
+            })
+        # elif (company_id == 41):
+        #     return self.write({
+        #         'sign_corlog': corlog.sign_x,
+        #         'sign_bisnis_pic': pic_bu_bgp_02.sign_x,
+        #     })
+        else:
+            return self.write({
+                'sign_corlog': corlog.sign_x,
+                'sign_bisnis_pic': False,
+            })
+    sign_corlog = fields.Binary('Logistik')
+    pic_seu     = fields.Binary('PIC BU')
+    bu_seu      = fields.Binary('Anggota BU')
 
     # Batas Atas
     @api.depends('vehicle_image1','vehicle_image2', 'vehicle_image3', 'vehicle_image4', 'vehicle_image5' ,'vehicle_image6' , 'note_image')   
@@ -86,20 +138,14 @@ class gas_maintenance_vehicle(models.Model):
     vehicle_image2 = fields.Binary("Foto Open 2", compute='_compute_image_64', inverse='_set_image_64', store=True)
     vehicle_image3 = fields.Binary("Foto Open 3", compute='_compute_image_64', inverse='_set_image_64', store=True)
     vehicle_image4 = fields.Binary("Foto Open 4", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image6 = fields.Binary("Foto Open 5", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    note_image     = fields.Binary("Foto Open 6", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    
-    # vehicle_image1 = fields.Binary( string="Foto Open 1", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # vehicle_image2 = fields.Binary( string="Foto Open 2",compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # vehicle_image3 = fields.Binary( string="Foto Open 3", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # vehicle_image4 = fields.Binary( tring="Foto Close 1", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # vehicle_image5 = fields.Binary( tring="Foto Close 2", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # vehicle_image6 = fields.Binary( tring="Foto Close 3", compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    # note_image     = fields.Binary( string="Foto Nota"  , compute='_compute_image_64',  inverse='_set_image_64', store=True , track_visibility='onchange')
-    
-    ttd_bu = fields.Binary('Anggota BU')
-    pic_bu = fields.Binary('PIC BU')
-    corlog = fields.Binary('Logistik')
+    vehicle_image5 = fields.Binary("Foto Open 5", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image6 = fields.Binary("Foto Open 6", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    note_image     = fields.Binary("Foto Nota", compute='_compute_image_64', inverse='_set_image_64', store=True)
+
+    note_image1 = fields.Binary(string="Foto Nota 1",store=True ,track_visibility='onchange')
+    note_image2 = fields.Binary(string="Foto Nota 2",store=True ,track_visibility='onchange')
+    note_image3 = fields.Binary(string="Foto Nota 3",store=True ,track_visibility='onchange')    
+    note_image4 = fields.Binary(string="Foto Nota 4",store=True ,track_visibility='onchange')
 
     
     @api.onchange('vehicle_id')
@@ -120,7 +166,22 @@ class gas_maintenance_vehicle(models.Model):
         compute='_get_company',
         string='Company Id',
     )
+    
        
+    corporate_select = fields.Many2one('gas.maintenance.corporate', string='Perusahaan' ,track_visibility='onchange')   
+
+    @api.onchange('corporate', 'corporate_select')
+    def get_price(self):
+        rec_corp = self.corporate
+        data =  self.env['gas.maintenance.corporate'].search([('key', '=', rec_corp)])    
+        if data:
+            self.corporate_select = data
+        else:
+            print("Data Kosong")
+            self.corporate_select = False
+            print("Data Kosong")
+    
+    
     corporate = fields.Selection([
         ('GEMILANG KARYA ENERGI', 'PT. GEMILANG KARYA ENERGI'),
         ('DHIRABRATA GAS NUSANTARA', 'PT. DHIRABRATA GAS NUSANTARA'),
@@ -190,10 +251,42 @@ class gas_maintenance_vehicle(models.Model):
                 bulan = intToRoman(bulan)                
                 year = rec.create_date.year                
                 names = converse(no,perusahaan,bulan,year)
-                rec.update({'name':names})
+                # Check Duplicate
+                hitungan = len(increment) -2
+                cuy = increment[hitungan].name                    
+                if names == cuy:
+                    print("Datanya Duplikat")
+                    no = length + 1
+                    bulan = rec.create_date.month
+                    bulan = intToRoman(bulan)                
+                    year = rec.create_date.year                
+                    names = converse(no,perusahaan,bulan,year)
+                    rec.update({'name':names})
+                else:
+                    print("Datanya Single")
+                    rec.update({'name':names})
         return res
     
+    @api.constrains('status')
+    def _check_status(self):
+        for record in self:
+            if record.status == 'finish' and self.env['gas.report.line'].search([('group_gas_id', '=', record.id), ('status', '!=', 'finish')]):
+                raise ValidationError("Tidak dapat menetapkan status Master ke 'Selesai'. Jika masih ada pekerjaan yang berjalan .")
+            if record.status == 'finish':
+                # Pengkondisian untuk menghilangkan 1 Indek setelah (/O)
+                if record.name and record.name.endswith('/O'):
+                    ba_close =  record.name.rsplit('/',1)[0]
+                    no_ba_close = ba_close + "/C"
+                    record.no_ba_close = no_ba_close
+                else:
+                    record.no_ba_close = record.name      
+            if record.status == 'open':
+                ba_close =''
+                record.no_ba_close = ba_close
 
+            if record.status == 'progress':
+                ba_close =''
+                record.no_ba_close = ba_close
     
             
     def open_records(self):
@@ -301,15 +394,6 @@ class gas_maintenance_vehicle(models.Model):
             })
         
 
-    vehicle_image1 = fields.Binary(string="Foto Open 1",store=True ,track_visibility='onchange')
-    vehicle_image2 = fields.Binary(string="Foto Open 2",store=True ,track_visibility='onchange')
-    vehicle_image3 = fields.Binary(string="Foto Open 3",store=True ,track_visibility='onchange')
-    
-    vehicle_image4 = fields.Binary(string="Foto Close 1",store=True ,track_visibility='onchange')
-    vehicle_image5 = fields.Binary(string="Foto Close 2",store=True ,track_visibility='onchange')
-    vehicle_image6 = fields.Binary(string="Foto Close 3",store=True ,track_visibility='onchange')
-    
-    note_image = fields.Binary(string="Foto Nota",store=True ,track_visibility='onchange')
     
     discount = fields.Float(string='Diskon' , default=0.0)
     afterDiscount = fields.Float(string='Diskon' , default=0.0)
@@ -355,6 +439,7 @@ class gas_maintenance_vehicle(models.Model):
         cuy                 = [1,2,3,4]
         text_value          = []
         foto                = []
+        foto2               = []
 
       
                 
@@ -380,6 +465,7 @@ class gas_maintenance_vehicle(models.Model):
                 'cuy': cuy,
                 'text_value': text_value,
                 'foto': foto,
+                'foto2': foto2,
             }
         nama                    = []
         jenis_sarfas            = []
@@ -418,15 +504,22 @@ class gas_maintenance_vehicle(models.Model):
             rec_vehicle_image3      = line.vehicle_image3
             rec_vehicle_image4      = line.vehicle_image4
             rec_vehicle_image5      = line.vehicle_image5
-            rec_vehicle_image6      = line.vehicle_image6
+            rec_vehicle_image6      = line.vehicle_image6             
             rec_note_image     = line.note_image
+            rec_ktp            = line.vendor.ktp
+            rec_no_rec         = line.vendor.accountNumber
+            rec_npwp           = line.vendor.NPWP            
             foto.append(rec_vehicle_image1)
             foto.append(rec_vehicle_image2)
             foto.append(rec_vehicle_image3)
             foto.append(rec_vehicle_image4)
             foto.append(rec_vehicle_image5)
             foto.append(rec_vehicle_image6)
-            foto.append(rec_note_image)
+
+            foto2.append(rec_note_image)
+            foto2.append(rec_ktp)
+            foto2.append(rec_no_rec)
+            foto2.append(rec_npwp)
             
             
             rec_biaya_perbaikan     = "Rp. " + str(f"{int(line.biaya_perbaikan):,}")            
@@ -441,17 +534,17 @@ class gas_maintenance_vehicle(models.Model):
             rec_final_price         = "Rp. " + str(f"{int(line.final_price):,}")
             rec_no_ba_close         = line.no_ba_close
             # Foto pertamina + seu
-            kop_surat_1 = self.company_id.kop_surat_1
+            kop_surat_1 = self.corporate_select.kop_surat_1
             # Foto pertamina + seu
-            kop_surat_2 = self.company_id.kop_surat_2
+            kop_surat_2 = self.corporate_select.kop_surat_2
             # Foto pertamina + seu
-            kop_surat_2_copy = self.company_id.kop_surat_2
+            kop_surat_2_copy = self.corporate_select.kop_surat_2
             # Foto Kosong
-            kop_surat_3 = self.company_id.kop_surat_3
+            kop_surat_3 = self.corporate_select.kop_surat_3
             # ttd
-            ttd_1 = self.pic_bu
-            ttd_2 = self.corlog
-            ttd_3 = self.ttd_bu
+            ttd_1 = self.pic_seu
+            ttd_2 = self.sign_corlog
+            ttd_3 = self.bu_seu
   
             ttd.append(ttd_1)            
             ttd.append(ttd_2)            
@@ -487,7 +580,7 @@ class gas_maintenance_vehicle(models.Model):
                 code = 'NULL'
                 vol = 1
                 sat     = "UNIT"
-                supply  = "SGT"
+                supply  = "SGT"               
 
                 # append
                 nama.append(rec_nama)
@@ -513,6 +606,17 @@ class gas_maintenance_vehicle(models.Model):
         }
         return self.env.ref('pms_module.actions_print_gas_maintenance_vehicle').report_action(self, data=data)          
 
+class gas_maintenance_corporate(models.Model):
+    _name = "gas.maintenance.corporate"
+    _description ="Gas Maintenance Corporate"
+
+    name = fields.Char(string="Nama corporate")
+    key = fields.Char(string="Key Corporate")
+    
+    kop_surat_1 = fields.Binary("Kop Surat 1" )
+    kop_surat_2 = fields.Binary("Kop Surat 2")
+    kop_surat_3 = fields.Binary("Kop Surat 3")
+
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"
     _description ="Gas Maintenance Vendor"
@@ -531,43 +635,12 @@ class gas_maintenance_vendor(models.Model):
     
     ownerBank = fields.Char('Nama Pemilik')
     
-    # Batas Atas
-    @api.depends('photoAcountBank','ktp', 'NPWP')   
-    def _ci_64(self):
-        for template in self:
-            if template.NPWP:
-                template.NPWP = self._c_i(template.NPWP)
-            if template.ktp:
-                template.ktp = self._c_i(template.ktp)
-            if template.photoAcountBank:
-                template.photoAcountBank = self._c_i(template.photoAcountBank)
-
-    def _s_i_64(self):
-        for template in self:
-            if template.NPWP:
-                template.NPWP = self._c_i(template.NPWP)
-            if template.ktp:
-                template.ktp = self._c_i(template.ktp)
-            if template.photoAcountBank:
-                template.photoAcountBank = self._c_i(template.photoAcountBank)
-
-    def _c_i(self, image_data):
-        # Decode the image data from base64
-        image = Image.open(io.BytesIO(base64.b64decode(image_data)))
-
-        # Compress the image
-        compressed_image = io.BytesIO()
-        image.save(compressed_image, format='JPEG', optimize=True, quality=60)
-
-        # Encode the compressed image data to base64
-        return base64.b64encode(compressed_image.getvalue())
-    
-    
-    
-    photoAcountBank = fields.Binary("Foto Buku Rekening'", compute='_ci_64', inverse='_s_i_64', store=True)
-    ktp = fields.Binary("Foto Ktp", compute='_ci_64', inverse='_s_i_64', store=True)
-    NPWP = fields.Binary("Foto NPWP", compute='_ci_64', inverse='_s_i_64', store=True)
  
+    photoAcountBank = fields.Binary("Foto Buku Rekening")
+    ktp = fields.Binary("Foto KTP")
+    NPWP = fields.Binary("Foto NPWP")
+    
+    
     
 
 class gas_maintenance_vehicle_line(models.Model):
@@ -677,7 +750,9 @@ class gas_maintenance_vehicle_line(models.Model):
             ('downtime ', 'Downtime '),
         ], default='maintenance'
     )    
-    
 
+# Overriding exciting class in Python
+# class gas_maintenance_vehicle(models.Model):
+#     _inherit = 'gas.maintenance.vehicle'
     
-        
+#     state = fields.Selection(selection=[('draft', 'Draft'),  ('approved', 'Approved')])

@@ -5,6 +5,7 @@ access_vehicle_vehicle,vehicle.vehicle,model_vehicle_vehicle,base.group_user,1,1
 access_submit_job_crew_line_wizard,submit.job.crew.line.wizard,model_submit_job_crew_line_wizard,base.group_user,1,1,1,1
 access_gas_maintenance_vehicle,gas.maintenance.vehicle,model_gas_maintenance_vehicle,base.group_user,1,1,1,1
 access_gas_maintenance_vendor,gas.maintenance.vendor,model_gas_maintenance_vendor,base.group_user,1,1,1,1
+access_gas_maintenance_corporate,gas.maintenance.corporate,model_gas_maintenance_corporate,base.group_user,1,1,1,1
 access_gas_report_line,gas.report.line,model_gas_report_line,base.group_user,1,1,1,1
 access_job_crew_evidence,job.crew.evidence,model_job_crew_evidence,base.group_user,1,1,1,1
 access_mom_request,mom.request,model_mom_request,base.group_user,1,1,1,1
