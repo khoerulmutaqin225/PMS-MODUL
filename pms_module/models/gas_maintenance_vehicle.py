@@ -142,7 +142,7 @@ class gas_maintenance_vehicle(models.Model):
     vehicle_image6 = fields.Binary("Foto Open 6", compute='_compute_image_64', inverse='_set_image_64', store=True)
     note_image     = fields.Binary("Foto Nota", compute='_compute_image_64', inverse='_set_image_64', store=True)
 
-    note_image1 = fields.Binary(string="Foto Nota 1",store=True ,track_visibility='onchange')
+    note_image5 = fields.Binary(string="Foto Nota 5",store=True ,track_visibility='onchange')
     note_image2 = fields.Binary(string="Foto Nota 2",store=True ,track_visibility='onchange')
     note_image3 = fields.Binary(string="Foto Nota 3",store=True ,track_visibility='onchange')    
     note_image4 = fields.Binary(string="Foto Nota 4",store=True ,track_visibility='onchange')
