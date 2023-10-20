@@ -149,7 +149,7 @@
                                     <field name="biaya_perbaikan" placeholder="Biaya Perbaikan" required="1" widget="monetary"/>
                                     <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan" required="1"/>
                                     <field name="start_perbaikan" placeholder="Start Perbaikan" required="1"/>
-                                    <field name="finish_perbaikan" placeholder="Finish Perbaikan" required="1"/>
+                                    <field name="finish_perbaikan" placeholder="Finish Perbaikan" required="0"/>
                                     <field name="km" placeholder="Masukan KM" required="1"/>
                                     <field name="status" style="background-color:green; color: white;" placeholder="Masukan Status" required="1"/>
                                     <field name="jenis_downtime" placeholder="Masukan Jenis Downtime" required="1"/>

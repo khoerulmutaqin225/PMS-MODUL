@@ -5,32 +5,18 @@ from datetime import datetime
 from datetime import timedelta
 import logging
 # from odoo.tools import float_round
-# tambahan
 import io
 from PIL import Image
 import base64
 
+_logger = logging.getLogger(__name__)
+from collections import OrderedDict
 
-
-
-class inherite_res_company(models.Model):
-    _inherit ='res.company'
-    _description = 'res_company'
-    
-    kop_surat_1 = fields.Binary('Kop Surat 1')
-    kop_surat_2 = fields.Binary('Kop Surat 2')
-    kop_surat_3 = fields.Binary('Kop Surat 3')
-    
-    
-    
-    
 
 class gas_maintenance_vehicle(models.Model):
     _name = 'gas.maintenance.vehicle'
-    _inherit ='mail.thread'
+    _inherit = 'mail.thread'
     _description = 'Gas Maintenance Vehicle'
-
-
 
     def unlink(self):
         alloc_to_unlink = self.env["gas.maintenance.vehicle"].search([('id', '=', self.id)])
@@ -46,15 +32,15 @@ class gas_maintenance_vehicle(models.Model):
             ('draft', 'Draft'),
             ('approved', 'Approved'),
             ('done', 'Done'),
-        ],    
+        ],
         default='approved',
         store=True,
         readonly=False,
         track_visibility='onchange')
-        
+
     def action_draft(self):
         self.write({'state': 'draft'})
-    
+
     def buttonCorpLog(self):
         corlog = self.env["res.users"].search([('name', '=', 'HAKIM')])
         pic_bu = self.env["res.users"].search([('name', '=', 'SYARIFAH HUZAIFAH')])
@@ -85,8 +71,9 @@ class gas_maintenance_vehicle(models.Model):
     pic_seu     = fields.Binary('PIC BU')
     bu_seu      = fields.Binary('Anggota BU')
 
-    # Batas Atas
-    @api.depends('vehicle_image1','vehicle_image2', 'vehicle_image3', 'vehicle_image4', 'vehicle_image5' ,'vehicle_image6' , 'note_image')   
+    # "Gas Maintenance Vendor"
+    @api.depends('vehicle_image1', 'vehicle_image2', 'vehicle_image3', 'vehicle_image4', 'vehicle_image5',
+                 'vehicle_image6', 'note_image')
     def _compute_image_64(self):
         for template in self:
             if template.note_image:
@@ -132,22 +119,18 @@ class gas_maintenance_vehicle(models.Model):
         # Encode the compressed image data to base64
         return base64.b64encode(compressed_image.getvalue())
     
-    image_1920     = fields.Binary("Image", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    image_1920_2   = fields.Binary("Image 2", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image1 = fields.Binary("Foto Open 1", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image2 = fields.Binary("Foto Open 2", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image3 = fields.Binary("Foto Open 3", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image4 = fields.Binary("Foto Open 4", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image5 = fields.Binary("Foto Open 5", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    vehicle_image6 = fields.Binary("Foto Open 6", compute='_compute_image_64', inverse='_set_image_64', store=True)
-    note_image     = fields.Binary("Foto Nota", compute='_compute_image_64', inverse='_set_image_64', store=True)
+    vehicle_image1 = fields.Binary("Foto Open 1", compute='_compute_image_64', inverse='_set_image_64', store=True ,track_visibility='onchange')
+    vehicle_image2 = fields.Binary("Foto Open 2", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
+    vehicle_image3 = fields.Binary("Foto Open 3", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
+    vehicle_image4 = fields.Binary("Foto Close 1", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
+    vehicle_image5 = fields.Binary("Foto CLose 2", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
+    vehicle_image6 = fields.Binary("Foto Close 3", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
+    note_image = fields.Binary("Foto Nota 1", compute='_compute_image_64', inverse='_set_image_64', store=True, track_visibility='onchange')
 
-    note_image5 = fields.Binary(string="Foto Nota 5",store=True ,track_visibility='onchange')
+    note_image1 = fields.Binary(string="Foto Nota 5",store=True ,track_visibility='onchange')
     note_image2 = fields.Binary(string="Foto Nota 2",store=True ,track_visibility='onchange')
-    note_image3 = fields.Binary(string="Foto Nota 3",store=True ,track_visibility='onchange')    
+    note_image3 = fields.Binary(string="Foto Nota 3",store=True ,track_visibility='onchange')
     note_image4 = fields.Binary(string="Foto Nota 4",store=True ,track_visibility='onchange')
-
-    
     @api.onchange('vehicle_id')
     def _get_company(self):
         for record in self:
@@ -159,7 +142,7 @@ class gas_maintenance_vehicle(models.Model):
                 self.company_id = x
                 
 
-    currency_id = fields.Many2one('res.currency',related='company_id.currency_id') 
+    currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
 
     company_id = fields.Many2one(
         'res.company',
@@ -168,12 +151,12 @@ class gas_maintenance_vehicle(models.Model):
     )
     
        
-    corporate_select = fields.Many2one('gas.maintenance.corporate', string='Perusahaan' ,track_visibility='onchange')   
+    corporate_select = fields.Many2one('gas.maintenance.corporate', string='Perusahaan' ,track_visibility='onchange')
 
     @api.onchange('corporate', 'corporate_select')
     def get_price(self):
         rec_corp = self.corporate
-        data =  self.env['gas.maintenance.corporate'].search([('key', '=', rec_corp)])    
+        data =  self.env['gas.maintenance.corporate'].search([('key', '=', rec_corp)])
         if data:
             self.corporate_select = data
         else:
@@ -195,12 +178,13 @@ class gas_maintenance_vehicle(models.Model):
         ('SINERGI JAYA ENERGI', 'PT. SINERGI JAYA ENERGI'),
         ('ANUGERAH SANGATTA ENERGI', 'PT. ANUGERAH SANGATTA ENERGI'),
         ('TAKA ENERGY NUSANTARA', 'PT. TAKA ENERGY NUSANTARA'),
-    ], string='corporate' , required=True, default=None)    
-    
-    ppn = fields.Float(string='PPN (10 %)' , default=0.0)
-    pph = fields.Float(string='PPH (2 %)' , default=0.0)
+    ], string='corporate', required=True, default=None)
+
+    ppn = fields.Float(string='PPN (10 %)', default=0.0)
+    pph = fields.Float(string='PPH (2 %)', default=0.0)
 
     global switch
+
     def switch(data):
         alamat = data
         # Split Awal
@@ -216,29 +200,31 @@ class gas_maintenance_vehicle(models.Model):
         data_3 = data_3[0]
         data = data_1 + data_2 + data_3
         return data
-    
+
     global converse
+
     def converse(no, corp, month, year):
         data = corp
         increment = '%03d' % no
         short = switch(data)
-        data = increment + '/' +  short + '/GAS/SGT' + '/' + str(month) + '/' + str(year) + "/O"
+        data = increment + '/' + short + '/GAS/SGT' + '/' + str(month) + '/' + str(year) + "/O"
         print(data)
         return data
-    
+
     global intToRoman
+
     def intToRoman(num):
-        dict = {1: "I",2: "II",3: "III",4: "IV",5: "V",6: "VI",7: "VII",8: "VIII",9: "IX",10: "X",
-                11: "XI",12: "XII",13: "XIII",14: "XIV",15: "XV",16: "XVI",17: "XVII",18: "XVIII",19: "XIX",20: "XX",
-                21: "XXI",22: "XXII",23: "XXIII",24: "XXIV",25: "XXV",26: "XXVI",27: "XXVII",28: "XXVIII",29: "XXIX",30: "XXX",30: "XXXI"}
+        dict = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X",
+                11: "XI", 12: "XII", 13: "XIII", 14: "XIV", 15: "XV", 16: "XVI", 17: "XVII", 18: "XVIII", 19: "XIX",
+                20: "XX",
+                21: "XXI", 22: "XXII", 23: "XXIII", 24: "XXIV", 25: "XXV", 26: "XXVI", 27: "XXVII", 28: "XXVIII",
+                29: "XXIX", 30: "XXX", 30: "XXXI"}
         data = (dict[num])
         return data
 
-    
-    
     @api.model
     def create(self, values):
-        res = super(gas_maintenance_vehicle,self).create(values)
+        res = super(gas_maintenance_vehicle, self).create(values)
         for rec in res:
             nama = rec.name
             data = ''
@@ -248,47 +234,24 @@ class gas_maintenance_vehicle(models.Model):
                 length  = len(increment)
                 no = length
                 bulan = rec.create_date.month
-                bulan = intToRoman(bulan)                
-                year = rec.create_date.year                
+                bulan = intToRoman(bulan)
+                year = rec.create_date.year
                 names = converse(no,perusahaan,bulan,year)
                 # Check Duplicate
                 hitungan = len(increment) -2
-                cuy = increment[hitungan].name                    
+                cuy = increment[hitungan].name
                 if names == cuy:
                     print("Datanya Duplikat")
                     no = length + 1
                     bulan = rec.create_date.month
-                    bulan = intToRoman(bulan)                
-                    year = rec.create_date.year                
-                    names = converse(no,perusahaan,bulan,year)
-                    rec.update({'name':names})
+                    bulan = intToRoman(bulan)
+                    year = rec.create_date.year
+                    names = converse(no, perusahaan, bulan, year)
+                    rec.update({'name': names})
                 else:
                     print("Datanya Single")
-                    rec.update({'name':names})
+                    rec.update({'name': names})
         return res
-    
-    @api.constrains('status')
-    def _check_status(self):
-        for record in self:
-            if record.status == 'finish' and self.env['gas.report.line'].search([('group_gas_id', '=', record.id), ('status', '!=', 'finish')]):
-                raise ValidationError("Tidak dapat menetapkan status Master ke 'Selesai'. Jika masih ada pekerjaan yang berjalan .")
-            if record.status == 'finish':
-                # Pengkondisian untuk menghilangkan 1 Indek setelah (/O)
-                if record.name and record.name.endswith('/O'):
-                    ba_close =  record.name.rsplit('/',1)[0]
-                    no_ba_close = ba_close + "/C"
-                    record.no_ba_close = no_ba_close
-                else:
-                    record.no_ba_close = record.name      
-            if record.status == 'open':
-                ba_close =''
-                record.no_ba_close = ba_close
-
-            if record.status == 'progress':
-                ba_close =''
-                record.no_ba_close = ba_close
-    
-            
     def open_records(self):
         ctx = dict(self._context)
         ctx.update({'search_default_vehicle_id': self.id})
@@ -306,7 +269,7 @@ class gas_maintenance_vehicle(models.Model):
         required=False, default=lambda self: self.env.context.get('default_vehicle_id'),
         index=True, tracking=True, change_default=True  ,track_visibility='onchange')
     brand = fields.Char('Merek', related='vehicle_id.brand')
-    tanggal_kerusakan = fields.Datetime(string="Tanggal Kerusakan",
+    tanggal_kerusakan = fields.Date(string="Tanggal Kerusakan",
                                     required=False,
                                     readonly=False,
                                     select=True,
@@ -356,159 +319,161 @@ class gas_maintenance_vehicle(models.Model):
                 record.no_ba_close = ba_close
               
     
-    # standar_lama = fields.Date(string="Tanggal Selesai"  ,track_visibility='onchange')     
 
     standar_lama = fields.Datetime(string='Tanggal Selesai', compute='_compute_tanggal', store=True, track_visibility='onchange')    
     
     @api.depends('gas_line.start_perbaikan', 'gas_line.finish_perbaikan')
     def _compute_tanggal(self):
+        virtual_data = []
         for master in self:
-            child_dates = master.gas_line.mapped('finish_perbaikan')
-            if child_dates:
-                # Pilih tanggal terbesar/terlama
-                master.standar_lama = max(child_dates)
-                x = max(child_dates)
-                print(x)
-            else:
-                master.standar_lama = False    
+            for rec in master.gas_line:
+                data = rec.finish_perbaikan
+                if data and data != False:
+                    virtual_data.append(data)
+                else:
+                    print("No Data")
+        virtual_data.sort(reverse=True)
+        print(virtual_data)
+        result = virtual_data[0]
+        master.update({'standar_lama': result})
+        
+
+                 
     
     biaya_perbaikan = fields.Monetary(string='Estimasi Biaya', store=True, readonly=True, compute='_amount_all' ,track_visibility='onchange')
     gas_line = fields.One2many(
-        'gas.report.line', 
+        'gas.report.line',
         'group_gas_id',
         string="List PErbaikan Sarfas",
         track_visibility='onchange'
     ) 
     
-    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor' ,track_visibility='onchange')   
-    
+
+    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor')
+
     @api.depends('gas_line.biaya_perbaikan')
     def _amount_all(self):
         for rec in self:
             jumlah = 0.0
             for line in rec.gas_line:
                 jumlah+= line.biaya_perbaikan
-            currency = rec.currency_id or self.env.company.currency_id                
+            currency = rec.currency_id or self.env.company.currency_id
             rec.update({
                 'biaya_perbaikan': currency.round(jumlah)
             })
-        
 
-    
-    discount = fields.Float(string='Diskon' , default=0.0)
+
+    discount = fields.Float(string='Diskon', track_visibility='onchange', default=0.0)
     afterDiscount = fields.Float(string='Diskon' , default=0.0)
-    
-    final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price' ,track_visibility='onchange')
-        
-    @api.depends('final_price', 'discount', 'biaya_perbaikan','ppn','pph','afterDiscount')
+    final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price',
+                                  track_visibility='onchange')
+
+    @api.depends('final_price', 'discount', 'biaya_perbaikan', 'ppn', 'pph', 'afterDiscount')
     def _final_price(self):
         for record in self:
             if not record.discount:
-                data = record.biaya_perbaikan            
+                data = record.biaya_perbaikan
                 record.final_price = data + record.pph + record.ppn
-                record.afterDiscount = data 
-                
+                record.afterDiscount = data
+
             else:
-                currency = record.currency_id or self.env.company.currency_id  
+                currency = record.currency_id or self.env.company.currency_id
                 final_price   = record.biaya_perbaikan - record.discount
                 record.afterDiscount = final_price
                 record.final_price = final_price + record.pph + record.ppn
-                
+
     def debug_gas(self):
         print("Hello World")
 
         data = self.env['gas.maintenance.vehicle'].search([('id', '=', self.id)])
-        name                =[]
-        brand               =[]
-        pelapor             =[]
-        status              =[]
-        vendor              =[]
-        corporate           =[]
-        tanggal_kerusakan   =[]
-        standar_lama        =[]
-        biaya_perbaikan     =[]
-        discount            =[]
-        final_price         =[]
-        no_ba_close         = []
-        kop_surat           = []
-        ttd                 = []
+        name = []
+        brand = []
+        pelapor = []
+        status = []
+        vendor = []
+        corporate = []
+        tanggal_kerusakan = []
+        standar_lama = []
+        biaya_perbaikan = []
+        discount = []
+        final_price = []
+        no_ba_close = []
+        kop_surat = []
+        ttd = []
 
-        pph                 = []
-        ppn                 = []
-        afterDiscount       = []
-        cuy                 = [1,2,3,4]
-        text_value          = []
-        foto                = []
-        foto2               = []
+        pph = []
+        ppn = []
+        afterDiscount = []
+        cuy = [1, 2, 3, 4]
+        text_value = []
+        foto = []
+        foto2 = []
 
-      
-                
         data_list = {
-                'id': id,
-                'name': name,
-                'brand': brand,
-                'pelapor': pelapor,
-                'status': status,
-                'vendor': vendor,
-                'corporate': corporate,
-                'tanggal_kerusakan': tanggal_kerusakan,
-                'standar_lama': standar_lama,
-                'biaya_perbaikan': biaya_perbaikan,
-                'discount': discount,
-                'final_price': final_price,
-                'no_ba_close': no_ba_close,
-                'kop_surat': kop_surat,
-                'ttd': ttd,
-                'afterDiscount': afterDiscount,
-                'ppn': ppn,
-                'pph': pph,
-                'cuy': cuy,
-                'text_value': text_value,
-                'foto': foto,
-                'foto2': foto2,
-            }
-        nama                    = []
-        jenis_sarfas            = []
-        uraian_pekerjaan        = []
-        line_biaya_perbaikan    = []
-        code   = []
-        vol    = []
-        sat    = []
+            'id': id,
+            'name': name,
+            'brand': brand,
+            'pelapor': pelapor,
+            'status': status,
+            'vendor': vendor,
+            'corporate': corporate,
+            'tanggal_kerusakan': tanggal_kerusakan,
+            'standar_lama': standar_lama,
+            'biaya_perbaikan': biaya_perbaikan,
+            'discount': discount,
+            'final_price': final_price,
+            'no_ba_close': no_ba_close,
+            'kop_surat': kop_surat,
+            'ttd': ttd,
+            'afterDiscount': afterDiscount,
+            'ppn': ppn,
+            'pph': pph,
+            'cuy': cuy,
+            'text_value': text_value,
+            'foto': foto,
+            'foto2': foto2,
+        }
+        nama = []
+        jenis_sarfas = []
+        uraian_pekerjaan = []
+        line_biaya_perbaikan = []
+        code = []
+        vol = []
+        sat = []
         supply = []
 
-
         dict_list = {
-                'id': id,
-                'nama': nama,
-                'jenis_sarfas': jenis_sarfas,
-                'uraian_pekerjaan': uraian_pekerjaan,
-                'line_biaya_perbaikan': line_biaya_perbaikan,
-                'code'  : code,
-                'vol'   : vol,
-                'sat'   : sat,
-                'supply': supply
-            }
-        
+            'id': id,
+            'nama': nama,
+            'jenis_sarfas': jenis_sarfas,
+            'uraian_pekerjaan': uraian_pekerjaan,
+            'line_biaya_perbaikan': line_biaya_perbaikan,
+            'code': code,
+            'vol': vol,
+            'sat': sat,
+            'supply': supply
+        }
+
         for line in data:
-            rec_name                = line.name
-            rec_brand               = line.brand
-            rec_pelapor             = line.pelapor
-            rec_status              = line.status
-            rec_vendor              = line.vendor.name.upper()
-            rec_vendor              = "BENGKEL " + rec_vendor
-            rec_corporate           = line.corporate
-            rec_tanggal_kerusakan   = line.tanggal_kerusakan
-            rec_standar_lama        = line.standar_lama
-            rec_vehicle_image1      = line.vehicle_image1
-            rec_vehicle_image2      = line.vehicle_image2
-            rec_vehicle_image3      = line.vehicle_image3
-            rec_vehicle_image4      = line.vehicle_image4
-            rec_vehicle_image5      = line.vehicle_image5
-            rec_vehicle_image6      = line.vehicle_image6             
-            rec_note_image     = line.note_image
-            rec_ktp            = line.vendor.ktp
-            rec_no_rec         = line.vendor.accountNumber
-            rec_npwp           = line.vendor.NPWP            
+            rec_name = line.name
+            rec_brand = line.brand
+            rec_pelapor = line.pelapor
+            rec_status = line.status
+            rec_vendor = line.vendor.name.upper()
+            rec_vendor = "BENGKEL " + rec_vendor
+            rec_corporate = line.corporate
+            rec_tanggal_kerusakan = line.tanggal_kerusakan
+            rec_standar_lama = line.standar_lama
+            rec_vehicle_image1 = line.vehicle_image1
+            rec_vehicle_image2 = line.vehicle_image2
+            rec_vehicle_image3 = line.vehicle_image3
+            rec_vehicle_image4 = line.vehicle_image4
+            rec_vehicle_image5 = line.vehicle_image5
+            rec_vehicle_image6 = line.vehicle_image6
+            rec_note_image = line.note_image
+            rec_ktp = line.vendor.ktp
+            rec_no_rec = line.vendor.accountNumber
+            rec_npwp = line.vendor.NPWP
             foto.append(rec_vehicle_image1)
             foto.append(rec_vehicle_image2)
             foto.append(rec_vehicle_image3)
@@ -520,19 +485,18 @@ class gas_maintenance_vehicle(models.Model):
             foto2.append(rec_ktp)
             foto2.append(rec_no_rec)
             foto2.append(rec_npwp)
-            
-            
-            rec_biaya_perbaikan     = "Rp. " + str(f"{int(line.biaya_perbaikan):,}")            
-            rec_discount            = "Rp. " + str(f"{int(line.discount):,}")
-            rec_afterDiscount       = "Rp. " + str(f"{int(line.afterDiscount):,}")
-            rec_ppn                 = "Rp. " + str(f"{int(line.ppn):,}")
-            rec_pph                 = "Rp. " + str(f"{int(line.pph):,}")
-            Text_sample             = "Pada hari jumat, 01 september 2023 kami memberitahukan bahwa akan dilakukan perbaikan roda belakang bocor pada skid Hino 500 KT 8061 RN Di bengkel JAYA MANDIRI yang berlokasi di Jln. Kawasan Rt. 06, Gg. Keluarga, Kel. Jawa, Kec. Sanga - Sanga, Kutai Kartenegara, Kaltim . Dengan gambar sebagai berikut :"
-            Katas                   = "\t{}".format(Text_sample)
+
+            rec_biaya_perbaikan = "Rp. " + str(f"{int(line.biaya_perbaikan):,}")
+            rec_discount = "Rp. " + str(f"{int(line.discount):,}")
+            rec_afterDiscount = "Rp. " + str(f"{int(line.afterDiscount):,}")
+            rec_ppn = "Rp. " + str(f"{int(line.ppn):,}")
+            rec_pph = "Rp. " + str(f"{int(line.pph):,}")
+            Text_sample = "Pada hari jumat, 01 september 2023 kami memberitahukan bahwa akan dilakukan perbaikan roda belakang bocor pada skid Hino 500 KT 8061 RN Di bengkel JAYA MANDIRI yang berlokasi di Jln. Kawasan Rt. 06, Gg. Keluarga, Kel. Jawa, Kec. Sanga - Sanga, Kutai Kartenegara, Kaltim . Dengan gambar sebagai berikut :"
+            Katas = "\t{}".format(Text_sample)
             text_value.append(Katas)
-            
-            rec_final_price         = "Rp. " + str(f"{int(line.final_price):,}")
-            rec_no_ba_close         = line.no_ba_close
+
+            rec_final_price = "Rp. " + str(f"{int(line.final_price):,}")
+            rec_no_ba_close = line.no_ba_close
             # Foto pertamina + seu
             kop_surat_1 = self.corporate_select.kop_surat_1
             # Foto pertamina + seu
@@ -545,15 +509,15 @@ class gas_maintenance_vehicle(models.Model):
             ttd_1 = self.pic_seu
             ttd_2 = self.sign_corlog
             ttd_3 = self.bu_seu
-  
-            ttd.append(ttd_1)            
-            ttd.append(ttd_2)            
-            ttd.append(ttd_3)            
-            
-            kop_surat.append(kop_surat_1)            
-            kop_surat.append(kop_surat_2)            
-            kop_surat.append(kop_surat_2_copy)            
-            kop_surat.append(kop_surat_3)            
+
+            ttd.append(ttd_1)
+            ttd.append(ttd_2)
+            ttd.append(ttd_3)
+
+            kop_surat.append(kop_surat_1)
+            kop_surat.append(kop_surat_2)
+            kop_surat.append(kop_surat_2_copy)
+            kop_surat.append(kop_surat_3)
 
             name.append(rec_name)
             brand.append(rec_brand)
@@ -568,10 +532,10 @@ class gas_maintenance_vehicle(models.Model):
             afterDiscount.append(rec_afterDiscount)
             ppn.append(rec_ppn)
             pph.append(rec_pph)
-            
+
             final_price.append(rec_final_price)
-            no_ba_close.append(rec_no_ba_close)            
-            
+            no_ba_close.append(rec_no_ba_close)
+
             for list in line.gas_line:
                 rec_nama = list.name
                 rec_jenis_sarfas = list.jenis_sarfas
@@ -579,32 +543,24 @@ class gas_maintenance_vehicle(models.Model):
                 rec_line_biaya_perbaikan = "Rp. " + str(f"{int(list.biaya_perbaikan):,}")
                 code = 'NULL'
                 vol = 1
-                sat     = "UNIT"
-                supply  = "SGT"               
+                sat = "UNIT"
+                supply = "SGT"
 
                 # append
                 nama.append(rec_nama)
                 jenis_sarfas.append(rec_jenis_sarfas)
                 uraian_pekerjaan.append(rec_uraian_pekerjaan)
-                line_biaya_perbaikan.append(rec_line_biaya_perbaikan) 
-                
+                line_biaya_perbaikan.append(rec_line_biaya_perbaikan)
 
-
-                    
         # print(data_list[0][0])
         # print("test")
-        testt = ["HERU", "LATIFA", "SILVIA"]
-        master = ["HERU", "LATIFA", "SILVIA"]                        
-        master_data = ["HERU", "LATIFA", "SILVIA"]        
-        data={
-            'form':self.read()[0],
-            'testt': testt,
-            'master': master,
-            'master_data': master_data,
-            'data_list':data_list,
-            'dict_list':dict_list,
+        data = {
+            'form': self.read()[0],
+            'data_list': data_list,
+            'dict_list': dict_list,
         }
-        return self.env.ref('pms_module.actions_print_gas_maintenance_vehicle').report_action(self, data=data)          
+        return self.env.ref('pms_module.actions_print_gas_maintenance_vehicle').report_action(self, data=data)
+
 
 class gas_maintenance_corporate(models.Model):
     _name = "gas.maintenance.corporate"
@@ -617,34 +573,30 @@ class gas_maintenance_corporate(models.Model):
     kop_surat_2 = fields.Binary("Kop Surat 2")
     kop_surat_3 = fields.Binary("Kop Surat 3")
 
+
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"
+    _inherit = 'mail.thread'
     _description ="Gas Maintenance Vendor"
+    name = fields.Char(string="Nama Vendor", track_visibility='onchange')
 
-    name = fields.Char(string="Nama Vendor")
-    
-    number = fields.Char('Telepon')
-    
-    alamat = fields.Char(string="Alamat")
-    
-    
-    accountNumber = fields.Char(string="Nomor Rekening")
-    
-    
+    number = fields.Char('Telepon' , track_visibility='onchange')
+
+    alamat = fields.Char(string="Alamat", track_visibility='onchange')
+
+    accountNumber = fields.Char(string="Nomor Rekening" , track_visibility='onchange')
     bankName = fields.Char('Nama Bank')
     
     ownerBank = fields.Char('Nama Pemilik')
     
  
     photoAcountBank = fields.Binary("Foto Buku Rekening")
-    ktp = fields.Binary("Foto KTP")
+    ktp = fields.Binary("Foto Ktp")
     NPWP = fields.Binary("Foto NPWP")
-    
-    
-    
 
 class gas_maintenance_vehicle_line(models.Model):
     _name = "gas.report.line"
+    _inherit = 'mail.thread'
     _description="Gas Report Line"
 
     @api.depends('start_perbaikan', 'finish_perbaikan')
@@ -656,9 +608,9 @@ class gas_maintenance_vehicle_line(models.Model):
                 dt_2 = fields.Datetime.from_string(record.finish_perbaikan)
                 # duration = (dt_2 - dt_1).days
                 duration = (dt_2 - dt_1).total_seconds()
-                record.update({'lama_perbaikan':duration})
+                record.update({'lama_perbaikan': duration})
             else:
-                record.update({'lama_perbaikan':duration})                
+                record.update({'lama_perbaikan': duration})
 
     lama_perbaikan = fields.Integer(
         'Lama Perbaikan',
@@ -669,7 +621,7 @@ class gas_maintenance_vehicle_line(models.Model):
     
     name = fields.Char(string="Nama Sarfas")
     jenis_sarfas = fields.Char(string="Jenis Sarfas")
-    biaya_perbaikan = fields.Float(string="Biaya Perbaikan", default=0.0 )
+    biaya_perbaikan = fields.Float(string="Biaya Perbaikan", default=0.0)
     uraian_pekerjaan = fields.Text('Uraian Pekerjaan')
     start_perbaikan = fields.Datetime(string="Tanggal Mulai")
     finish_perbaikan = fields.Datetime(string="Tanggal Selesai")
@@ -684,24 +636,33 @@ class gas_maintenance_vehicle_line(models.Model):
     status = fields.Selection(
         string='Status',
         selection=[('open', 'Open'),
-                   ('progress', 'Progress'), 
-                   ('finish', 'Finish') ],
+                   ('progress', 'Progress'),
+                   ('finish', 'Finish')],
         default='open',
         store=True,
         readonly=False,
     )
-    
+
     group_gas_id = fields.Many2one(
         'gas.maintenance.vehicle',
         string='group_gas_id',
-        ondelete='cascade',
         readonly=True
     )
-    
+
+    jenis_downtime = fields.Selection(
+        string='Jenis Perawatan',
+        selection=[
+            ('maintenance', 'Maintenance'),
+            ('repair ', 'Repair '),
+            ('breakdown ', 'Breakdown '),
+            ('downtime ', 'Downtime '),
+        ], default='maintenance'
+    )
+
     no_ba_open =  fields.Char('NO BA (OPEN)' , related= "group_gas_id.name", readonly=True, store=True )
-    
+
     no_ba_close = fields.Char('NO BA (CLOSE)',  related="group_gas_id.no_ba_close", readonly=True, store=True )
-    
+
     corporate = fields.Selection([
         ('GEMILANG KARYA ENERGI', 'PT. GEMILANG KARYA ENERGI'),
         ('DHIRABRATA GAS NUSANTARA', 'PT. DHIRABRATA GAS NUSANTARA'),
@@ -715,20 +676,12 @@ class gas_maintenance_vehicle_line(models.Model):
         ('SINERGI JAYA ENERGI', 'PT. SINERGI JAYA ENERGI'),
         ('ANUGERAH SANGATTA ENERGI', 'PT. ANUGERAH SANGATTA ENERGI'),
         ('TAKA ENERGY NUSANTARA', 'PT. TAKA ENERGY NUSANTARA'),
-    ], string='corporate' , required=True, related="group_gas_id.corporate")  
-        
-    tanggal_kerusakan = fields.Datetime('Tanggal Downtime',  related="group_gas_id.tanggal_kerusakan", readonly=True, store=True )
-    
+    ], string='Perusahaan' , required=True, related="group_gas_id.corporate")
+
+    tanggal_kerusakan = fields.Date('Tanggal Downtime',  related="group_gas_id.tanggal_kerusakan", readonly=True, store=True )
+
     pelapor = fields.Char('Pelapor',  related="group_gas_id.pelapor", readonly=True, store=True )
-    status = fields.Selection(
-        string='Status',
-        selection=[('open', 'Open'),
-                   ('progress', 'Progress'), 
-                   ('finish', 'Finish') ],
-        default='open',
-        store=True,
-        readonly=False,
-        track_visibility='onchange', related="group_gas_id.status")   
+
     vehicle_id = fields.Many2one(
         'vehicle.vehicle',
         string='Vehicle',
@@ -737,10 +690,7 @@ class gas_maintenance_vehicle_line(models.Model):
     # vehicle_id = fields.Char('NO POLISI',  related="group_gas_id.vehicle_id", readonly=True, store=True )
     
     brand = fields.Char('Jenis Kendaraan',  related="group_gas_id.brand", readonly=True, store=True )
-    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor' ,track_visibility='onchange', related="group_gas_id.vendor")   
-       
-    # vendor = fields.Char('Jenis Kendaraan',  related="group_gas_id.vendor", readonly=True, store=True )
-        
+    vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor' ,track_visibility='onchange', related="group_gas_id.vendor")
     jenis_downtime = fields.Selection(
         string='Jenis Perawatan',
         selection=[
@@ -750,9 +700,3 @@ class gas_maintenance_vehicle_line(models.Model):
             ('downtime ', 'Downtime '),
         ], default='maintenance'
     )    
-
-# Overriding exciting class in Python
-# class gas_maintenance_vehicle(models.Model):
-#     _inherit = 'gas.maintenance.vehicle'
-    
-#     state = fields.Selection(selection=[('draft', 'Draft'),  ('approved', 'Approved')])
