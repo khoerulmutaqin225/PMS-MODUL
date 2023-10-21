@@ -334,8 +334,11 @@ class gas_maintenance_vehicle(models.Model):
                     print("No Data")
         virtual_data.sort(reverse=True)
         print(virtual_data)
-        result = virtual_data[0]
-        master.update({'standar_lama': result})
+        if virtual_data:
+            result = virtual_data[0]
+            master.update({'standar_lama': result})
+        else:
+            master.update({'standar_lama': False})
         
 
                  
