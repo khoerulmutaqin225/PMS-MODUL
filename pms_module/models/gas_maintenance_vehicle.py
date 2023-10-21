@@ -232,26 +232,26 @@ class gas_maintenance_vehicle(models.Model):
                 perusahaan = rec.corporate
                 increment =  self.env['gas.maintenance.vehicle'].search([('corporate', '=', rec.corporate)])
                 length  = len(increment)
-                no = length
+                no = 0
+                if length == 1:
+                    no = 1
+                else:
+                    dto_length = length - 2
+                    last_record = increment[dto_length].name
+                    data = last_record
+                    data = data.split("/",1)
+                    key = int(data[0]) 
+                    print ("Value Data : ", data)
+                    no = int(data[0])
+                    no += 1                     
                 bulan = rec.create_date.month
                 bulan = intToRoman(bulan)
                 year = rec.create_date.year
                 names = converse(no,perusahaan,bulan,year)
                 # Check Duplicate
-                hitungan = len(increment) -2
-                cuy = increment[hitungan].name
-                if names == cuy:
-                    print("Datanya Duplikat")
-                    no = length + 1
-                    bulan = rec.create_date.month
-                    bulan = intToRoman(bulan)
-                    year = rec.create_date.year
-                    names = converse(no, perusahaan, bulan, year)
-                    rec.update({'name': names})
-                else:
-                    print("Datanya Single")
-                    rec.update({'name': names})
+                rec.update({'name': names})
         return res
+    
     def open_records(self):
         ctx = dict(self._context)
         ctx.update({'search_default_vehicle_id': self.id})
