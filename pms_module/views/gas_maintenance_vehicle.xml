@@ -120,7 +120,7 @@
                             <field name="brand" />                            
                             <field name="pelapor" style="" placeholder="Masukan Nama Pelapor" required="1"/>
                             <field name="status" style="background-color:green; color: white;" placeholder="Pilih Status" required="1" widget="radio" />
-                            <field name="vendor" placeholder="Vendor" required="1"/>
+                            <field name="vendor" placeholder="Vendor" invisible="1" />
                             <field name="company_id" placeholder="Select Company" invisible="1"/>
                             <field name="corporate" placeholder="Select Company" string="Perusahaan" />
                             <field name="corporate_select" widget="selection" placeholder="Select Company" string="Perusahaan Select" />
