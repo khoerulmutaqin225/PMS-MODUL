@@ -351,6 +351,14 @@ class gas_maintenance_vehicle(models.Model):
         track_visibility='onchange'
     ) 
     
+    # gas.maintenance.vendor
+    gas_vendor_transfer_line = fields.One2many(
+        'gas.maintenance.vendor.transfer',
+        'group_vendor_transfer_gas_id',
+        string="List Vendor",
+        track_visibility='onchange'
+    )
+    
 
     vendor = fields.Many2one('gas.maintenance.vendor', string='Vendor')
 
@@ -575,7 +583,39 @@ class gas_maintenance_corporate(models.Model):
     kop_surat_1 = fields.Binary("Kop Surat 1" )
     kop_surat_2 = fields.Binary("Kop Surat 2")
     kop_surat_3 = fields.Binary("Kop Surat 3")
+    
+    
 
+
+class gas_maintenance_vendor_transfer(models.Model):
+    _name = "gas.maintenance.vendor.transfer"
+    _inherit = 'mail.thread'
+    _description ="Gas Maintenance Vendor Transfer"
+    
+    group_vendor_transfer_gas_id = fields.Many2one(
+        'gas.maintenance.vehicle',
+        string='ID',
+    )    
+    
+    name = fields.Many2one(
+        'gas.maintenance.vendor',
+        string='Nama Vendor',
+    )    
+    
+    number = fields.Char('Telepon' , track_visibility='onchange', related='name.number', )
+
+    alamat = fields.Char(string="Alamat", track_visibility='onchange' , related='name.alamat', )
+
+    accountNumber = fields.Char(string="Nomor Rekening" , track_visibility='onchange' , related='name.accountNumber', )
+    bankName = fields.Char('Nama Bank' , related='name.bankName', )
+    
+    ownerBank = fields.Char('Nama Pemilik' , related='name.ownerBank', )
+    
+ 
+    photoAcountBank = fields.Binary("Foto Buku Rekening" , related='name.photoAcountBank', )
+    ktp = fields.Binary("Foto Ktp" , related='name.ktp', )
+    NPWP = fields.Binary("Foto NPWP" , related='name.NPWP', )
+    
 
 class gas_maintenance_vendor(models.Model):
     _name = "gas.maintenance.vendor"
@@ -596,6 +636,12 @@ class gas_maintenance_vendor(models.Model):
     photoAcountBank = fields.Binary("Foto Buku Rekening")
     ktp = fields.Binary("Foto Ktp")
     NPWP = fields.Binary("Foto NPWP")
+    
+    group_vendor_gas_id = fields.Many2one(
+        'gas.maintenance.vehicle',
+        string='group_gas_vendor_id',
+        readonly=True
+    )    
 
 class gas_maintenance_vehicle_line(models.Model):
     _name = "gas.report.line"

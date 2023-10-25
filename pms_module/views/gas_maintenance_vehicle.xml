@@ -191,8 +191,23 @@
                                   <field name="note_image4"/>
                                 </group>
                             </group>
-                        </page>                        
-                        <page string="Foto TTD">
+                        </page>                 
+                        <page string="Daftar Vendor">
+                            <field name="gas_vendor_transfer_line" widget="section_and_note_one2many" mode="tree">
+                                <tree editable="top">
+                                    <field name="name" placeholder="Nama Vendor" />
+                                    <field name="number" placeholder="Nomor Vendor" />
+                                    <field name="alamat" placeholder="Alamat" />
+                                    <field name="accountNumber" placeholder="Nomor Rekening" />
+                                    <field name="bankName" placeholder="Nama Bank" />
+                                    <field name="ownerBank" placeholder="Nama Pemilik Rekening"  />
+                                    <field name="photoAcountBank" placeholder="Buku Tabungan" />
+                                    <field name="ktp" placeholder="Masukan KTP"  />
+                                    <field name="NPWP" placeholder="Masukan NPWP"  />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Foto TTD" invisible="1">
                            <group>
                              <group>
                                 <field name="pic_seu" widget="image" options="{'widget': 'image', 'size': (250, 250)}" readonly="0"/>
