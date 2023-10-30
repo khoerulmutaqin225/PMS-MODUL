@@ -30,7 +30,7 @@
         <field name="arch" type="xml">
             <search string="Search Job Crew">
                 <field name="name" string="Job" />
-                <field name="vehicle_id" />
+                <field name="vehicle_id"   />
                 <!--                <filter name="recap_date" string="Report Date" date="tanggal_rekap"/>-->
                 <separator />
                 <group expand="0" string="Group By">

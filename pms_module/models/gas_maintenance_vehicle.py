@@ -178,6 +178,7 @@ class gas_maintenance_vehicle(models.Model):
         ('SINERGI JAYA ENERGI', 'PT. SINERGI JAYA ENERGI'),
         ('ANUGERAH SANGATTA ENERGI', 'PT. ANUGERAH SANGATTA ENERGI'),
         ('TAKA ENERGY NUSANTARA', 'PT. TAKA ENERGY NUSANTARA'),
+        ('SUKSES MAJU ENERGY', 'PT. SUKSES MAJU ENERGY'),
     ], string='corporate', required=True, default=None)
 
     ppn = fields.Float(string='PPN (10 %)', default=0.0)
