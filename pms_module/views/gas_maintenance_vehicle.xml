@@ -100,6 +100,7 @@
             <button type="object" name="debug_gas" string="Print" class="btn-primary" />
             <button type="object" name="buttonCorpLog" string="Approved" class="btn-primary" />
             <button type="object" name="action_draft" string="Reset Default" class="btn-primary" />
+            <!-- <link class="ActionUrlDialog" name="debug_gas" string="Link" type="ir.actions.act_url"/>             -->
             <field name="state" widget="statusbar"/>
             </header>
                 <sheet>
@@ -143,9 +144,11 @@
                         <page string="Perbaikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
-                                    <field name="name" placeholder="Masukan Nama" required="1"/>
+                                    <field name="name" placeholder="Masukan Nama" invisible="1" />
+                                    <field name="name_selection" placeholder="Masukan Nama" />
                                     <field name="currency_id" invisible="1"/>
-                                    <field name="jenis_sarfas" placeholder="Jenis Sarfas" required="1"/>
+                                    <field name="jenis_sarfas" placeholder="Jenis Sarfas" invisible="1" />
+                                    <field name="jenis_sarfas_selection" placeholder="Jenis Sarfas" />
                                     <field name="biaya_perbaikan" placeholder="Biaya Perbaikan" required="1" widget="monetary"/>
                                     <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan" required="1"/>
                                     <field name="start_perbaikan" placeholder="Start Perbaikan" required="1"/>
@@ -255,25 +258,24 @@
         <field name="model">gas.report.line</field>
         <field name="arch" type="xml">
             <tree string="Maintenance Kendaraan" decoration-success="status == 'finish'" decoration-muted="status == ''" decoration-danger="status == 'open'">
-                <field name="no_ba_open"  />
-                <field name="corporate"/>
-                <field name="jenis_sarfas" string="Jenis Sarfas"/>
+                <field name="corporate" />
+                <field name="vehicle_id" string="Mobil" />
+                <field name="jenis_sarfas" string="Jenis Sarfas" />
                 <field name="name" string="Nama Sarfas" />
-                <field name="jenis_downtime" string="Jenis Kegiatan" />
-                <field name="tanggal_kerusakan" string="Tanggal Downtime" />
-                <field name="uraian_pekerjaan" />
-                <field name="pelapor" />
+                <field name="tanggal_kerusakan" string="Perbaikan" />
+                <field name="vendor" />
+                <field name="status" />
                 <field name="start_perbaikan" />
                 <field name="finish_perbaikan" />
-                <field name="finish_perbaikan" />
-                <field name="brand" />
-                <field name="status" />
-                <field name="vehicle_id" />
-                <field name="km" />
+                <field name="no_ba_open" />
                 <field name="no_ba_close" />
-                <field name="lama_perbaikan" />
-                <field name="biaya_perbaikan" widget="monetary"/>
-                <field name="vendor" />
+                <field name="biaya_perbaikan" widget="monetary" />
+                <field name="jenis_downtime" string="Jenis Kegiatan" invisible="1" />
+                <field name="lama_perbaikan" invisible="1" />
+                <field name="brand" invisible="1" />
+                <field name="km" invisible="1" />
+                <field name="uraian_pekerjaan" invisible="1" />
+                <field name="pelapor" invisible="1" />                
             </tree>
         </field>
     </record>
@@ -288,7 +290,7 @@
     <menuitem name="Maintenance Mobil" id="gas_maintenance_vehicle_menu" parent="gas" action="gas_maintenance_vehicle_act_window" sequence="10" />
 
     <menuitem name="Vendor" id="gas_maintenance_vehicle_vendor_menu" parent="gas" action="gas_maintenance_vehicle_vendor_act_window" sequence="24" />
-    <menuitem name="Laporan Perbaikan" id="gas_report_line_menu" parent="gas" action="gas_report_line_act_window" sequence="14" />
+    <menuitem name="List Maintenance Mobil" id="gas_report_line_menu" parent="gas" action="gas_report_line_act_window" sequence="14" />
 
 
 </odoo>

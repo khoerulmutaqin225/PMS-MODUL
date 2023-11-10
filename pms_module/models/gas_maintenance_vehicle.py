@@ -669,7 +669,75 @@ class gas_maintenance_vehicle_line(models.Model):
     )
     
     
+    @api.onchange('name', 'name_selection')
+    def get_name_sarfas(self):
+        data = self.name_selection
+        if not data:
+            print("Tidak ada data")
+            self.name = False
+        else:
+            print("Ada data")
+            self.name = data
+    
+    @api.onchange('jenis_sarfas', 'jenis_sarfas_selection')
+    def get_jenis_sarfas_sarfas(self):
+        data = self.jenis_sarfas_selection
+        if not data:
+            print("Tidak ada data")
+            self.jenis_sarfas = False
+        else:
+            print("Ada data")
+            self.jenis_sarfas = data
+            
     name = fields.Char(string="Nama Sarfas")
+    
+    
+    name_selection = fields.Selection([
+        ('Engine', 'Engine'),
+        ('Clutch', 'Clutch'),
+        ('Gearbox', 'Gearbox'),
+        ('Control', 'Control'),
+        ('Accelerator', 'Accelerator'),
+        ('Frame', 'Frame'),
+        ('Suspension', 'Suspension'),
+        ('Front Axle', 'Front Axle'),
+        ('Rear Axle', 'Rear Axle'),
+        ('Wheels', 'Wheels'),
+        ('Propeller Shaft', 'Propeller Shaft'),
+        ('Brakes', 'Brakes'),
+        ('Steering', 'Steering'),
+        ('Fuel System', 'Fuel System'),
+        ('Exhaust System', 'Exhaust System'),
+        ('Radiator', 'Radiator'),
+        ('Electricals', 'Electricals'),
+        ('Emblem', 'Emblem'),
+        ('Body', 'Body'),
+        ('Load Body', 'Load Body'),
+    ], string="Nama Sarfas Selection")  
+    
+    jenis_sarfas_selection = fields.Selection([
+        ('Engine', 'Engine'),
+        ('Clutch', 'Clutch'),
+        ('Gearbox', 'Gearbox'),
+        ('Control', 'Control'),
+        ('Accelerator', 'Accelerator'),
+        ('Frame', 'Frame'),
+        ('Suspension', 'Suspension'),
+        ('Front Axle', 'Front Axle'),
+        ('Rear Axle', 'Rear Axle'),
+        ('Wheels', 'Wheels'),
+        ('Propeller Shaft', 'Propeller Shaft'),
+        ('Brakes', 'Brakes'),
+        ('Steering', 'Steering'),
+        ('Fuel System', 'Fuel System'),
+        ('Exhaust System', 'Exhaust System'),
+        ('Radiator', 'Radiator'),
+        ('Electricals', 'Electricals'),
+        ('Emblem', 'Emblem'),
+        ('Body', 'Body'),
+        ('Load Body', 'Load Body'),
+    ], string="Jenis Sarfas Selection")
+        
     jenis_sarfas = fields.Char(string="Jenis Sarfas")
     biaya_perbaikan = fields.Float(string="Biaya Perbaikan", default=0.0)
     uraian_pekerjaan = fields.Text('Uraian Pekerjaan')
