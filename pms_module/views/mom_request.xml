@@ -741,35 +741,35 @@
                                                 </t>
 
                                                 <!-- Batas Tambahan -->
-                                                <t t-if="record.name.value == 'CSBD'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                               <t t-if="record.name.value == 'CSBD'">
+                                                  <i class="fa fa-building" role="img" aria-label="CSBD" title="CSBD"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CIAT'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CIAT" title="CIAT"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORTING'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORTING" title="CORTING"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'COPER'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="COPER" title="COPER"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORCIT'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORCIT" title="CORCIT"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORFIN'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORFIN" title="CORFIN"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORSE'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORSE" title="CORSE"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORLOG'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORLOG" title="CORLOG"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'CORAL'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="CORAL" title="CORAL"/>
                                                 </t>
                                                 <t t-if="record.name.value == 'COHR'">
-                                                  <i class="fa fa-building" role="img" aria-label="Kota Baru" title="Kota Baru"/>
+                                                  <i class="fa fa-building" role="img" aria-label="COHR" title="COHR"/>
                                                 </t>
 
 
