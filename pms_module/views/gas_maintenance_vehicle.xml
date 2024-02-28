@@ -124,7 +124,7 @@
                             <field name="vendor" placeholder="Vendor" invisible="1" />
                             <field name="company_id" placeholder="Select Company" invisible="1"/>
                             <field name="corporate" placeholder="Select Company" string="Perusahaan" />
-                            <field name="corporate_select" widget="selection" placeholder="Select Company" string="Perusahaan Select" />
+                            <field name="corporate_select" widget="selection" placeholder="Select Company" string="Perusahaan Select" invisible="1" />
                         </group>
                         <group name="records" string="Records :">
                             <field name="tanggal_kerusakan" placeholder="Masukan Tanggal Kerusakan" required="1" />
