@@ -135,6 +135,8 @@
                             <field name="pph" widget="monetary"  style="background-color:yellow; color: black;" /> -->
                             <field name="final_price" widget="monetary"/>
                             <field name="no_ba_close" placeholder="No Berita Acara Close" readonly="1"/>
+                            <field name="pph_check" />
+                            <field name="ppn_check" />
                         </group>
                     </group>
                     <!-- <separator string="Catatan"/>
@@ -145,10 +147,10 @@
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
                                     <field name="name" placeholder="Masukan Nama" invisible="1" />
-                                    <field name="name_selection" placeholder="Masukan Nama" />
                                     <field name="currency_id" invisible="1"/>
                                     <field name="jenis_sarfas" placeholder="Jenis Sarfas" invisible="1" />
                                     <field name="jenis_sarfas_selection" placeholder="Jenis Sarfas" />
+                                    <field name="name_selection" placeholder="Masukan Nama" />
                                     <field name="biaya_perbaikan" placeholder="Biaya Perbaikan" required="1" widget="monetary"/>
                                     <field name="uraian_pekerjaan" placeholder="Uraian Pekerjaan" required="1"/>
                                     <field name="start_perbaikan" placeholder="Start Perbaikan" required="1"/>
@@ -163,7 +165,7 @@
                                 <field name="discount" widget="monetary" />
                                 <field name="afterDiscount" widget="monetary" string="Setelah Discount" force_save="1" readonly="1"/>
                                 <field name="pph" string="PPH ( 2%)" widget="monetary" />
-                                <field name="ppn" string="PPH (10%)" widget="monetary" />
+                                <field name="ppn" string="PPN (10%)" widget="monetary" />
                                 <div class="oe_subtotal_footer_separator oe_inline">
                                     <label for="final_price" />
                                 </div>

@@ -178,11 +178,32 @@ class gas_maintenance_vehicle(models.Model):
         ('SINERGI JAYA ENERGI', 'PT. SINERGI JAYA ENERGI'),
         ('ANUGERAH SANGATTA ENERGI', 'PT. ANUGERAH SANGATTA ENERGI'),
         ('TAKA ENERGY NUSANTARA', 'PT. TAKA ENERGY NUSANTARA'),
-        ('SUKSES MAJU ENERGY', 'PT. SUKSES MAJU ENERGY'),
+        ('BANUA SANGGAM JAYA GAS','PT. BANUA SANGGAM JAYA GAS'),
+        ('NIAGA ENERGI PERKASA','PT. NIAGA ENERGI PERKASA'),
+        ('ENERGI BENUA ETAM','PT. ENERGI BENUA ETAM'),
+        ('SUKSES MAJU ENERGI','PT. SUKSES MAJU ENERGI'),
     ], string='corporate', required=True, default=None)
 
-    ppn = fields.Float(string='PPN (10 %)', default=0.0)
-    pph = fields.Float(string='PPH (2 %)', default=0.0)
+    ppn = fields.Float(string='PPN (10 %)', default=0.0, compute='get_price_pph_ppn',)
+    pph = fields.Float(string='PPH (2 %)', default=0.0, compute='get_price_pph_ppn',)
+
+    pph_check = fields.Boolean(default=False, string='PPH (2 %)')
+    ppn_check = fields.Boolean(default=False, string='PPN (10 %)')
+    
+    @api.onchange('pph_check','ppn_check','ppn','pph')
+    def get_price_pph_ppn(self):
+        if not self.ppn_check and not self.pph_check :
+            self.pph = 0.0
+            self.ppn = 0.0
+        elif self.ppn_check and not self.pph_check:
+            self.ppn = round((self.biaya_perbaikan * 0.1),  2)
+            self.pph = 0.0
+        elif not self.ppn_check and self.pph_check:
+            self.pph = round((self.biaya_perbaikan * 0.02), 2)
+            self.ppn = 0.0
+        else:
+            self.ppn = round((self.biaya_perbaikan * 0.1),  2)
+            self.pph = round((self.biaya_perbaikan * 0.02), 2)    
 
     global switch
 
@@ -202,13 +223,35 @@ class gas_maintenance_vehicle(models.Model):
         data = data_1 + data_2 + data_3
         return data
 
+    # fungsi untuk mengambil data dari field nama,perusahaan,bulan dan tahun dan memanggil function converse
     global converse
 
     def converse(no, corp, month, year):
         data = corp
+        # nama Agen dan wilayahnya
+        agen = {
+            # "Wilayah" : "Code Wilayah"
+            "PASER ENERGY ABADI":"PSR",
+            "DHIRABRATA GAS NUSANTARA":"TGG",
+            "TAKA ENERGY NUSANTARA":"PAM",
+            "GEMILANG ENERGY NUSANTARA":"SMD",
+            "GEMILANG KARYA ENERGI":"BTG",
+            "BERKAH ETAM NUSANTARA":"PDN",
+            "BAROKAH GEMILANG PERKASA":"BPN",
+            "ANUGERAH SANGATTA ENERGI":"SGA",
+            "SEGAH PRIMA GAS":"BRU",
+            "SANGKULIRANG ENERGI UTAMA":"SGA",
+            "SINERGI JAYA ENERGI":"BPN",
+            "BANUA SANGGAM JAYA GAS":"BRU",
+            "NIAGA ENERGI PERKASA":"MLK",
+            "ENERGI BENUA ETAM":"SMD",
+            "SUKSES MAJU ENERGI":"PDN",
+        }
+        agen = agen[corp]
+
         increment = '%03d' % no
         short = switch(data)
-        data = increment + '/' + short + '/GAS/SGT' + '/' + str(month) + '/' + str(year) + "/O"
+        data = increment + '/' + short + '/GAS/'+ agen + '/' + str(month) + '/' + str(year) + "/O"
         print(data)
         return data
 
@@ -225,14 +268,15 @@ class gas_maintenance_vehicle(models.Model):
 
     @api.model
     def create(self, values):
+        data = values
         res = super(gas_maintenance_vehicle, self).create(values)
         for rec in res:
             nama = rec.name
             data = ''
             # untuk cek apakah  ada  vendor telah di isi jika tidak maka akan error karena belum memilih vendor
-            dic_vendor = rec.gas_vendor_transfer_line
-            if dic_vendor.number == False:
-                raise ValidationError(("Vendor wajib di isi"))
+            for dict_vendor in rec.gas_vendor_transfer_line:
+                if dict_vendor.number == False:
+                    raise ValidationError(("Vendor wajib di isi"))
             if nama == 'New':
                 perusahaan = rec.corporate
                 increment =  self.env['gas.maintenance.vehicle'].search([('corporate', '=', rec.corporate)])
@@ -377,6 +421,7 @@ class gas_maintenance_vehicle(models.Model):
             rec.update({
                 'biaya_perbaikan': currency.round(jumlah)
             })
+    
 
 
     discount = fields.Float(string='Diskon', track_visibility='onchange', default=0.0)
@@ -384,7 +429,7 @@ class gas_maintenance_vehicle(models.Model):
     final_price = fields.Monetary(string='Harga Akhir', store=True, readonly=True, compute='_final_price',
                                   track_visibility='onchange')
 
-    @api.depends('final_price', 'discount', 'biaya_perbaikan', 'ppn', 'pph', 'afterDiscount')
+    @api.depends('final_price', 'discount', 'biaya_perbaikan', 'ppn', 'pph', 'afterDiscount', 'pph_check', 'ppn_check')
     def _final_price(self):
         for record in self:
             if not record.discount:
@@ -696,28 +741,29 @@ class gas_maintenance_vehicle_line(models.Model):
     name = fields.Char(string="Nama Sarfas")
     
     
-    name_selection = fields.Selection([
-        ('Engine', 'Engine'),
-        ('Clutch', 'Clutch'),
-        ('Gearbox', 'Gearbox'),
-        ('Control', 'Control'),
-        ('Accelerator', 'Accelerator'),
-        ('Frame', 'Frame'),
-        ('Suspension', 'Suspension'),
-        ('Front Axle', 'Front Axle'),
-        ('Rear Axle', 'Rear Axle'),
-        ('Wheels', 'Wheels'),
-        ('Propeller Shaft', 'Propeller Shaft'),
-        ('Brakes', 'Brakes'),
-        ('Steering', 'Steering'),
-        ('Fuel System', 'Fuel System'),
-        ('Exhaust System', 'Exhaust System'),
-        ('Radiator', 'Radiator'),
-        ('Electricals', 'Electricals'),
-        ('Emblem', 'Emblem'),
-        ('Body', 'Body'),
-        ('Load Body', 'Load Body'),
-    ], string="Nama Sarfas Selection")  
+    # name_selection = fields.Selection([
+    #     ('Engine', 'Engine'),
+    #     ('Clutch', 'Clutch'),
+    #     ('Gearbox', 'Gearbox'),
+    #     ('Control', 'Control'),
+    #     ('Accelerator', 'Accelerator'),
+    #     ('Frame', 'Frame'),
+    #     ('Suspension', 'Suspension'),
+    #     ('Front Axle', 'Front Axle'),
+    #     ('Rear Axle', 'Rear Axle'),
+    #     ('Wheels', 'Wheels'),
+    #     ('Propeller Shaft', 'Propeller Shaft'),
+    #     ('Brakes', 'Brakes'),
+    #     ('Steering', 'Steering'),
+    #     ('Fuel System', 'Fuel System'),
+    #     ('Exhaust System', 'Exhaust System'),
+    #     ('Radiator', 'Radiator'),
+    #     ('Electricals', 'Electricals'),
+    #     ('Emblem', 'Emblem'),
+    #     ('Body', 'Body'),
+    #     ('Load Body', 'Load Body'),
+    # ], string="Nama Sarfas Selection")
+    name_selection = fields.Char('Nama Sarfas')  
     
     jenis_sarfas_selection = fields.Selection([
         ('Engine', 'Engine'),
