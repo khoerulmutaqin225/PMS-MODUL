@@ -236,7 +236,7 @@
         <field name="name">pms.gas_maintenance_tree.tree</field>
         <field name="model">gas.maintenance.vehicle</field>
         <field name="arch" type="xml">
-            <tree string="Maintenance Armada" decoration-success="status == 'open'" decoration-muted="status == ''" decoration-danger="status == 'finish'">
+            <tree string="Maintenance Armada" decoration-success="status == 'finish'" decoration-muted="status == ''" decoration-danger="status == 'open'">
                 <field name="name"/>
                 <field name="no_ba_close"/>
                 <field name="vehicle_id"/>

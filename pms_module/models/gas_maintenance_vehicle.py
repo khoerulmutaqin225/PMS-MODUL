@@ -229,6 +229,10 @@ class gas_maintenance_vehicle(models.Model):
         for rec in res:
             nama = rec.name
             data = ''
+            # untuk cek apakah  ada  vendor telah di isi jika tidak maka akan error karena belum memilih vendor
+            dic_vendor = rec.gas_vendor_transfer_line
+            if dic_vendor.number == False:
+                raise ValidationError(("Vendor wajib di isi"))
             if nama == 'New':
                 perusahaan = rec.corporate
                 increment =  self.env['gas.maintenance.vehicle'].search([('corporate', '=', rec.corporate)])

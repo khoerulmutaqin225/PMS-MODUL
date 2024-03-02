@@ -39,6 +39,11 @@
                     <filter string="Vehicle" name="Vehicle" context="{'group_by': 'vehicle_id'}" />
                 </group>
             </search>
+            <searchpanel>
+                    <field name="status" icon="fa-list"/>
+                    <field name="corporate" icon="fa-list"/>
+            </searchpanel>
+
         </field>
     </record>
 
