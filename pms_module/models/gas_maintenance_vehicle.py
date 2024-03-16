@@ -19,12 +19,11 @@ class gas_maintenance_vehicle(models.Model):
     _description = 'Gas Maintenance Vehicle'
 
     def unlink(self):
-        alloc_to_unlink = self.env["gas.maintenance.vehicle"].search([('id', '=', self.id)])
         for record in self:
             if record.state != 'draft':
                 raise ValidationError("Rubah dahulu menjadi draft .")
-        data = super(gas_maintenance_vehicle, self).unlink()
-        return data
+        delete_selection = super(gas_maintenance_vehicle, self).unlink()
+        return self 
     
     state = fields.Selection(
         string='State',
@@ -396,8 +395,9 @@ class gas_maintenance_vehicle(models.Model):
     gas_line = fields.One2many(
         'gas.report.line',
         'group_gas_id',
-        string="List PErbaikan Sarfas",
-        track_visibility='onchange'
+        string="List Perbaikan Sarfas",
+        track_visibility='onchange',
+        ondelete='cascade'
     ) 
     
     # gas.maintenance.vendor
