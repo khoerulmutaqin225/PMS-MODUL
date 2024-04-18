@@ -101,7 +101,7 @@
                     <label for="catatan" string="Catatan perbaikan:"/>
                     <field name="catatan" placeholder="Masukan Catatan"/> -->
                     <notebook>
-                        <page string="Per   baikan Line">
+                        <page string="Perbaikan Line">
                             <field name="gas_line" widget="section_and_note_one2many" mode="tree">
                                 <tree editable="bottom">
                                     <field name="name" placeholder="Masukan Nama" required="1"/>
@@ -154,13 +154,14 @@
                 <field name="name"/>
                 <field name="no_ba_close"/>
                 <field name="vehicle_id"/>
+                <field name="corporate" string="Perusahaan"/>
+                <field name="catatan" string="Keluhan" />
                 <field name="vendor"/>
                 <field name="status"/>
                 <field name="tanggal_kerusakan"/>
                 <field name="standar_lama"/>
-                <field name="biaya_perbaikan" widget="monetary"/>
                 <field name="final_price" widget="monetary"/>
-                <field name="company_id" string="Perusahaan"/>
+                <field name="company_id" string="Perusahaan" invisible="1"/>
             </tree>
         </field>
     </record>
