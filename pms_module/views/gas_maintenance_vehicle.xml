@@ -242,14 +242,14 @@
                 <field name="name"/>
                 <field name="no_ba_close"/>
                 <field name="vehicle_id"/>
-                <field name="vendor"/>
+            	<field name="corporate" string="Perusahaan"/>
+		        <field name="catatan" string="Keluhan"/>
+                <field name="vendor" invisible="1"/>
                 <field name="status"/>
-                <field name="tanggal_kerusakan" widget="date"/>
+                <field name="tanggal_kerusakan"/>
                 <field name="standar_lama"/>
-                <field name="biaya_perbaikan" widget="monetary"/>
                 <field name="final_price" widget="monetary"/>
-                <field name="company_id" string="Perusahaan"  invisible="1"/>
-                <field name="corporate" string="Perusahaan" />
+                <field name="company_id" string="Perusahaan" invisible="1"/>
             </tree>
         </field>
     </record>
